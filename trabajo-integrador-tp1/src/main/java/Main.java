@@ -42,84 +42,9 @@ public class Main {
             FacturaProductoDao facturaProductoDao = new FacturaProductoDaoImp();
             ProductoDao productoDao = new ProductoDaoImp();
 
-            /* Creación de las tablas (comentar una vez creadas) */
-            clienteDao.createTable(connection);
-            productoDao.createTable(connection);
-            facturaDao.createTable(connection);
-            facturaProductoDao.createTable(connection);
-
-            /* Inserto los clientes del archivo csv */
-            try {
-                CSVParser parserClientes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/clientes.csv"));
-                for (CSVRecord fila : parserClientes.getRecords()) {
-                    Cliente c = new Cliente(Integer.parseInt(fila.get(0)), fila.get(1), fila.get(2));
-                    System.out.println(c);
-                    clienteDao.createCliente(connection, c);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
-            /* Inserto los productos del archivo csv */
-            /*
-            * Exception in thread "main" java.lang.NumberFormatException: For input string: "nisl sem,"
-               at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
-               at java.base/java.lang.Integer.parseInt(Integer.java:668)
-               at java.base/java.lang.Integer.parseInt(Integer.java:786)
-                 at Main.main(Main.java:85)
-            * */
-            try {
-                CSVParser parserProductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/productos.csv"));
-                for(CSVRecord fila : parserProductos) {
-                    int id = Integer.parseInt(fila.get(0));
-                    String nombre = fila.get(1);
-                    float valor = Float.parseFloat(fila.get(2));
-
-                    System.out.println(id + " " + nombre + " " + valor);
-
-                    Producto p = new Producto(Integer.parseInt(fila.get("idProducto")), fila.get("nombre"), Float.parseFloat(fila.get("valor")));
-                    productoDao.createProducto(connection, p);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
-            /* Inserto las facturas del archivo csv */
-            try {
-                CSVParser parserFacturas = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/facturas.csv"));
-                for(CSVRecord fila : parserFacturas.getRecords()) {
-                    Factura f = new Factura(Integer.parseInt(fila.get(0)), Integer.parseInt(fila.get(1)));
-                    System.out.println(f);
-                    facturaDao.createFactura(connection, f);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
-            /* Inserto las facturasproductos del archivo csv */
-            try {
-                CSVParser parserFacturasProductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/facturas-productos.csv"));
-                for(CSVRecord fila : parserFacturasProductos.getRecords()) {
-                    FacturaProducto fp = new FacturaProducto(Integer.parseInt(fila.get(0)), Integer.parseInt(fila.get(1)), Integer.parseInt(fila.get(2)));
-                    System.out.println(fp);
-                    facturaProductoDao.createFacturaProducto(connection, fp);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-
+/*
+            inicializarTablas(connection);
+*/
 
             /* Prueba de métodos solicitados en el tp */
             ResultSet productosMayorRecaudo = productoDao.obtenerProductoMayorRecaudo(connection);
@@ -127,7 +52,8 @@ public class Main {
                 String nombreProducto = productosMayorRecaudo.getString("nombre");
                 double recaudacion = productosMayorRecaudo.getDouble("recaudacion");
                 System.out.println("Producto que más recaudó: " + nombreProducto);
-                System.out.println("Recaudación total: " + recaudacion);
+                System.out.println("Recaudación total del producto: " + recaudacion);
+                System.out.println();
             } else {
                 System.out.println("No hay productos vendidos.");
             }
@@ -165,6 +91,77 @@ public class Main {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void inicializarTablas(Connection connection) throws SQLException {
+
+        ClienteDao clienteDao = new ClienteDaoImp();
+        FacturaDao facturaDao = new FacturaDaoImp();
+        FacturaProductoDao facturaProductoDao = new FacturaProductoDaoImp();
+        ProductoDao productoDao = new ProductoDaoImp();
+
+        /* Creación de las tablas (comentar una vez creadas) */
+        clienteDao.createTable(connection);
+        productoDao.createTable(connection);
+        facturaDao.createTable(connection);
+        facturaProductoDao.createTable(connection);
+
+        /* Inserto los clientes del archivo csv */
+        try {
+            CSVParser parserClientes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/clientes.csv"));
+            for (CSVRecord fila : parserClientes.getRecords()) {
+                Cliente c = new Cliente(Integer.parseInt(fila.get(0)), fila.get(1), fila.get(2));
+                System.out.println(c);
+                clienteDao.createCliente(connection, c);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        /* Inserto los productos del archivo csv */
+        try {
+            CSVParser parserProductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/productos.csv"));
+            for(CSVRecord fila : parserProductos) {
+                Producto p = new Producto(Integer.parseInt(fila.get("idProducto")), fila.get("nombre"), Float.parseFloat(fila.get("valor")));
+                productoDao.createProducto(connection, p);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        /* Inserto las facturas del archivo csv */
+        try {
+            CSVParser parserFacturas = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/facturas.csv"));
+            for(CSVRecord fila : parserFacturas.getRecords()) {
+                Factura f = new Factura(Integer.parseInt(fila.get(0)), Integer.parseInt(fila.get(1)));
+                facturaDao.createFactura(connection, f);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        /* Inserto las facturasproductos del archivo csv */
+        try {
+            CSVParser parserFacturasProductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/facturas-productos.csv"));
+            for(CSVRecord fila : parserFacturasProductos.getRecords()) {
+                FacturaProducto fp = new FacturaProducto(Integer.parseInt(fila.get(0)), Integer.parseInt(fila.get(1)), Integer.parseInt(fila.get(2)));
+                facturaProductoDao.createFacturaProducto(connection, fp);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
