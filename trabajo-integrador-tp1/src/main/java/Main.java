@@ -64,11 +64,23 @@ public class Main {
 
 
             /* Inserto los productos del archivo csv */
+            /*
+            * Exception in thread "main" java.lang.NumberFormatException: For input string: "nisl sem,"
+               at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+               at java.base/java.lang.Integer.parseInt(Integer.java:668)
+               at java.base/java.lang.Integer.parseInt(Integer.java:786)
+                 at Main.main(Main.java:85)
+            * */
             try {
                 CSVParser parserProductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/productos.csv"));
-                for(CSVRecord fila : parserProductos.getRecords()) {
-                    Producto p = new Producto(Integer.parseInt(fila.get(0)), fila.get(1), Float.parseFloat(fila.get(2)));
-                    System.out.println(p);
+                for(CSVRecord fila : parserProductos) {
+                    int id = Integer.parseInt(fila.get(0));
+                    String nombre = fila.get(1);
+                    float valor = Float.parseFloat(fila.get(2));
+
+                    System.out.println(id + " " + nombre + " " + valor);
+
+                    Producto p = new Producto(Integer.parseInt(fila.get("idProducto")), fila.get("nombre"), Float.parseFloat(fila.get("valor")));
                     productoDao.createProducto(connection, p);
                 }
             } catch (FileNotFoundException e) {
@@ -80,7 +92,7 @@ public class Main {
 
             /* Inserto las facturas del archivo csv */
             try {
-                CSVParser parserFacturas = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/productos.csv"));
+                CSVParser parserFacturas = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/facturas.csv"));
                 for(CSVRecord fila : parserFacturas.getRecords()) {
                     Factura f = new Factura(Integer.parseInt(fila.get(0)), Integer.parseInt(fila.get(1)));
                     System.out.println(f);
@@ -95,7 +107,7 @@ public class Main {
 
             /* Inserto las facturasproductos del archivo csv */
             try {
-                CSVParser parserFacturasProductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/productos.csv"));
+                CSVParser parserFacturasProductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/facturas-productos.csv"));
                 for(CSVRecord fila : parserFacturasProductos.getRecords()) {
                     FacturaProducto fp = new FacturaProducto(Integer.parseInt(fila.get(0)), Integer.parseInt(fila.get(1)), Integer.parseInt(fila.get(2)));
                     System.out.println(fp);

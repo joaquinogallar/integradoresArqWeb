@@ -16,8 +16,10 @@ docker exec -it [id_contenedor] mysql -u [usuario] -p
 Luego de acceder al SQL
 ```SQL
 -- Seleccionar la base de datos
-USE integradorDb;
+USE [nombre_db];
+```
     
+```SQL
 -- Desactivar la verificación de claves foráneas
 SET FOREIGN_KEY_CHECKS = 0;
 
