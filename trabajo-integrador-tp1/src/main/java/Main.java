@@ -109,7 +109,6 @@ public class Main {
             CSVParser parserClientes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/clientes.csv"));
             for (CSVRecord fila : parserClientes.getRecords()) {
                 Cliente c = new Cliente(Integer.parseInt(fila.get(0)), fila.get(1), fila.get(2));
-                System.out.println(c);
                 clienteDao.createCliente(connection, c);
             }
         } catch (FileNotFoundException e) {
