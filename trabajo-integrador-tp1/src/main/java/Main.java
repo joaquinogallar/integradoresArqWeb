@@ -42,9 +42,7 @@ public class Main {
             FacturaProductoDao facturaProductoDao = new FacturaProductoDaoImp();
             ProductoDao productoDao = new ProductoDaoImp();
 
-/*
             inicializarTablas(connection);
-*/
 
             /* Prueba de métodos solicitados en el tp */
             ResultSet productosMayorRecaudo = productoDao.obtenerProductoMayorRecaudo(connection);
