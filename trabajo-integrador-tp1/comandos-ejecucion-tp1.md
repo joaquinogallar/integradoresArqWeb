@@ -9,7 +9,7 @@ docker-compose up
 ```
 
 ## Eliminacion de las tablas
-Ejecutar el siguiente comando y a continuación ingresar la contraseña del usuario
+Ejecutar el siguiente comando y a continuación ingresar la contraseña del usuario, en linux es probable que pida permisos de super usuario **(sudo)**
 ```bash
 docker exec -it [id_contenedor] mysql -u [usuario] -p
 ```
