@@ -117,7 +117,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-
         /* Inserto los productos del archivo csv */
         try {
             CSVParser parserProductos = CSVFormat.DEFAULT.withHeader().parse(new FileReader("src/main/java/csv/productos.csv"));
