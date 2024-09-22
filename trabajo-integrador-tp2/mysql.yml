@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql_integrador2
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+#     networks:
+#       - my_network
+
+volumes:
+  mysql_data:
+
+# networks:
+#   my_network:
+
+# docker-compose -f mysql.yml up
+# -f specifies the file to use; by default, it is "docker-compose.yml".
+# -d runs the containers in detached mode (in the background).

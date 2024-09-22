@@ -7,13 +7,16 @@
     <persistence-unit name="orm_config">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <body>entities.Estudiante</body>
+        <body>entities.CarreraInscripta</body>
+
         <properties>
             <!-- Apache derby configuration -->
             <!-- <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:derby:derbyDb;create=true" />  -->
 
             <!-- Mysql configuration -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mySqlDb" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/integradorDb2" />
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <property name="javax.persistence.jdbc.user" value="user" />
             <property name="javax.persistence.jdbc.password" value="userpassword" />
