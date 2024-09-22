@@ -4,11 +4,11 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-    <persistence-unit name="orm_config">
+    <persistence-unit name="mysql_config">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <body>entities.Estudiante</body>
-        <body>entities.CarreraInscripta</body>
+        <class>entities.Estudiante</class>
+        <class>entities.CarreraInscripta</class>
 
         <properties>
             <!-- Apache derby configuration -->

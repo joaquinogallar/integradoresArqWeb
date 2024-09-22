@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,4 +25,15 @@ public class Estudiante {
 
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
     private List<CarreraInscripta> carreras;
+
+    public Estudiante(String nombres, String apellido, int edad, String genero, String numeroDocumento, String ciudadResidencia, String numeroLibretaUniversitaria) {
+        this.nombres = nombres;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.genero = genero;
+        this.numeroDocumento = numeroDocumento;
+        this.ciudadResidencia = ciudadResidencia;
+        this.numeroLibretaUniversitaria = numeroLibretaUniversitaria;
+        this.carreras = new ArrayList<>();
+    }
 }
