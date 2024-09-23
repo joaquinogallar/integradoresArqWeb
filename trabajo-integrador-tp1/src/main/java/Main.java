@@ -23,7 +23,7 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) {
         String driver = "com.mysql.cj.jdbc.Driver";
-        String uri = "jdbc:mysql://localhost:3306/integradorDb";
+        String uri = "jdbc:mysql://localhost:3306/integrador1";
 
         try {
             Class.forName(driver).getDeclaredConstructor().newInstance();
@@ -64,24 +64,6 @@ public class Main {
                 System.out.println("Recaudacion total: " + recaudacion);
             }
 
-
-
-            /* Clientes, Productos, Facturas y FacturasProductos insertados a mano */
-           /* clienteDao.createCliente(connection, new Cliente(1, "joaquin", "jogallar@alumos.exa.unicen.edu.ar"));
-            clienteDao.createCliente(connection, new Cliente(2, "luca", "lochoa@alumos.exa.unicen.edu.ar"));
-            clienteDao.createCliente(connection, new Cliente(3, "alejo", "arau@alumos.exa.unicen.edu.ar"));
-
-            productoDao.createProducto(connection, new Producto(1, "A", 10));
-            productoDao.createProducto(connection, new Producto(2, "B", 20));
-            productoDao.createProducto(connection, new Producto(3, "C", 50));
-
-            facturaDao.createFactura(connection, new Factura(1, 1));
-            facturaDao.createFactura(connection, new Factura(2, 3));
-            facturaDao.createFactura(connection, new Factura(3, 2));
-
-            facturaProductoDao.createFacturaProducto(connection, new FacturaProducto(1, 3, 5));
-            facturaProductoDao.createFacturaProducto(connection, new FacturaProducto(2, 2, 6));
-            facturaProductoDao.createFacturaProducto(connection, new FacturaProducto(3, 1, 10));*/
 
             connection.close();
 
