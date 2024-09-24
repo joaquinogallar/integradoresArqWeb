@@ -10,6 +10,8 @@ import entities.Cliente;
 import entities.Factura;
 import entities.FacturaProducto;
 import entities.Producto;
+import factories.AbstractFactory;
+import factories.MySQLFactory;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -23,19 +25,33 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) {
 
+        AbstractFactory mySqlFactory = AbstractFactory.getFactory(AbstractFactory.MYSQL_JDBC_DRIVER);
+
+        ClienteDao clienteDao = mySqlFactory.getClienteDao();
+        FacturaDao facturaDao = mySqlFactory.getFacturaDao();
+        ProductoDao productoDao = mySqlFactory.getProductoDao();
+        FacturaProductoDao facturaProductoDao = mySqlFactory.getFacturaProductoDao();
+
         try {
-            Connection connection = DriverManager.getConnection(uri, "root", "rootpassword");
-            connection.setAutoCommit(false);
+            // eliminar primero las tablas con FK para evitar conflictos
+            facturaProductoDao.dropTable();
+            facturaDao.dropTable();
+            productoDao.dropTable();
+            clienteDao.dropTable();
 
-            ClienteDao clienteDao = new ClienteDaoImp();
-            FacturaDao facturaDao = new FacturaDaoImp();
-            FacturaProductoDao facturaProductoDao = new FacturaProductoDaoImp();
-            ProductoDao productoDao = new ProductoDaoImp();
+            clienteDao.createTable();
+            facturaDao.createTable();
+            productoDao.createTable();
+            facturaProductoDao.createTable();
 
-            inicializarTablas(connection);
+            clienteDao.loadData();
+            facturaDao.loadData();
+            productoDao.loadData();
+            facturaProductoDao.loadData();
+
 
             /* Prueba de métodos solicitados en el tp */
-            ResultSet productosMayorRecaudo = productoDao.obtenerProductoMayorRecaudo(connection);
+            ResultSet productosMayorRecaudo = productoDao.obtenerProductoMayorRecaudo();
             if (productosMayorRecaudo.next()) {
                 String nombreProducto = productosMayorRecaudo.getString("nombre");
                 double recaudacion = productosMayorRecaudo.getDouble("recaudacion");
@@ -46,17 +62,13 @@ public class Main {
                 System.out.println("No hay productos vendidos.");
             }
 
-            ResultSet clientesMayorFacturacion = clienteDao.getClientesOrdenados(connection);
+            ResultSet clientesMayorFacturacion = clienteDao.getClientesOrdenados();
             while (clientesMayorFacturacion.next()) {
                 String nombreCliente = clientesMayorFacturacion.getString("nombre");
                 double recaudacion = clientesMayorFacturacion.getDouble("totalFacturado");
                 System.out.println("Cliente: " + nombreCliente);
                 System.out.println("Recaudacion total: " + recaudacion);
             }
-
-
-            connection.close();
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

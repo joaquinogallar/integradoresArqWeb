@@ -4,6 +4,10 @@ import dao.ClienteDao;
 import dao.FacturaDao;
 import dao.FacturaProductoDao;
 import dao.ProductoDao;
+import dao.imp.ClienteDaoImp;
+import dao.imp.FacturaDaoImp;
+import dao.imp.FacturaProductoDaoImp;
+import dao.imp.ProductoDaoImp;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -15,7 +19,7 @@ public class MySQLFactory extends  AbstractFactory {
     // Atributos
     private static MySQLFactory instance = null;
 
-    public static final String DRIVER = "com.mysql.jdbc.Driver";
+    public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     public static final String URI = "jdbc:mysql://localhost:3306/integrador1";
     public static Connection connection;
 
@@ -64,21 +68,21 @@ public class MySQLFactory extends  AbstractFactory {
 
     @Override
     public ClienteDao getClienteDao() {
-        return null;
+        return new ClienteDaoImp(createConnection());
     }
 
     @Override
     public FacturaDao getFacturaDao() {
-        return null;
+        return new FacturaDaoImp(createConnection());
     }
 
     @Override
     public ProductoDao getProductoDao() {
-        return null;
+        return new ProductoDaoImp(createConnection());
     }
 
     @Override
     public FacturaProductoDao getFacturaProductoDao() {
-        return null;
+        return new FacturaProductoDaoImp(createConnection());
     }
 }
