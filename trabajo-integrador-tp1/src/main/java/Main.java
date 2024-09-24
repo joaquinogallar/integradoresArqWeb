@@ -22,16 +22,6 @@ import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
-        String driver = "com.mysql.cj.jdbc.Driver";
-        String uri = "jdbc:mysql://localhost:3306/integrador1";
-
-        try {
-            Class.forName(driver).getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException |
-                 InvocationTargetException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
 
         try {
             Connection connection = DriverManager.getConnection(uri, "root", "rootpassword");
