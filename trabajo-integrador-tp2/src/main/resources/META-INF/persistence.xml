@@ -8,7 +8,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <body>entities.Estudiante</body>
-        <body>entities.CarreraInscripta</body>
+        <body>entities.Carrera</body>
 
         <properties>
             <!-- Apache derby configuration -->
