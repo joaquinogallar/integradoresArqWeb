@@ -17,7 +17,7 @@ public class Estudiante implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombres;
+    private String nombre;
     private String apellido;
     private int edad;
     private String genero;
@@ -28,8 +28,8 @@ public class Estudiante implements Serializable {
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
     private List<EstudianteCarrera> carreras;
 
-    public Estudiante(String nombres, String apellido, int edad, String genero, String numeroDocumento, String ciudadResidencia, String numeroLibretaUniversitaria) {
-        this.nombres = nombres;
+    public Estudiante(String nombre, String apellido, int edad, String genero, String numeroDocumento, String ciudadResidencia, String numeroLibretaUniversitaria) {
+        this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
         this.genero = genero;

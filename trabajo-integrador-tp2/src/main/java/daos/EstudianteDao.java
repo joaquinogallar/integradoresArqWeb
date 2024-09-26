@@ -26,9 +26,6 @@ public class EstudianteDao {
         em.persist(estudiante);
     }
 
-    public List<Estudiante> getEstudiantes() {
-        return em.createQuery("SELECT e FROM estudiante e", Estudiante.class).getResultList();
-    }
 
     public void deleteEstudiante(Long id) {
         Estudiante estudiante = getEstudianteById(id);
@@ -39,4 +36,21 @@ public class EstudianteDao {
     public Estudiante getEstudianteById(Long id) {
         return em.find(Estudiante.class, id);
     }
+
+
+    // CONSULTAS TP
+    public List<Estudiante> getEstudiantes() {
+        return em.createNativeQuery("SELECT * FROM estudiante e ORDER BY e.nombre", Estudiante.class).getResultList();
+    }
+
+    public Estudiante getEstudianteByNumeroLibreta(String numeroLibreta) {
+        try {
+            return em.createQuery("SELECT e FROM Estudiante e WHERE e.numeroLibretaUniversitaria = :numeroLibreta", Estudiante.class)
+                    .setParameter("numeroLibreta", numeroLibreta)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
