@@ -15,13 +15,18 @@ public class EstudianteCarrera {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Estudiante estudiante;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Carrera carrera;
 
     private int antiguedad;
     private boolean graduado;
 
-
+    public EstudianteCarrera(Estudiante estudiante, Carrera carrera) {
+        this.estudiante = estudiante;
+        this.carrera = carrera;
+        this.antiguedad = 0;
+        this.graduado = false;
+    }
 }

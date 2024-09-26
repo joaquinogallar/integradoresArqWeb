@@ -18,5 +18,11 @@ public class Carrera {
     private String nombreCarrera;
 
     @OneToMany(mappedBy = "carrera")
-    private List<EstudianteCarrera> estudiante;
+    private List<EstudianteCarrera> estudiantes;
+
+    public void inscribirEstudiante(Estudiante estudiante) {
+        EstudianteCarrera estudianteCarrera = new EstudianteCarrera(estudiante, this);
+        estudiantes.add(estudianteCarrera);
+        estudiante.getCarreras().add(estudianteCarrera);
+    }
 }

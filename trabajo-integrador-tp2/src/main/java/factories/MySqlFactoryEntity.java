@@ -2,6 +2,7 @@ package factories;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.sql.Connection;
 
 public class MySqlFactoryEntity extends FactoryEntity {
 
