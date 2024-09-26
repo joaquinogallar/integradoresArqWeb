@@ -7,10 +7,9 @@
     <persistence-unit name="mysql_config">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <body>entities.Estudiante</body>
-        <body>entities.Carrera</body>
         <class>entities.Estudiante</class>
-        <class>entities.CarreraInscripta</class>
+        <class>entities.Carrera</class>
+        <class>entities.EstudianteCarrera</class>
 
         <properties>
             <!-- Apache derby configuration -->

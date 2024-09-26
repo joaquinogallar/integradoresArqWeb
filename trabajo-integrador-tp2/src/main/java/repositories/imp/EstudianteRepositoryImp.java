@@ -1,6 +1,7 @@
 package repositories.imp;
 
 import entities.Estudiante;
+import entities.Genero;
 import repositories.EstudianteRepository;
 
 import javax.persistence.EntityManager;
@@ -17,16 +18,17 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
         this.em = em;
     }
 
+    // SINGLETON
     public static synchronized EstudianteRepositoryImp getInstance(EntityManager em) {
         if(instance == null)
             return new EstudianteRepositoryImp(em);
         return instance;
     }
 
+    // CONSULTAS BASICAS
     public void createEstudiante(Estudiante estudiante) {
         em.persist(estudiante);
     }
-
 
     public void deleteEstudiante(Long id) {
         Estudiante estudiante = getEstudianteById(id);
@@ -37,9 +39,6 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     public Estudiante getEstudianteById(Long id) {
         return em.find(Estudiante.class, id);
     }
-
-
-
 
     // CONSULTAS TP
     @Override
@@ -59,7 +58,7 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     @Override
     public Estudiante getEstudianteByNumeroLibreta(String numeroLibreta) {
         try {
-            return em.createQuery("SELECT e FROM Estudiante e WHERE e.numeroLibretaUniversitaria = :numeroLibreta", Estudiante.class)
+            return em.createQuery("SELECT e FROM estudiante e WHERE e.numeroLibretaUniversitaria = :numeroLibreta", Estudiante.class)
                     .setParameter("numeroLibreta", numeroLibreta)
                     .getSingleResult();
         } catch (Exception e) {
@@ -68,7 +67,9 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     }
 
     @Override
-    public List<Estudiante> getEstudiantesByGenero(String genero) {
-        return List.of();
+    public List<Estudiante> getEstudiantesByGenero(Genero genero) {
+        return em.createQuery("SELECT e FROM estudiante e WHERE e.genero = :genero", Estudiante.class)
+                .setParameter("genero", genero)
+                .getResultList();
     }
 }

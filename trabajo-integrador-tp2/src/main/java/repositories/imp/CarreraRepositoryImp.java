@@ -14,12 +14,14 @@ public class CarreraRepositoryImp implements CarreraRepository {
         this.em = em;
     }
 
+    // SINGLETON
     public static synchronized CarreraRepositoryImp getInstance(EntityManager em) {
         if(instance == null)
             return new CarreraRepositoryImp(em);
         return instance;
     }
 
+    // CONSULTAS BASICAS
     public void createCarrera(Carrera carreraInscripta) {
         em.persist(carreraInscripta);
     }
@@ -38,8 +40,11 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return em.find(Carrera.class, id);
     }
 
+    // CONSULTAS TP
     @Override
     public List<Carrera> getCarrerasConEstudiantes(Carrera carrera) {
         return List.of();
     }
+
+
 }
