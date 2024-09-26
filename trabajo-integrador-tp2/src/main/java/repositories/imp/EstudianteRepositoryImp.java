@@ -1,24 +1,25 @@
-package daos;
+package repositories.imp;
 
 import entities.Estudiante;
+import repositories.EstudianteRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public class EstudianteDao {
+public class EstudianteRepositoryImp implements EstudianteRepository {
 
     @PersistenceContext
     private EntityManager em;
-    private static EstudianteDao instance;
+    private static EstudianteRepositoryImp instance;
 
-    private EstudianteDao(EntityManager em) {
+    private EstudianteRepositoryImp(EntityManager em) {
         this.em = em;
     }
 
-    public static synchronized EstudianteDao getInstance(EntityManager em) {
+    public static synchronized EstudianteRepositoryImp getInstance(EntityManager em) {
         if(instance == null)
-            return new EstudianteDao(em);
+            return new EstudianteRepositoryImp(em);
         return instance;
     }
 
@@ -38,11 +39,24 @@ public class EstudianteDao {
     }
 
 
+
+
     // CONSULTAS TP
+    @Override
+    public void darAltaEstudiante(Estudiante estudiante) {
+
+    }
+
+    @Override
+    public void inscribirEstudiante(Estudiante estudiante) {
+
+    }
+    @Override
     public List<Estudiante> getEstudiantes() {
         return em.createNativeQuery("SELECT * FROM estudiante e ORDER BY e.nombre", Estudiante.class).getResultList();
     }
 
+    @Override
     public Estudiante getEstudianteByNumeroLibreta(String numeroLibreta) {
         try {
             return em.createQuery("SELECT e FROM Estudiante e WHERE e.numeroLibretaUniversitaria = :numeroLibreta", Estudiante.class)
@@ -53,4 +67,8 @@ public class EstudianteDao {
         }
     }
 
+    @Override
+    public List<Estudiante> getEstudiantesByGenero(String genero) {
+        return List.of();
+    }
 }

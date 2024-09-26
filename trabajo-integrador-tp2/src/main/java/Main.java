@@ -1,9 +1,8 @@
 import factories.FactoryEntity;
 
-import daos.EstudianteDao;
+import repositories.imp.EstudianteRepositoryImp;
 import entities.Carrera;
 import entities.Estudiante;
-import factories.FactoryEntity;
 
 import javax.persistence.EntityManager;
 
@@ -15,7 +14,7 @@ public class Main {
                 mySqlFactory.open();
 
                 EntityManager em = mySqlFactory.getEm();
-                EstudianteDao estudianteDao = EstudianteDao.getInstance(em);
+                EstudianteRepositoryImp estudianteDao = EstudianteRepositoryImp.getInstance(em);
 
                 /* ESTUDIANTES */
                 Estudiante estudiante1 = new Estudiante("Juan", "Pérez", 20, "Masculino", "12345678", "Buenos Aires", "LU12345");

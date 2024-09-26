@@ -1,21 +1,22 @@
-package daos;
+package repositories.imp;
 
 import entities.Carrera;
+import repositories.CarreraRepository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class CarreraDao {
+public class CarreraRepositoryImp implements CarreraRepository {
     private EntityManager em;
-    private static CarreraDao instance;
+    private static CarreraRepositoryImp instance;
 
-    private CarreraDao(EntityManager em) {
+    private CarreraRepositoryImp(EntityManager em) {
         this.em = em;
     }
 
-    public static synchronized CarreraDao getInstance(EntityManager em) {
+    public static synchronized CarreraRepositoryImp getInstance(EntityManager em) {
         if(instance == null)
-            return new CarreraDao(em);
+            return new CarreraRepositoryImp(em);
         return instance;
     }
 
@@ -37,4 +38,8 @@ public class CarreraDao {
         return em.find(Carrera.class, id);
     }
 
+    @Override
+    public List<Carrera> getCarrerasConEstudiantes(Carrera carrera) {
+        return List.of();
+    }
 }
