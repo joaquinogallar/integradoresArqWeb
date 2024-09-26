@@ -21,6 +21,10 @@ public class Carrera implements Serializable {
     @OneToMany(mappedBy = "carrera")
     private List<EstudianteCarrera> estudiantes;
 
+    public Carrera(String nombreCarrera) {
+        this.nombreCarrera = nombreCarrera;
+    }
+
     public void inscribirEstudiante(Estudiante estudiante) {
         EstudianteCarrera estudianteCarrera = new EstudianteCarrera(estudiante, this);
         estudiantes.add(estudianteCarrera);

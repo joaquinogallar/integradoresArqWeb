@@ -3,9 +3,12 @@ package daos;
 import entities.Estudiante;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 public class EstudianteDao {
+
+    @PersistenceContext
     private EntityManager em;
     private static EstudianteDao instance;
 

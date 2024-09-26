@@ -41,27 +41,27 @@ public class Main {
                 estudianteDao.createEstudiante(estudiante10);
 
                 /* CARRERAS */
-                Carrera carrera1 = new Carrera("Ingeniería en Sistemas", estudiante1);
-                Carrera carrera2 = new Carrera("Medicina", estudiante2);
-                Carrera carrera3 = new Carrera("Arquitectura", estudiante3);
-                Carrera carrera4 = new Carrera("Derecho", estudiante4);
-                Carrera carrera5 = new Carrera("Psicología", estudiante5);
-                Carrera carrera6 = new Carrera("Economía", estudiante6);
-                Carrera carrera7 = new Carrera("Ingeniería Civil", estudiante7);
-                Carrera carrera8 = new Carrera("Farmacia", estudiante8);
-                Carrera carrera9 = new Carrera("Veterinaria", estudiante9);
-                Carrera carrera10 = new Carrera("Comunicación Social", estudiante10);
+                Carrera carrera1 = new Carrera("Ingeniería en Sistemas");
+                Carrera carrera2 = new Carrera("Medicina");
+                Carrera carrera3 = new Carrera("Arquitectura");
+                Carrera carrera4 = new Carrera("Derecho");
+                Carrera carrera5 = new Carrera("Psicología");
+                Carrera carrera6 = new Carrera("Economía");
+                Carrera carrera7 = new Carrera("Ingeniería Civil");
+                Carrera carrera8 = new Carrera("Farmacia");
+                Carrera carrera9 = new Carrera("Veterinaria");
+                Carrera carrera10 = new Carrera("Comunicación Social");
 
-                estudiante1.agregarCarrera(carrera1);
-                estudiante2.agregarCarrera(carrera2);
-                estudiante3.agregarCarrera(carrera3);
-                estudiante4.agregarCarrera(carrera4);
-                estudiante5.agregarCarrera(carrera5);
-                estudiante6.agregarCarrera(carrera6);
-                estudiante7.agregarCarrera(carrera7);
-                estudiante8.agregarCarrera(carrera8);
-                estudiante9.agregarCarrera(carrera9);
-                estudiante10.agregarCarrera(carrera10);
+                estudiante1.inscribirseCarrera(carrera1);
+                estudiante2.inscribirseCarrera(carrera2);
+                estudiante3.inscribirseCarrera(carrera3);
+                estudiante4.inscribirseCarrera(carrera4);
+                estudiante5.inscribirseCarrera(carrera5);
+                estudiante6.inscribirseCarrera(carrera6);
+                estudiante7.inscribirseCarrera(carrera7);
+                estudiante8.inscribirseCarrera(carrera8);
+                estudiante9.inscribirseCarrera(carrera9);
+                estudiante10.inscribirseCarrera(carrera10);
 
             } finally {
                 mySqlFactory.close();
