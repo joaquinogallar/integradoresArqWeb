@@ -39,17 +39,4 @@ public class Estudiante implements Serializable {
         this.carreras = new ArrayList<>();
     }
 
-    public void inscribirseCarrera(Carrera carrera) {
-        EstudianteCarrera estudianteCarrera = new EstudianteCarrera(this, carrera);
-        carreras.add(estudianteCarrera);
-        carrera.getEstudiantes().add(estudianteCarrera);
-    }
-
-    public void darDeAlta(Carrera carrera) {
-        carreras.forEach(ec -> {
-            if(ec.getCarrera().equals(carrera)) {
-                ec.setEstudiante(this);
-            }
-        });
-    }
 }

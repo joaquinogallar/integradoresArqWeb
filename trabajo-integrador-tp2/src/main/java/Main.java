@@ -1,5 +1,8 @@
 import factories.FactoryEntity;
 
+import repositories.CarreraRepository;
+import repositories.EstudianteRepository;
+import repositories.imp.CarreraRepositoryImp;
 import repositories.imp.EstudianteRepositoryImp;
 import entities.Carrera;
 import entities.Estudiante;
@@ -14,7 +17,8 @@ public class Main {
                 mySqlFactory.open();
 
                 EntityManager em = mySqlFactory.getEm();
-                EstudianteRepositoryImp estudianteDao = EstudianteRepositoryImp.getInstance(em);
+                EstudianteRepository estudianteRepository = EstudianteRepositoryImp.getInstance(em);
+                CarreraRepository carreraRepository = CarreraRepositoryImp.getInstance(em);
 
                 /* ESTUDIANTES */
                 Estudiante estudiante1 = new Estudiante("Juan", "Pérez", 20, "Masculino", "12345678", "Buenos Aires", "LU12345");
@@ -28,16 +32,16 @@ public class Main {
                 Estudiante estudiante9 = new Estudiante("Federico", "Ruiz", 21, "Masculino", "99884477", "Neuquén", "LU44556");
                 Estudiante estudiante10 = new Estudiante("Sofía", "Pereyra", 23, "Femenino", "22334455", "Salta", "LU33456");
 
-                estudianteDao.createEstudiante(estudiante1);
-                estudianteDao.createEstudiante(estudiante2);
-                estudianteDao.createEstudiante(estudiante3);
-                estudianteDao.createEstudiante(estudiante4);
-                estudianteDao.createEstudiante(estudiante5);
-                estudianteDao.createEstudiante(estudiante6);
-                estudianteDao.createEstudiante(estudiante7);
-                estudianteDao.createEstudiante(estudiante8);
-                estudianteDao.createEstudiante(estudiante9);
-                estudianteDao.createEstudiante(estudiante10);
+                estudianteRepository.createEstudiante(estudiante1);
+                estudianteRepository.createEstudiante(estudiante2);
+                estudianteRepository.createEstudiante(estudiante3);
+                estudianteRepository.createEstudiante(estudiante4);
+                estudianteRepository.createEstudiante(estudiante5);
+                estudianteRepository.createEstudiante(estudiante6);
+                estudianteRepository.createEstudiante(estudiante7);
+                estudianteRepository.createEstudiante(estudiante8);
+                estudianteRepository.createEstudiante(estudiante9);
+                estudianteRepository.createEstudiante(estudiante10);
 
                 /* CARRERAS */
                 Carrera carrera1 = new Carrera("Ingeniería en Sistemas");
@@ -51,19 +55,20 @@ public class Main {
                 Carrera carrera9 = new Carrera("Veterinaria");
                 Carrera carrera10 = new Carrera("Comunicación Social");
 
-                estudiante1.inscribirseCarrera(carrera1);
-                estudiante2.inscribirseCarrera(carrera2);
-                estudiante3.inscribirseCarrera(carrera3);
-                estudiante4.inscribirseCarrera(carrera4);
-                estudiante5.inscribirseCarrera(carrera5);
-                estudiante6.inscribirseCarrera(carrera6);
-                estudiante7.inscribirseCarrera(carrera7);
-                estudiante8.inscribirseCarrera(carrera8);
-                estudiante9.inscribirseCarrera(carrera9);
-                estudiante10.inscribirseCarrera(carrera10);
+                carreraRepository.createCarrera(carrera1);
+                carreraRepository.createCarrera(carrera2);
+                carreraRepository.createCarrera(carrera3);
+                carreraRepository.createCarrera(carrera4);
+                carreraRepository.createCarrera(carrera5);
+                carreraRepository.createCarrera(carrera6);
+                carreraRepository.createCarrera(carrera7);
+                carreraRepository.createCarrera(carrera8);
+                carreraRepository.createCarrera(carrera9);
+                carreraRepository.createCarrera(carrera10);
 
-            } finally {
-                mySqlFactory.close();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         } else {
             throw new RuntimeException("Error en la creación del MysqlFactory");

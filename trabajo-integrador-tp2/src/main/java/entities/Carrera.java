@@ -25,9 +25,4 @@ public class Carrera implements Serializable {
         this.nombreCarrera = nombreCarrera;
     }
 
-    public void inscribirEstudiante(Estudiante estudiante) {
-        EstudianteCarrera estudianteCarrera = new EstudianteCarrera(estudiante, this);
-        estudiantes.add(estudianteCarrera);
-        estudiante.getCarreras().add(estudianteCarrera);
-    }
 }

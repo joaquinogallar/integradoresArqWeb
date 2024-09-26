@@ -9,6 +9,7 @@ import java.util.List;
 public class CarreraRepositoryImp implements CarreraRepository {
     private EntityManager em;
     private static CarreraRepositoryImp instance;
+    private Carrera carrera;
 
     private CarreraRepositoryImp(EntityManager em) {
         this.em = em;
@@ -22,10 +23,6 @@ public class CarreraRepositoryImp implements CarreraRepository {
     }
 
     // CONSULTAS BASICAS
-    public void createCarrera(Carrera carreraInscripta) {
-        em.persist(carreraInscripta);
-    }
-
     public List<Carrera> getCaerrerasInscriptas() {
         return em.createQuery("SELECT e FROM carrera e", Carrera.class).getResultList();
     }
@@ -38,6 +35,12 @@ public class CarreraRepositoryImp implements CarreraRepository {
 
     public Carrera getCarreraById(Long id) {
         return em.find(Carrera.class, id);
+    }
+
+    @Override
+    public void createCarrera(Carrera carrera) {
+        this.carrera = carrera;
+        em.persist(carrera);
     }
 
     // CONSULTAS TP

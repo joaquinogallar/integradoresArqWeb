@@ -6,6 +6,7 @@ import entities.Genero;
 import java.util.List;
 
 public interface EstudianteRepository {
+    public void createEstudiante(Estudiante estudiante);
     public void darAltaEstudiante(Estudiante estudiante);
     public void inscribirEstudiante(Estudiante estudiante);
     public List<Estudiante> getEstudiantes();
