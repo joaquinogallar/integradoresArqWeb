@@ -85,7 +85,21 @@ public class CarreraRepositoryImp implements CarreraRepository {
     @Override
     public List<ReporteCarreraDTO> generarReporteCarreras() {
         List<Carrera> carreras = em.createQuery("SELECT c FROM Carrera c ORDER BY c.nombreCarrera ASC" , Carrera.class).getResultList();
-        return null;
+        List<ReporteCarreraDTO> reportes = new ArrayList<>();
+
+        for(Carrera c : carreras) {
+            ReporteCarreraDTO reporteCarrera = new ReporteCarreraDTO(c);
+
+            List<EstudianteDTO> inscriptos = obtenerInscriptosPorCarrera(c.getId());
+            reporteCarrera.getInscriptos().addAll(inscriptos);
+
+            List<EstudianteDTO> egresados = obtenerEgresadosPorCarrera(c.getId());
+            reporteCarrera.getEgresados().addAll(egresados);
+
+            reportes.add(reporteCarrera);
+        }
+
+        return reportes;
     }
 
     public List<EstudianteDTO> obtenerInscriptosPorCarrera(Long id) {
@@ -101,7 +115,7 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return estudiantesDTO;
     }
 
-    public List<EstudianteDTO> obtenerGraduadosPorCarrera(Long id) {
+    public List<EstudianteDTO> obtenerEgresadosPorCarrera(Long id) {
         Carrera carrera = em.find(Carrera.class, id);
         List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera AND ec.graduado = true", Estudiante.class)
                 .setParameter("carrera", carrera)

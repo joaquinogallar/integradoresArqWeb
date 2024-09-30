@@ -1,10 +1,12 @@
 package dtos;
 
 import entities.Carrera;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class ReporteCarreraDTO {
     private Carrera carrera;
     private List<EstudianteDTO> inscriptos;
