@@ -1,8 +1,10 @@
 package repositories.imp;
 
 import dtos.CarreraDTO;
+import dtos.EstudianteDTO;
 import dtos.ReporteCarreraDTO;
 import entities.Carrera;
+import entities.Estudiante;
 import repositories.CarreraRepository;
 
 import javax.persistence.EntityManager;
@@ -58,7 +60,8 @@ public class CarreraRepositoryImp implements CarreraRepository {
 
     // CONSULTAS TP
     @Override
-    public List<CarreraDTO> getCarrerasConEstudiantes(Carrera carrera) {
+    public List<CarreraDTO> getCarrerasConEstudiantes(Long id) {
+        Carrera carrera = em.find(Carrera.class, id);
         List<Carrera> carreras = em.createQuery("SELECT c FROM EstudianteCarrera ec JOIN ec.carrera c WHERE ec.carrera = :carrera", Carrera.class)
                 .setParameter("carrera", carrera)
                 .getResultList();
@@ -81,8 +84,34 @@ public class CarreraRepositoryImp implements CarreraRepository {
 
     @Override
     public List<ReporteCarreraDTO> generarReporteCarreras() {
-        List<Carrera> carreras = em.createNativeQuery("SELECT * FROM carrera", Carrera.class).getResultList();
+        List<Carrera> carreras = em.createQuery("SELECT c FROM Carrera c ORDER BY c.nombreCarrera ASC" , Carrera.class).getResultList();
+        return null;
+    }
 
+    public List<EstudianteDTO> obtenerInscriptosPorCarrera(Long id) {
+        Carrera carrera = em.find(Carrera.class, id);
+        List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera", Estudiante.class)
+                .setParameter("carrera", carrera)
+                .getResultList();
+        List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
+
+        for(Estudiante e : estudiantes)
+            estudiantesDTO.add(new EstudianteDTO(e));
+
+        return estudiantesDTO;
+    }
+
+    public List<EstudianteDTO> obtenerGraduadosPorCarrera(Long id) {
+        Carrera carrera = em.find(Carrera.class, id);
+        List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera AND ec.graduado = true", Estudiante.class)
+                .setParameter("carrera", carrera)
+                .getResultList();
+        List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
+
+        for(Estudiante e : estudiantes)
+            estudiantesDTO.add(new EstudianteDTO(e));
+
+        return estudiantesDTO;
     }
 
 }
