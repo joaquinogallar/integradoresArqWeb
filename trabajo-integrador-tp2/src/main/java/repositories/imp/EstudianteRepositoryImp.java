@@ -50,6 +50,7 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     public void inscribirEstudiante(Estudiante estudiante) {
 
     }
+    
     @Override
     public List<Estudiante> getEstudiantes() {
         return em.createNativeQuery("SELECT * FROM estudiante e ORDER BY e.nombre", Estudiante.class).getResultList();
