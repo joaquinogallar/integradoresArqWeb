@@ -1,5 +1,6 @@
 package repositories.imp;
 
+import dtos.EstudianteDTO;
 import entities.Estudiante;
 import entities.Genero;
 import repositories.EstudianteRepository;
@@ -31,24 +32,27 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     }
 
     public void deleteEstudiante(Long id) {
-        Estudiante estudiante = getEstudianteById(id);
+        Estudiante estudiante = em.find(Estudiante.class, id);
         if(estudiante != null)
             em.remove(estudiante);
     }
 
-    public Estudiante getEstudianteById(Long id) {
-        return em.find(Estudiante.class, id);
+    public EstudianteDTO getEstudianteById(Long id) {
+        Estudiante estudiante = em.find(Estudiante.class, id);
+        return new EstudianteDTO(estudiante);
     }
 
     // CONSULTAS TP
     @Override
-    public void darAltaEstudiante(Estudiante estudiante) {
-
+    public void darAltaEstudiante(Long id) {
+        Estudiante estudiante = em.find(Estudiante.class, id);
+        em.remove(estudiante);
     }
 
     @Override
-    public void inscribirEstudiante(Estudiante estudiante) {
-
+    public void inscribirEstudiante(Long id) {
+        Estudiante estudiante = em.find(Estudiante.class, id);
+        em.persist(estudiante);
     }
     
     @Override
