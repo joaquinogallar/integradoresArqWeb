@@ -1,4 +1,4 @@
-import factories.FactoryEntity;
+import factories.AbstractFactory;
 
 import repositories.CarreraRepository;
 import repositories.EstudianteRepository;
@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 
 public class Main {
     public static void main(String[] args) {
-        FactoryEntity mySqlFactory = FactoryEntity.getFactoryEntity(FactoryEntity.MY_SQL);
+        AbstractFactory mySqlFactory = AbstractFactory.getFactoryEntity(AbstractFactory.MY_SQL);
         if (mySqlFactory != null) {
             try {
                 mySqlFactory.open();
