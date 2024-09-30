@@ -1,7 +1,9 @@
 package repositories.imp;
 
 import dtos.EstudianteDTO;
+import entities.Carrera;
 import entities.Estudiante;
+import entities.EstudianteCarrera;
 import entities.Genero;
 import repositories.EstudianteRepository;
 
@@ -44,26 +46,37 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
 
     // CONSULTAS TP
     @Override
-    public void darAltaEstudiante(Long id) {
-        Estudiante estudiante = em.find(Estudiante.class, id);
-        em.remove(estudiante);
+    public void darAltaEstudiante(Long idEstudiante, Long idCarrera) {
+        EstudianteCarrera estudianteCarrera = em.createQuery("SELECT ec FROM EstudianteCarrera ec WHERE ec.estudiante.id = :idEstudiante AND ec.carrera.id = :idCarrera", EstudianteCarrera.class)
+                .setParameter("idEstudiante", idEstudiante)
+                .setParameter("idCarrera", idCarrera)
+                .getSingleResult();
+
+        if(estudianteCarrera == null) throw new IllegalArgumentException("No existe vinculo entre el alumno y la carrera");
+        em.remove(estudianteCarrera);
     }
 
     @Override
-    public void inscribirEstudiante(Long id) {
-        Estudiante estudiante = em.find(Estudiante.class, id);
-        em.persist(estudiante);
+    public void inscribirEstudiante(Long idEstudiante, Long idCarrera) {
+        Estudiante estudiante = em.find(Estudiante.class, idEstudiante);
+        if(estudiante == null) throw new IllegalArgumentException("Estudiante no encontrado");
+
+        Carrera carrera = em.find(Carrera.class, idCarrera);
+        if(carrera == null) throw new IllegalArgumentException("Carrera no encontrado");
+
+        EstudianteCarrera ec = new EstudianteCarrera(estudiante, carrera);
+        em.persist(ec);
     }
     
     @Override
     public List<Estudiante> getEstudiantes() {
-        return em.createNativeQuery("SELECT * FROM estudiante e ORDER BY e.nombre", Estudiante.class).getResultList();
+        return em.createNativeQuery("SELECT * FROM Estudiante e ORDER BY e.nombre", Estudiante.class).getResultList();
     }
 
     @Override
     public Estudiante getEstudianteByNumeroLibreta(String numeroLibreta) {
         try {
-            return em.createQuery("SELECT e FROM estudiante e WHERE e.numeroLibretaUniversitaria = :numeroLibreta", Estudiante.class)
+            return em.createQuery("SELECT e FROM Estudiante e WHERE e.numeroLibretaUniversitaria = :numeroLibreta", Estudiante.class)
                     .setParameter("numeroLibreta", numeroLibreta)
                     .getSingleResult();
         } catch (Exception e) {
@@ -73,7 +86,7 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
 
     @Override
     public List<Estudiante> getEstudiantesByGenero(Genero genero) {
-        return em.createQuery("SELECT e FROM estudiante e WHERE e.genero = :genero", Estudiante.class)
+        return em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class)
                 .setParameter("genero", genero)
                 .getResultList();
     }

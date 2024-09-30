@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface EstudianteRepository {
     public void createEstudiante(Estudiante estudiante);
-    public void darAltaEstudiante(Long id);
-    public void inscribirEstudiante(Long id);
+    public void darAltaEstudiante(Long idEstudiante, Long idCarrera);
+    public void inscribirEstudiante(Long idEstudiante, Long idCarrera);
 
     public List<Estudiante> getEstudiantes();
     public Estudiante getEstudianteByNumeroLibreta(String numeroLibreta);
