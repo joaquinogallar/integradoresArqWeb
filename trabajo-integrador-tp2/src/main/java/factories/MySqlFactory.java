@@ -1,44 +1,54 @@
 package factories;
 
-import entities.EstudianteCarrera;
+import lombok.Data;
 import repositories.CarreraRepository;
 import repositories.EstudianteRepository;
+import repositories.EstudianteCarreraRepository;
 import repositories.imp.CarreraRepositoryImp;
 import repositories.imp.EstudianteCarreraRepositoryImp;
 import repositories.imp.EstudianteRepositoryImp;
 
 import javax.persistence.EntityManager;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import javax.persistence.EntityManagerFactory;
 
+@Data
 public class MySqlFactory extends AbstractFactory {
     // Atributos
     private static MySqlFactory instance = null;
 
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     public static final String URI = "jdbc:mysql://localhost:3306/integrador2";
-    public static EntityManager em;
+    private EntityManagerFactory emf;
+    private EntityManager em;
 
     // Constructor
-    private MySqlFactory() {
+    private MySqlFactory(EntityManagerFactory emf) {
+        this.emf = emf;
+        em = emf.createEntityManager();
     }
 
     // Metodos
-    public static MySqlFactory getInstance() {
+    public static MySqlFactory getInstance(EntityManagerFactory emf) {
         if (instance == null) {
-            instance = new MySqlFactory();
+            instance = new MySqlFactory(emf);
         }
         return instance;
     }
 
-    public void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void open() {
+        if (!em.getTransaction().isActive())
+            em.getTransaction().begin();
+    }
+
+    public void commit() {
+        if(em.getTransaction().isActive())
+            em.getTransaction().commit();
+    }
+
+    public void close() {
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
     }
 
     @Override
@@ -52,7 +62,7 @@ public class MySqlFactory extends AbstractFactory {
     }
 
     @Override
-    public EstudianteCarrera getEstudianteCarreraRepository() {
-        return EstudianteCarreraRepositoryImp.get;
+    public EstudianteCarreraRepository getEstudianteCarreraRepository() {
+        return EstudianteCarreraRepositoryImp.getInstance();
     }
 }

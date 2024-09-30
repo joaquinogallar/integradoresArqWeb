@@ -1,8 +1,10 @@
 package factories;
 
-import entities.EstudianteCarrera;
 import repositories.CarreraRepository;
+import repositories.EstudianteCarreraRepository;
 import repositories.EstudianteRepository;
+
+import javax.persistence.Persistence;
 
 public abstract class AbstractFactory {
     public static final int MYSQL_DRIVER = 1;
@@ -10,11 +12,15 @@ public abstract class AbstractFactory {
 
     public abstract CarreraRepository getCarreraRepositoty();
     public abstract EstudianteRepository getEstudianteRepositoty();
-    public abstract EstudianteCarrera getEstudianteCarreraRepository();
+    public abstract EstudianteCarreraRepository getEstudianteCarreraRepository();
+
+    public abstract void open();
+    public abstract void commit();
+    public abstract void close();
 
     public static AbstractFactory getFactory(int mode) {
         switch (mode) {
-            case MYSQL_DRIVER: return MySqlFactory.getInstance();
+            case MYSQL_DRIVER: return MySqlFactory.getInstance(Persistence.createEntityManagerFactory("mysql_config"));
             case ORACLE_DRIVER: return null;
             default: return null;
         }

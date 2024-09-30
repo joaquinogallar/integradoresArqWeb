@@ -1,15 +1,18 @@
 package dtos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReporteCarreraDTO {
     private String nombreCarrera;
     private int anio;
-    private int cantidadInscriptos;
-    private int cantidadEgresados;
+    private List<EstudianteDTO> inscriptos;
+    private List<EstudianteDTO> egresados;
 
-    public ReporteCarreraDTO(String nombreCarrera, int anio, int cantidadInscriptos, int cantidadEgresados) {
+    public ReporteCarreraDTO(String nombreCarrera, int anio) {
         this.nombreCarrera = nombreCarrera;
         this.anio = anio;
-        this.cantidadInscriptos = cantidadInscriptos;
-        this.cantidadEgresados = cantidadEgresados;
+        inscriptos = new ArrayList<>();
+        egresados = new ArrayList<>();
     }
 }

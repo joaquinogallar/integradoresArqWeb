@@ -1,6 +1,7 @@
 import factories.AbstractFactory;
 
 import repositories.CarreraRepository;
+import repositories.EstudianteCarreraRepository;
 import repositories.EstudianteRepository;
 import repositories.imp.CarreraRepositoryImp;
 import repositories.imp.EstudianteRepositoryImp;
@@ -11,14 +12,14 @@ import javax.persistence.EntityManager;
 
 public class Main {
     public static void main(String[] args) {
-        AbstractFactory mySqlFactory = AbstractFactory.getFactoryEntity(AbstractFactory.MY_SQL);
+        AbstractFactory mySqlFactory = AbstractFactory.getFactory(AbstractFactory.MYSQL_DRIVER);
         if (mySqlFactory != null) {
             try {
                 mySqlFactory.open();
 
-                EntityManager em = mySqlFactory.getEm();
-                EstudianteRepository estudianteRepository = EstudianteRepositoryImp.getInstance(em);
-                CarreraRepository carreraRepository = CarreraRepositoryImp.getInstance(em);
+                EstudianteRepository estudianteRepository = mySqlFactory.getEstudianteRepositoty();
+                CarreraRepository carreraRepository = mySqlFactory.getCarreraRepositoty();
+                EstudianteCarreraRepository estudianteCarreraRepository = mySqlFactory.getEstudianteCarreraRepository();
 
                 /* ESTUDIANTES */
                 Estudiante estudiante1 = new Estudiante("Juan", "Pérez", 20, "Masculino", "12345678", "Buenos Aires", "LU12345");
@@ -66,6 +67,8 @@ public class Main {
                 carreraRepository.createCarrera(carrera9);
                 carreraRepository.createCarrera(carrera10);
 
+                mySqlFactory.commit();
+                mySqlFactory.close();
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
