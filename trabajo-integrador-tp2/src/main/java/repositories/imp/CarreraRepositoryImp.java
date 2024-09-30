@@ -49,5 +49,10 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return List.of();
     }
 
+    @Override
+    public List<Carrera> getCarrerasOrdenadasPorInscripciones() {
+        return em.createQuery("SELECT c, COUNT(ec) as inscriptos FROM EstudianteCarrera ec JOIN ec.carrera c GROUP BY c ORDER BY inscriptos DESC", Carrera.class).getResultList();
+    }
+
 
 }
