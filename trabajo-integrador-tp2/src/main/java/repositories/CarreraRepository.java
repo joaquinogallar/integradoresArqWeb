@@ -1,13 +1,15 @@
 package repositories;
 
+import dtos.CarreraDTO;
 import dtos.ReporteCarreraDTO;
 import entities.Carrera;
 
 import java.util.List;
 
 public interface CarreraRepository {
+    public List<CarreraDTO> getCarreras();
     public void createCarrera(Carrera carrera);
-    public List<Carrera> getCarrerasConEstudiantes(Carrera carrera);
-    public List<Carrera> getCarrerasOrdenadasPorInscripciones();
+    public List<CarreraDTO> getCarrerasConEstudiantes(Carrera carrera);
+    public List<CarreraDTO> getCarrerasOrdenadasPorInscripciones();
     public List<ReporteCarreraDTO> generarReporteCarreras();
 }

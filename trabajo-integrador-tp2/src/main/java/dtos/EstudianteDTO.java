@@ -2,8 +2,10 @@ package dtos;
 
 import entities.Estudiante;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
+@ToString
 public class EstudianteDTO {
     private Long id;
     private String nombre;
