@@ -1,8 +1,11 @@
 package repositories;
 
+import dtos.EstudianteDTO;
 import entities.Estudiante;
 import entities.Genero;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public interface EstudianteRepository {
@@ -14,4 +17,6 @@ public interface EstudianteRepository {
     public Estudiante getEstudianteByNumeroLibreta(String numeroLibreta);
     public List<Estudiante> getEstudiantesByGenero(Genero genero);
     public List<Estudiante> getEstudiantesPorCarreraYCiudad(Long idCarrera, String ciudadResidencia);
+
+    public void cargarDatos(String ruta) throws IOException;
 }

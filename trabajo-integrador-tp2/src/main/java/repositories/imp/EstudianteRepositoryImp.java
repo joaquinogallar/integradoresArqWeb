@@ -5,10 +5,16 @@ import entities.Carrera;
 import entities.Estudiante;
 import entities.EstudianteCarrera;
 import entities.Genero;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import repositories.EstudianteRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 public class EstudianteRepositoryImp implements EstudianteRepository {
@@ -42,6 +48,15 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     public EstudianteDTO getEstudianteById(Long id) {
         Estudiante estudiante = em.find(Estudiante.class, id);
         return new EstudianteDTO(estudiante);
+    }
+
+    @Override
+    public void cargarDatos(String ruta) throws IOException {
+        CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ruta));
+        for(CSVRecord fila : csvParser.getRecords()) {
+            Estudiante estudiante = new Estudiante(fila.get(0), fila.get(1), Integer.parseInt(fila.get(2)), fila.get(3), fila.get(4), fila.get(5), fila.get(6));
+            createEstudiante(estudiante);
+        }
     }
 
     // CONSULTAS TP

@@ -5,9 +5,15 @@ import dtos.EstudianteDTO;
 import dtos.ReporteCarreraDTO;
 import entities.Carrera;
 import entities.Estudiante;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import repositories.CarreraRepository;
 
 import javax.persistence.EntityManager;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +64,15 @@ public class CarreraRepositoryImp implements CarreraRepository {
         em.persist(carrera);
     }
 
+    @Override
+    public void cargarDatos(String ruta) throws IOException {
+        CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ruta));
+        for(CSVRecord fila : csvParser.getRecords()) {
+            Carrera carrera = new Carrera(fila.get(0));
+            createCarrera(carrera);
+        }
+    }
+
     // CONSULTAS TP
     @Override
     public List<CarreraDTO> getCarrerasConEstudiantes(Long id) {
@@ -102,6 +117,7 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return reportes;
     }
 
+    @Override
     public List<EstudianteDTO> obtenerInscriptosPorCarrera(Long id) {
         Carrera carrera = em.find(Carrera.class, id);
         List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera", Estudiante.class)
@@ -115,6 +131,7 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return estudiantesDTO;
     }
 
+    @Override
     public List<EstudianteDTO> obtenerEgresadosPorCarrera(Long id) {
         Carrera carrera = em.find(Carrera.class, id);
         List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera AND ec.graduado = true", Estudiante.class)
