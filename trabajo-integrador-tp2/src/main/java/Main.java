@@ -30,6 +30,10 @@ public class Main {
             // ESTUDIANTES
             estudianteRepository.cargarDatos(ruta + "estudiantes.csv");
 
+            // ANOTAR ESTUDIANTES
+
+
+
             mySqlFactory.commit();
 
         } else {

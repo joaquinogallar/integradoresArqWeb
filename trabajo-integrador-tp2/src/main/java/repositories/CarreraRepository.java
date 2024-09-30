@@ -12,10 +12,10 @@ import java.util.List;
 public interface CarreraRepository {
     public List<CarreraDTO> getCarreras();
     public void createCarrera(Carrera carrera);
-    public List<CarreraDTO> getCarrerasConEstudiantes(Long id);
+    public List<CarreraDTO> getCarrerasConEstudiantes(Carrera carrera);
     public List<CarreraDTO> getCarrerasOrdenadasPorInscripciones();
     public List<ReporteCarreraDTO> generarReporteCarreras();
-    public List<EstudianteDTO> obtenerInscriptosPorCarrera(Long id);
-    public List<EstudianteDTO> obtenerEgresadosPorCarrera(Long id);
+    public List<EstudianteDTO> getInscriptosPorCarrera(Carrera carrera);
+    public List<EstudianteDTO> getEgresadosPorCarrera(Carrera carrera);
     public void cargarDatos(String ruta) throws IOException;
 }

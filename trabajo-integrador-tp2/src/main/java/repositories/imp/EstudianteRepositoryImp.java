@@ -61,10 +61,10 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
 
     // CONSULTAS TP
     @Override
-    public void darAltaEstudiante(Long idEstudiante, Long idCarrera) {
-        EstudianteCarrera estudianteCarrera = em.createQuery("SELECT ec FROM EstudianteCarrera ec WHERE ec.estudiante.id = :idEstudiante AND ec.carrera.id = :idCarrera", EstudianteCarrera.class)
-                .setParameter("idEstudiante", idEstudiante)
-                .setParameter("idCarrera", idCarrera)
+    public void darAltaEstudiante(Estudiante estudiante, Carrera carrera) {
+        EstudianteCarrera estudianteCarrera = em.createQuery("SELECT ec FROM EstudianteCarrera ec WHERE ec.estudiante = :estudiante AND ec.carrera = :carrera", EstudianteCarrera.class)
+                .setParameter("estudiante", estudiante)
+                .setParameter("carrera", carrera)
                 .getSingleResult();
 
         if(estudianteCarrera == null) throw new IllegalArgumentException("No existe vinculo entre el alumno y la carrera");
@@ -72,13 +72,7 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     }
 
     @Override
-    public void inscribirEstudiante(Long idEstudiante, Long idCarrera) {
-        Estudiante estudiante = em.find(Estudiante.class, idEstudiante);
-        if(estudiante == null) throw new IllegalArgumentException("Estudiante no encontrado");
-
-        Carrera carrera = em.find(Carrera.class, idCarrera);
-        if(carrera == null) throw new IllegalArgumentException("Carrera no encontrado");
-
+    public void inscribirEstudiante(Estudiante estudiante, Carrera carrera) {
         EstudianteCarrera ec = new EstudianteCarrera(estudiante, carrera);
         em.persist(ec);
     }
@@ -107,9 +101,9 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     }
 
     @Override
-    public List<Estudiante> getEstudiantesPorCarreraYCiudad(Long idCarrera, String ciudadResidencia) {
-        return em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec JOIN ec.estudiante e  WHERE ec.carrera.id = :idCarrera AND e.ciudadResidencia = :ciudadResidencia", Estudiante.class)
-                .setParameter("idCarrera", idCarrera)
+    public List<Estudiante> getEstudiantesPorCarreraYCiudad(Carrera carrera, String ciudadResidencia) {
+        return em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec JOIN ec.estudiante e  WHERE ec.carrera = :carrera AND e.ciudadResidencia = :ciudadResidencia", Estudiante.class)
+                .setParameter("carrera", carrera)
                 .setParameter("ciudadResidencia", ciudadResidencia)
                 .getResultList();
     }

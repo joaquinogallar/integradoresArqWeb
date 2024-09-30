@@ -75,8 +75,7 @@ public class CarreraRepositoryImp implements CarreraRepository {
 
     // CONSULTAS TP
     @Override
-    public List<CarreraDTO> getCarrerasConEstudiantes(Long id) {
-        Carrera carrera = em.find(Carrera.class, id);
+    public List<CarreraDTO> getCarrerasConEstudiantes(Carrera carrera) {
         List<Carrera> carreras = em.createQuery("SELECT c FROM EstudianteCarrera ec JOIN ec.carrera c WHERE ec.carrera = :carrera", Carrera.class)
                 .setParameter("carrera", carrera)
                 .getResultList();
@@ -105,10 +104,10 @@ public class CarreraRepositoryImp implements CarreraRepository {
         for(Carrera c : carreras) {
             ReporteCarreraDTO reporteCarrera = new ReporteCarreraDTO(c);
 
-            List<EstudianteDTO> inscriptos = obtenerInscriptosPorCarrera(c.getId());
+            List<EstudianteDTO> inscriptos = getInscriptosPorCarrera(c);
             reporteCarrera.getInscriptos().addAll(inscriptos);
 
-            List<EstudianteDTO> egresados = obtenerEgresadosPorCarrera(c.getId());
+            List<EstudianteDTO> egresados = getEgresadosPorCarrera(c);
             reporteCarrera.getEgresados().addAll(egresados);
 
             reportes.add(reporteCarrera);
@@ -118,8 +117,7 @@ public class CarreraRepositoryImp implements CarreraRepository {
     }
 
     @Override
-    public List<EstudianteDTO> obtenerInscriptosPorCarrera(Long id) {
-        Carrera carrera = em.find(Carrera.class, id);
+    public List<EstudianteDTO> getInscriptosPorCarrera(Carrera carrera) {
         List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera", Estudiante.class)
                 .setParameter("carrera", carrera)
                 .getResultList();
@@ -132,8 +130,7 @@ public class CarreraRepositoryImp implements CarreraRepository {
     }
 
     @Override
-    public List<EstudianteDTO> obtenerEgresadosPorCarrera(Long id) {
-        Carrera carrera = em.find(Carrera.class, id);
+    public List<EstudianteDTO> getEgresadosPorCarrera(Carrera carrera) {
         List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera AND ec.graduado = true", Estudiante.class)
                 .setParameter("carrera", carrera)
                 .getResultList();
