@@ -1,5 +1,6 @@
 package repositories.imp;
 
+import dtos.ReporteCarreraDTO;
 import entities.Carrera;
 import repositories.CarreraRepository;
 
@@ -54,5 +55,9 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return em.createQuery("SELECT c, COUNT(ec) as inscriptos FROM EstudianteCarrera ec JOIN ec.carrera c GROUP BY c ORDER BY inscriptos DESC", Carrera.class).getResultList();
     }
 
+    @Override
+    public List<ReporteCarreraDTO> generarReporteCarreras() {
+        return null;
+    }
 
 }

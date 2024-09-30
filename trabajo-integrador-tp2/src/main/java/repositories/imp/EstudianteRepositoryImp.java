@@ -93,12 +93,7 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
 
     @Override
     public List<Estudiante> getEstudiantesPorCarreraYCiudad(Long idCarrera, String ciudadResidencia) {
-        return em.createQuery(
-                        "SELECT ec.estudiante " +
-                                "FROM EstudianteCarrera ec " +
-                                "JOIN ec.estudiante e " +
-                                "WHERE ec.carrera.id = :idCarrera " +
-                                "AND e.ciudadResidencia = :ciudadResidencia", Estudiante.class)
+        return em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec JOIN ec.estudiante e  WHERE ec.carrera.id = :idCarrera AND e.ciudadResidencia = :ciudadResidencia", Estudiante.class)
                 .setParameter("idCarrera", idCarrera)
                 .setParameter("ciudadResidencia", ciudadResidencia)
                 .getResultList();
