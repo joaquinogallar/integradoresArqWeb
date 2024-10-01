@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EstudianteRepositoryImp implements EstudianteRepository {
@@ -78,33 +79,49 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     }
     
     @Override
-    public List<Estudiante> getEstudiantes() {
-        return em.createNativeQuery("SELECT * FROM Estudiante e ORDER BY e.nombre", Estudiante.class).getResultList();
+    public List<EstudianteDTO> getEstudiantes() {
+        List<Estudiante> estudiantes = em.createNativeQuery("SELECT * FROM Estudiante e ORDER BY e.nombre", Estudiante.class).getResultList();
+        List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
+        for(Estudiante estudiante : estudiantes) {
+            estudiantesDTO.add(new EstudianteDTO(estudiante));
+        }
+        return estudiantesDTO;
     }
 
     @Override
-    public Estudiante getEstudianteByNumeroLibreta(String numeroLibreta) {
+    public EstudianteDTO getEstudianteByNumeroLibreta(String numeroLibreta) {
         try {
-            return em.createQuery("SELECT e FROM Estudiante e WHERE e.numeroLibretaUniversitaria = :numeroLibreta", Estudiante.class)
+            Estudiante estudiante = em.createQuery("SELECT e FROM Estudiante e WHERE e.numeroLibretaUniversitaria = :numeroLibreta", Estudiante.class)
                     .setParameter("numeroLibreta", numeroLibreta)
                     .getSingleResult();
+            return new EstudianteDTO(estudiante);
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public List<Estudiante> getEstudiantesByGenero(Genero genero) {
-        return em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class)
+    public List<EstudianteDTO> getEstudiantesByGenero(Genero genero) {
+        List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class)
                 .setParameter("genero", genero)
                 .getResultList();
+        List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
+        for(Estudiante estudiante : estudiantes) {
+            estudiantesDTO.add(new EstudianteDTO(estudiante));
+        }
+        return estudiantesDTO;
     }
 
     @Override
-    public List<Estudiante> getEstudiantesPorCarreraYCiudad(Carrera carrera, String ciudadResidencia) {
-        return em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec JOIN ec.estudiante e  WHERE ec.carrera = :carrera AND e.ciudadResidencia = :ciudadResidencia", Estudiante.class)
+    public List<EstudianteDTO> getEstudiantesPorCarreraYCiudad(Carrera carrera, String ciudadResidencia) {
+        List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec JOIN ec.estudiante e  WHERE ec.carrera = :carrera AND e.ciudadResidencia = :ciudadResidencia", Estudiante.class)
                 .setParameter("carrera", carrera)
                 .setParameter("ciudadResidencia", ciudadResidencia)
                 .getResultList();
+        List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
+        for(Estudiante estudiante : estudiantes) {
+            estudiantesDTO.add(new EstudianteDTO(estudiante));
+        }
+        return estudiantesDTO;
     }
 }

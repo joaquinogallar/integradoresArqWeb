@@ -14,10 +14,10 @@ public interface EstudianteRepository {
     public void darAltaEstudiante(Estudiante estudiante, Carrera carrera);
     public void inscribirEstudiante(Estudiante estudiante, Carrera carrera);
 
-    public List<Estudiante> getEstudiantes();
-    public Estudiante getEstudianteByNumeroLibreta(String numeroLibreta);
-    public List<Estudiante> getEstudiantesByGenero(Genero genero);
-    public List<Estudiante> getEstudiantesPorCarreraYCiudad(Carrera Carrera, String ciudadResidencia);
+    public List<EstudianteDTO> getEstudiantes();
+    public EstudianteDTO getEstudianteByNumeroLibreta(String numeroLibreta);
+    public List<EstudianteDTO> getEstudiantesByGenero(Genero genero);
+    public List<EstudianteDTO> getEstudiantesPorCarreraYCiudad(Carrera Carrera, String ciudadResidencia);
 
     public void cargarDatos(String ruta) throws IOException;
 }

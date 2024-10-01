@@ -1,3 +1,6 @@
+import dtos.CarreraDTO;
+import dtos.EstudianteDTO;
+import dtos.ReporteCarreraDTO;
 import factories.AbstractFactory;
 
 import repositories.CarreraRepository;
@@ -9,6 +12,8 @@ import entities.Carrera;
 import entities.Estudiante;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -111,6 +116,12 @@ public class Main {
             estudianteRepository.inscribirEstudiante(estudiante8, carrera10);
             estudianteRepository.inscribirEstudiante(estudiante9, carrera6);
             estudianteRepository.inscribirEstudiante(estudiante10, carrera7);
+
+            List<CarreraDTO> carrerasEstudiantesInscriptos = carreraRepository.getCarrerasConEstudiantes(carrera1);
+            List<EstudianteDTO> estudiantesPorResidencia = estudianteRepository.getEstudiantesPorCarreraYCiudad(carrera6, "Mar del plata");
+
+            carrerasEstudiantesInscriptos.forEach(carreraDTO -> System.out.println(carreraDTO.toString()));
+            estudiantesPorResidencia.forEach(carreraDTO -> System.out.println(carreraDTO.toString()));
 
             mySqlFactory.commit();
 
