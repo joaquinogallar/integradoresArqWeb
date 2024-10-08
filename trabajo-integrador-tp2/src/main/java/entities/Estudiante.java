@@ -39,4 +39,18 @@ public class Estudiante implements Serializable {
         this.carreras = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "Estudiante{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", edad=" + edad +
+                ", genero='" + genero + '\'' +
+                ", numeroDocumento='" + numeroDocumento + '\'' +
+                ", ciudadResidencia='" + ciudadResidencia + '\'' +
+                ", numeroLibretaUniversitaria='" + numeroLibretaUniversitaria + '\'' +
+                // evitar imprimir la lista completa de carreras para evitar recursividad
+                '}';
+    }
 }

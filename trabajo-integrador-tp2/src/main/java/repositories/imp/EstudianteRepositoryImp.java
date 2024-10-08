@@ -75,6 +75,8 @@ public class EstudianteRepositoryImp implements EstudianteRepository {
     @Override
     public void inscribirEstudiante(Estudiante estudiante, Carrera carrera) {
         EstudianteCarrera ec = new EstudianteCarrera(estudiante, carrera);
+        estudiante.getCarreras().add(ec);
+        carrera.getEstudiantes().add(ec);
         em.persist(ec);
     }
     

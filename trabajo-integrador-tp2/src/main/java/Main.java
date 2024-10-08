@@ -123,6 +123,9 @@ public class Main {
             carrerasEstudiantesInscriptos.forEach(carreraDTO -> System.out.println(carreraDTO.toString()));
             estudiantesPorResidencia.forEach(carreraDTO -> System.out.println(carreraDTO.toString()));
 
+            List<ReporteCarreraDTO> reportes = carreraRepository.generarReporteCarreras();
+            reportes.forEach(r -> System.out.println(r));
+
             mySqlFactory.commit();
 
         } else {

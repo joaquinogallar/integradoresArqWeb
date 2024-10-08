@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,16 @@ public class Carrera implements Serializable {
 
     public Carrera(String nombreCarrera) {
         this.nombreCarrera = nombreCarrera;
+        estudiantes = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Carrera{" +
+                "id=" + id +
+                ", nombreCarrera='" + nombreCarrera + '\'' +
+                // evitar imprimir la lista completa de estudiantes para evitar recursividad
+                '}';
     }
 
 }
