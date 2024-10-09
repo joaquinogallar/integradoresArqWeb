@@ -23,6 +23,7 @@ public class EstudianteCarrera implements Serializable {
 
     private int antiguedad;
     private boolean graduado;
+    private Integer anioGraduado; // es de tipo Integer para que pueda ser null en un inicio
 
     public EstudianteCarrera(Estudiante estudiante, Carrera carrera) {
         this.estudiante = estudiante;

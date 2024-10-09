@@ -7,6 +7,7 @@ import repositories.EstudianteCarreraRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.Year;
 
 public class EstudianteCarreraRepositoryImp implements EstudianteCarreraRepository {
 
@@ -32,7 +33,10 @@ public class EstudianteCarreraRepositoryImp implements EstudianteCarreraReposito
                 .setParameter("carrera", carrera)
                 .getSingleResult();
 
+        Integer anioActual = Year.now().getValue();
         estudianteCarrera.setGraduado(true);
+        estudianteCarrera.setAnioGraduado(anioActual);
+
         em.merge(estudianteCarrera);
     }
 }

@@ -1,10 +1,12 @@
 package repositories.imp;
 
 import dtos.CarreraDTO;
+import dtos.EgresadoDTO;
 import dtos.EstudianteDTO;
 import dtos.ReporteCarreraDTO;
 import entities.Carrera;
 import entities.Estudiante;
+import entities.EstudianteCarrera;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -106,7 +108,7 @@ public class CarreraRepositoryImp implements CarreraRepository {
             List<EstudianteDTO> inscriptos = getInscriptosPorCarrera(c);
             reporteCarrera.getInscriptos().addAll(inscriptos);
 
-            List<EstudianteDTO> egresados = getEgresadosPorCarrera(c);
+            List<EgresadoDTO> egresados = getEgresadosPorCarrera(c);
             reporteCarrera.getEgresados().addAll(egresados);
 
             reportes.add(reporteCarrera);
@@ -129,16 +131,22 @@ public class CarreraRepositoryImp implements CarreraRepository {
     }
 
     @Override
-    public List<EstudianteDTO> getEgresadosPorCarrera(Carrera carrera) {
+    public List<EgresadoDTO> getEgresadosPorCarrera(Carrera carrera) {
         List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera AND ec.graduado = true", Estudiante.class)
                 .setParameter("carrera", carrera)
                 .getResultList();
-        List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
+        List<EgresadoDTO> egresadosDTO = new ArrayList<>();
 
-        for(Estudiante e : estudiantes)
-            estudiantesDTO.add(new EstudianteDTO(e));
 
-        return estudiantesDTO;
+        for(Estudiante e : estudiantes) {
+            EstudianteCarrera ec = em.createQuery("SELECT ec FROM EstudianteCarrera ec WHERE ec.estudiante = :estudiante AND ec.carrera = :carrera", EstudianteCarrera.class)
+                    .setParameter("estudiante", e)
+                    .setParameter("carrera", carrera)
+                    .getSingleResult();
+
+            egresadosDTO.add(new EgresadoDTO(e, ec));
+        }
+        return egresadosDTO;
     }
 
 }
