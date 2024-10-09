@@ -124,7 +124,7 @@ public class CarreraRepository extends BaseJPARepository<Carrera, Long> {
     }
 
     public List<EgresadoDTO> getEgresadosPorCarrera(Carrera carrera) {
-        List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera AND ec.graduado = true", Estudiante.class)
+        List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera AND ec.graduado = true ORDER BY ec.anioGraduado", Estudiante.class)
                 .setParameter("carrera", carrera)
                 .getResultList();
         List<EgresadoDTO> egresadosDTO = new ArrayList<>();
