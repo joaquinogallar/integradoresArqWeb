@@ -117,6 +117,12 @@ public class Main {
             estudianteRepository.inscribirEstudiante(estudiante9, carrera6);
             estudianteRepository.inscribirEstudiante(estudiante10, carrera7);
 
+            estudianteCarreraRepository.setEstudianteAGraduado(estudiante1, carrera1);
+            estudianteCarreraRepository.setEstudianteAGraduado(estudiante2, carrera2);
+            estudianteCarreraRepository.setEstudianteAGraduado(estudiante3, carrera3);
+            estudianteCarreraRepository.setEstudianteAGraduado(estudiante4, carrera4);
+
+
             List<CarreraDTO> carrerasEstudiantesInscriptos = carreraRepository.getCarrerasConEstudiantes(carrera1);
             List<EstudianteDTO> estudiantesPorResidencia = estudianteRepository.getEstudiantesPorCarreraYCiudad(carrera6, "Mar del plata");
 

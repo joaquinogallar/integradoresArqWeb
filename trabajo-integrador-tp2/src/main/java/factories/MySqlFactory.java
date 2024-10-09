@@ -63,6 +63,6 @@ public class MySqlFactory extends AbstractFactory {
 
     @Override
     public EstudianteCarreraRepository getEstudianteCarreraRepository() {
-        return EstudianteCarreraRepositoryImp.getInstance();
+        return EstudianteCarreraRepositoryImp.getInstance(em);
     }
 }

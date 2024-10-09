@@ -20,7 +20,6 @@ import java.util.List;
 public class CarreraRepositoryImp implements CarreraRepository {
     private EntityManager em;
     private static CarreraRepositoryImp instance;
-    private Carrera carrera;
 
     private CarreraRepositoryImp(EntityManager em) {
         this.em = em;
@@ -60,7 +59,7 @@ public class CarreraRepositoryImp implements CarreraRepository {
 
     @Override
     public void createCarrera(Carrera carrera) {
-        this.carrera = carrera;
+
         em.persist(carrera);
     }
 
