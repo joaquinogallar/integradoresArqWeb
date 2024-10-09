@@ -3,16 +3,12 @@ import dtos.EstudianteDTO;
 import dtos.ReporteCarreraDTO;
 import factories.AbstractFactory;
 
-import repositories.CarreraRepository;
-import repositories.EstudianteCarreraRepository;
-import repositories.EstudianteRepository;
-import repositories.imp.CarreraRepositoryImp;
-import repositories.imp.EstudianteRepositoryImp;
 import entities.Carrera;
 import entities.Estudiante;
+import repositories.imp.CarreraRepository;
+import repositories.imp.EstudianteCarreraRepository;
+import repositories.imp.EstudianteRepository;
 
-import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {

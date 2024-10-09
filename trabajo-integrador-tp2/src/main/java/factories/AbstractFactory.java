@@ -1,8 +1,8 @@
 package factories;
 
-import repositories.CarreraRepository;
-import repositories.EstudianteCarreraRepository;
-import repositories.EstudianteRepository;
+import repositories.imp.CarreraRepository;
+import repositories.imp.EstudianteCarreraRepository;
+import repositories.imp.EstudianteRepository;
 
 import javax.persistence.Persistence;
 

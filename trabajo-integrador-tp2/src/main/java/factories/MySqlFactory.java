@@ -1,12 +1,9 @@
 package factories;
 
 import lombok.Data;
-import repositories.CarreraRepository;
-import repositories.EstudianteRepository;
-import repositories.EstudianteCarreraRepository;
-import repositories.imp.CarreraRepositoryImp;
-import repositories.imp.EstudianteCarreraRepositoryImp;
-import repositories.imp.EstudianteRepositoryImp;
+import repositories.imp.CarreraRepository;
+import repositories.imp.EstudianteCarreraRepository;
+import repositories.imp.EstudianteRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -53,16 +50,16 @@ public class MySqlFactory extends AbstractFactory {
 
     @Override
     public CarreraRepository getCarreraRepositoty() {
-        return CarreraRepositoryImp.getInstance(em);
+        return CarreraRepository.getInstance(em);
     }
 
     @Override
     public EstudianteRepository getEstudianteRepositoty() {
-        return EstudianteRepositoryImp.getInstance(em);
+        return EstudianteRepository.getInstance(em);
     }
 
     @Override
     public EstudianteCarreraRepository getEstudianteCarreraRepository() {
-        return EstudianteCarreraRepositoryImp.getInstance(em);
+        return EstudianteCarreraRepository.getInstance(em);
     }
 }

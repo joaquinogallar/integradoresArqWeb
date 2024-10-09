@@ -10,27 +10,27 @@ import entities.EstudianteCarrera;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import repositories.CarreraRepository;
+import repositories.BaseJPARepository;
 
 import javax.persistence.EntityManager;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarreraRepositoryImp implements CarreraRepository {
+public class CarreraRepository extends BaseJPARepository<Carrera, Long> {
     private EntityManager em;
-    private static CarreraRepositoryImp instance;
+    private static CarreraRepository instance;
 
-    private CarreraRepositoryImp(EntityManager em) {
+    private CarreraRepository(EntityManager em) {
+        super(Carrera.class, em);
         this.em = em;
     }
 
     // SINGLETON
-    public static synchronized CarreraRepositoryImp getInstance(EntityManager em) {
+    public static synchronized CarreraRepository getInstance(EntityManager em) {
         if(instance == null)
-            return new CarreraRepositoryImp(em);
+            return new CarreraRepository(em);
         return instance;
     }
 
@@ -59,13 +59,10 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return null;
     }
 
-    @Override
     public void createCarrera(Carrera carrera) {
-
         em.persist(carrera);
     }
 
-    @Override
     public void cargarDatos(String ruta) throws IOException {
         CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ruta));
         for(CSVRecord fila : csvParser.getRecords()) {
@@ -75,7 +72,6 @@ public class CarreraRepositoryImp implements CarreraRepository {
     }
 
     // CONSULTAS TP
-    @Override
     public List<CarreraDTO> getCarrerasConEstudiantes(Carrera carrera) {
         List<Carrera> carreras = em.createQuery("SELECT c FROM EstudianteCarrera ec JOIN ec.carrera c WHERE ec.carrera = :carrera", Carrera.class)
                 .setParameter("carrera", carrera)
@@ -87,7 +83,6 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return carrerasDTO;
     }
 
-    @Override
     public List<CarreraDTO> getCarrerasOrdenadasPorInscripciones() {
         List<Carrera> carreras = em.createQuery("SELECT c, COUNT(ec) as inscriptos FROM EstudianteCarrera ec JOIN ec.carrera c GROUP BY c ORDER BY inscriptos DESC", Carrera.class).getResultList();
         List<CarreraDTO> carrerasDTO = new ArrayList<>();
@@ -97,7 +92,6 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return carrerasDTO;
     }
 
-    @Override
     public List<ReporteCarreraDTO> generarReporteCarreras() {
         List<Carrera> carreras = em.createQuery("SELECT c FROM Carrera c ORDER BY c.nombreCarrera ASC" , Carrera.class).getResultList();
         List<ReporteCarreraDTO> reportes = new ArrayList<>();
@@ -117,7 +111,6 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return reportes;
     }
 
-    @Override
     public List<EstudianteDTO> getInscriptosPorCarrera(Carrera carrera) {
         List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera", Estudiante.class)
                 .setParameter("carrera", carrera)
@@ -130,7 +123,6 @@ public class CarreraRepositoryImp implements CarreraRepository {
         return estudiantesDTO;
     }
 
-    @Override
     public List<EgresadoDTO> getEgresadosPorCarrera(Carrera carrera) {
         List<Estudiante> estudiantes = em.createQuery("SELECT ec.estudiante FROM EstudianteCarrera ec WHERE ec.carrera = :carrera AND ec.graduado = true", Estudiante.class)
                 .setParameter("carrera", carrera)
