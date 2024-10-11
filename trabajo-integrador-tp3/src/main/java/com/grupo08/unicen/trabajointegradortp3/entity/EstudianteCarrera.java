@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "estudiante_carrera")
 @Data
 @NoArgsConstructor
 public class EstudianteCarrera implements Serializable {

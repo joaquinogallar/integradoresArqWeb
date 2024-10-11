@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "estudiante")
 @Data
 @NoArgsConstructor
 public class Estudiante implements Serializable {
