@@ -75,7 +75,7 @@ public class ProductoDaoImp implements ProductoDao {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException e) {w
             throw new RuntimeException(e);
         }
     }

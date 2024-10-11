@@ -2,24 +2,9 @@ import dao.ClienteDao;
 import dao.FacturaDao;
 import dao.FacturaProductoDao;
 import dao.ProductoDao;
-import dao.imp.ClienteDaoImp;
-import dao.imp.FacturaDaoImp;
-import dao.imp.FacturaProductoDaoImp;
-import dao.imp.ProductoDaoImp;
-import entities.Cliente;
-import entities.Factura;
-import entities.FacturaProducto;
-import entities.Producto;
-import factories.AbstractFactory;
-import factories.MySQLFactory;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import factories.AbstractFactory;
+
 import java.sql.*;
 
 public class Main {
