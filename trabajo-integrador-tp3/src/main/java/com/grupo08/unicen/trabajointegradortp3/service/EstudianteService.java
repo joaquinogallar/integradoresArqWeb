@@ -69,4 +69,13 @@ public class EstudianteService {
 
         return estudianteDTO;
     }
+
+    public EstudianteDTO findEstudianteByNumeroLibretaUniversitaria(String numeroLibreta) {
+        Estudiante estudiante = estudianteRepository.findEstudianteByNumeroLibretaUniversitaria(numeroLibreta);
+        if(estudiante == null)
+            throw new EstudianteNoEncontradoException("No se encontro el estudiante con el numero de libreta: " + numeroLibreta);
+
+        return new EstudianteDTO(estudiante);
+    }
+
 }
