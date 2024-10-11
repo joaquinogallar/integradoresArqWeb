@@ -60,4 +60,13 @@ public class EstudianteService {
         estudianteRepository.delete(estudiante);
         return estudiante;
     }
+
+    // METODOS TP
+    public List<EstudianteDTO> getEstudiantesOrderByApellido() {
+        List<Estudiante> estudiantes = estudianteRepository.findAllByOrderByApellidoAsc();
+        List<EstudianteDTO> estudianteDTO = new ArrayList<>();
+        estudiantes.forEach(estudiante -> estudianteDTO.add(new EstudianteDTO(estudiante)));
+
+        return estudianteDTO;
+    }
 }

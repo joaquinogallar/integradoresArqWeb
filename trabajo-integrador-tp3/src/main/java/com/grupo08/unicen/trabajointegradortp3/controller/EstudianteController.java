@@ -41,4 +41,10 @@ public class EstudianteController {
         return estudianteService.deleteEstudiante(id);
     }
 
+    // METODOS TP
+    @GetMapping("/ordenado")
+    public List<EstudianteDTO> getEstudiantesOrderByApellido() {
+        return estudianteService.getEstudiantesOrderByApellido();
+    }
+
 }
