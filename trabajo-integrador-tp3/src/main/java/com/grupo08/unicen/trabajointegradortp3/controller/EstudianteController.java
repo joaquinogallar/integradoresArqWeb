@@ -17,8 +17,8 @@ public class EstudianteController {
     private EstudianteService estudianteService;
 
     @GetMapping
-    public List<EstudianteDTO> getAllEstudiantes() {
-        return estudianteService.getAllEstudiantes();
+    public List<EstudianteDTO> getEstudiantes() {
+        return estudianteService.getEstudiantes();
     }
 
     @GetMapping("/{id}")
@@ -27,7 +27,7 @@ public class EstudianteController {
     }
 
     @PostMapping
-    public void createEstudiante(@RequestBody Estudiante estudiante) {
+    public void createEstudiante(@RequestBody List<Estudiante> estudiante) {
         estudianteService.createEstudiante(estudiante);
     }
 
@@ -47,4 +47,13 @@ public class EstudianteController {
         return estudianteService.getEstudiantesOrderByApellido();
     }
 
+    @GetMapping("/libreta/{numeroLibreta}")
+    public EstudianteDTO getEstudianteByNumeroLibretaUniversitaria(@PathVariable String numeroLibreta) {
+        return estudianteService.findEstudianteByNumeroLibretaUniversitaria(numeroLibreta);
+    }
+
+    @GetMapping("/genero/{genero}")
+    public List<EstudianteDTO> getEstudiantesByGenero(@PathVariable String genero) {
+        return estudianteService.findAllByGenero(genero);
+    }
 }

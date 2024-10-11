@@ -16,7 +16,7 @@ public class EstudianteService {
     @Autowired
     private EstudianteRepository estudianteRepository;
 
-    public List<EstudianteDTO> getAllEstudiantes() {
+    public List<EstudianteDTO> getEstudiantes() {
         List<Estudiante> estudiantes = estudianteRepository.findAll();
         List<EstudianteDTO> estudianteDTO = new ArrayList<>();
         estudiantes.forEach(estudiante -> estudianteDTO.add(new EstudianteDTO(estudiante)));
@@ -32,8 +32,8 @@ public class EstudianteService {
         return new EstudianteDTO(estudiante);
     }
 
-    public void createEstudiante(Estudiante estudiante) {
-        estudianteRepository.save(estudiante);
+    public void createEstudiante(List<Estudiante> estudiantes) {
+        estudiantes.forEach(estudiante -> estudianteRepository.save(estudiante));
     }
 
     public void updateEstudiante(Long id, Estudiante estudianteUpdate) {
@@ -76,6 +76,14 @@ public class EstudianteService {
             throw new EstudianteNoEncontradoException("No se encontro el estudiante con el numero de libreta: " + numeroLibreta);
 
         return new EstudianteDTO(estudiante);
+    }
+
+    public List<EstudianteDTO> findAllByGenero(String genero) {
+        List<Estudiante> estudiantes = estudianteRepository.findAllByGenero(genero);
+        List<EstudianteDTO> estudianteDTO = new ArrayList<>();
+        estudiantes.forEach(estudiante -> estudianteDTO.add(new EstudianteDTO(estudiante)));
+
+        return estudianteDTO;
     }
 
 }

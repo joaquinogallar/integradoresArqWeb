@@ -10,4 +10,5 @@ import java.util.List;
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
     List<Estudiante> findAllByOrderByApellidoAsc();
     Estudiante findEstudianteByNumeroLibretaUniversitaria(String numeroLibreta);
+    List<Estudiante> findAllByGenero(String genero);
 }
