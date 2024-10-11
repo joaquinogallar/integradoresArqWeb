@@ -1,6 +1,6 @@
 package com.grupo08.unicen.trabajointegradortp3.dtos;
 
-import entities.Carrera;
+import com.grupo08.unicen.trabajointegradortp3.entity.Carrera;
 import lombok.Data;
 
 @Data

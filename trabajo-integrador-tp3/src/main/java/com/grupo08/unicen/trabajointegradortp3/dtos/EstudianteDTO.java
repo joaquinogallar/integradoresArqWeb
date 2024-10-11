@@ -1,6 +1,6 @@
 package com.grupo08.unicen.trabajointegradortp3.dtos;
 
-import entities.Estudiante;
+import com.grupo08.unicen.trabajointegradortp3.entity.Estudiante;
 import lombok.Data;
 import lombok.ToString;
 
