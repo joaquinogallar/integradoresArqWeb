@@ -1,6 +1,7 @@
 package com.grupo08.unicen.trabajointegradortp3.controller;
 
 import com.grupo08.unicen.trabajointegradortp3.dtos.CarreraDTO;
+import com.grupo08.unicen.trabajointegradortp3.dtos.ReporteCarreraDTO;
 import com.grupo08.unicen.trabajointegradortp3.entity.Carrera;
 import com.grupo08.unicen.trabajointegradortp3.service.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,10 @@ public class CarreraController {
     @GetMapping("/ordenado/inscriptos")
     public List<CarreraDTO> findCarrerasConEstudiantesOrdenadasPorInscritos() {
         return carreraService.findCarrerasConEstudiantesOrdenadasPorInscritos();
+    }
+
+    @GetMapping("/reporte")
+    public List<ReporteCarreraDTO> generarReportes() {
+        return carreraService.generarReporte();
     }
 }

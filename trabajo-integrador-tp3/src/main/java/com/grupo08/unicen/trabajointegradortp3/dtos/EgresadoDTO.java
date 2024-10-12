@@ -1,7 +1,9 @@
 package com.grupo08.unicen.trabajointegradortp3.dtos;
 
+import com.grupo08.unicen.trabajointegradortp3.entity.Carrera;
 import com.grupo08.unicen.trabajointegradortp3.entity.Estudiante;
 import com.grupo08.unicen.trabajointegradortp3.entity.EstudianteCarrera;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.ToString;
 
@@ -15,11 +17,14 @@ public class EgresadoDTO {
     private Integer anioInscripcion;
     private Integer anioEgreso;
 
-    public EgresadoDTO(Estudiante estudiante, EstudianteCarrera estudianteCarrera) {
-        this.id = estudiante.getId();
-        this.nombre = estudiante.getNombre();
-        this.apellido = estudiante.getApellido();
-        this.numeroLibretaUniversitaria = estudiante.getNumeroLibretaUniversitaria();
+    @ManyToOne
+    private Carrera carrera;
+
+    public EgresadoDTO(EstudianteCarrera estudianteCarrera) {
+        this.id = estudianteCarrera.getEstudiante().getId();
+        this.nombre = estudianteCarrera.getEstudiante().getNombre();
+        this.apellido = estudianteCarrera.getEstudiante().getApellido();
+        this.numeroLibretaUniversitaria = estudianteCarrera.getEstudiante().getNumeroLibretaUniversitaria();
         this.anioInscripcion = estudianteCarrera.getAnioIngreso();
         this.anioEgreso = estudianteCarrera.getAnioGraduado();
     }

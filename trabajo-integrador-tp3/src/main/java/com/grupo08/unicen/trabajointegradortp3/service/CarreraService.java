@@ -1,9 +1,11 @@
 package com.grupo08.unicen.trabajointegradortp3.service;
 
 import com.grupo08.unicen.trabajointegradortp3.dtos.CarreraDTO;
+import com.grupo08.unicen.trabajointegradortp3.dtos.ReporteCarreraDTO;
 import com.grupo08.unicen.trabajointegradortp3.entity.Carrera;
 import com.grupo08.unicen.trabajointegradortp3.exception.CarreraNoEncontradaException;
 import com.grupo08.unicen.trabajointegradortp3.repository.CarreraRepository;
+import com.grupo08.unicen.trabajointegradortp3.repository.EstudianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,9 @@ public class CarreraService {
 
     @Autowired
     private CarreraRepository carreraRepository;
+
+    @Autowired
+    private EstudianteService estudianteService;
 
     public List<CarreraDTO> getAllCarreras() {
         List<Carrera> carreras = carreraRepository.findAll();
@@ -65,6 +70,22 @@ public class CarreraService {
         carreras.forEach(carrera -> carrerasDTO.add(new CarreraDTO(carrera)));
 
         return carrerasDTO;
+    }
+
+    public List<ReporteCarreraDTO> generarReporte() {
+        List<Carrera> carreras = carreraRepository.findCarrerasByOrderByNombreCarrera();
+        List<ReporteCarreraDTO> reporteDTO = new ArrayList<>();
+        carreras.forEach(carrera -> {
+            ReporteCarreraDTO reporte = new ReporteCarreraDTO(carrera);
+
+            estudianteService.findEstudiantesByIdCarrera(carrera.getId())
+                    .forEach(estudiante -> reporte.getInscriptos().add(estudiante));
+
+            estudianteService.findEgresadosByIdCarrera(carrera.getId())
+                    .forEach(egresado -> reporte.getEgresados().add(egresado));
+
+        });
+        return reporteDTO;
     }
 
 }

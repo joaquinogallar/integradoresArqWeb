@@ -1,8 +1,14 @@
 package com.grupo08.unicen.trabajointegradortp3.service;
 
+import com.grupo08.unicen.trabajointegradortp3.dtos.EgresadoDTO;
 import com.grupo08.unicen.trabajointegradortp3.dtos.EstudianteDTO;
+import com.grupo08.unicen.trabajointegradortp3.entity.Carrera;
 import com.grupo08.unicen.trabajointegradortp3.entity.Estudiante;
+import com.grupo08.unicen.trabajointegradortp3.entity.EstudianteCarrera;
+import com.grupo08.unicen.trabajointegradortp3.exception.CarreraNoEncontradaException;
 import com.grupo08.unicen.trabajointegradortp3.exception.EstudianteNoEncontradoException;
+import com.grupo08.unicen.trabajointegradortp3.repository.CarreraRepository;
+import com.grupo08.unicen.trabajointegradortp3.repository.EstudianteCarreraRepository;
 import com.grupo08.unicen.trabajointegradortp3.repository.EstudianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +21,12 @@ public class EstudianteService {
 
     @Autowired
     private EstudianteRepository estudianteRepository;
+
+    @Autowired
+    private CarreraRepository carreraRepository;
+
+    @Autowired
+    private EstudianteCarreraRepository estudianteCarreraRepository;
 
     public List<EstudianteDTO> getEstudiantes() {
         List<Estudiante> estudiantes = estudianteRepository.findAll();
@@ -59,6 +71,30 @@ public class EstudianteService {
 
         estudianteRepository.delete(estudiante);
         return estudiante;
+    }
+
+    public List<EstudianteDTO> findEstudiantesByIdCarrera(Long idCarrera) {
+        List<Estudiante> estudiantes = estudianteRepository.findEstudiantesByIdCarrera(idCarrera);
+        List<EstudianteDTO> estudianteDTO = new ArrayList<>();
+        estudiantes.forEach(estudiante -> estudianteDTO.add(new EstudianteDTO(estudiante)));
+
+        return estudianteDTO;
+    }
+
+    public List<EgresadoDTO> findEgresadosByIdCarrera(Long idCarrera) {
+        Carrera carrera = carreraRepository.findById(idCarrera).orElse(null);
+        if(carrera == null)
+            throw new CarreraNoEncontradaException("No se encontro la carrera con el id: " + idCarrera);
+
+        List<Estudiante> egresados = estudianteRepository.findEgresadosByIdCarrera(idCarrera);
+        List<EgresadoDTO> egresadoDTO = new ArrayList<>();
+
+        egresados.forEach(estudiante -> {
+            EstudianteCarrera estudianteCarrera = estudianteCarreraRepository.findByEstudianteIdAndCarreraId(estudiante.getId(), idCarrera);
+            egresadoDTO.add(new EgresadoDTO(estudianteCarrera));
+        });
+
+        return egresadoDTO;
     }
 
     // METODOS TP
