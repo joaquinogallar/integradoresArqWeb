@@ -59,5 +59,12 @@ public class CarreraService {
     }
 
     // METODOS TP
+    public List<CarreraDTO> findCarrerasConEstudiantesOrdenadasPorInscritos() {
+        List<Carrera> carreras = carreraRepository.findCarrerasConEstudiantesOrdenadasPorInscritos();
+        List<CarreraDTO> carrerasDTO = new ArrayList<>();
+        carreras.forEach(carrera -> carrerasDTO.add(new CarreraDTO(carrera)));
+
+        return carrerasDTO;
+    }
 
 }

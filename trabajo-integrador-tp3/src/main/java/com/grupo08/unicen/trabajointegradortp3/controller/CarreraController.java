@@ -39,4 +39,10 @@ public class CarreraController {
     public CarreraDTO deleteCarrera(@PathVariable("id") Long id) {
         return carreraService.deleteCarrera(id);
     }
+
+    // METODOS TP
+    @GetMapping("/ordenado/inscriptos")
+    public List<CarreraDTO> findCarrerasConEstudiantesOrdenadasPorInscritos() {
+        return carreraService.findCarrerasConEstudiantesOrdenadasPorInscritos();
+    }
 }
