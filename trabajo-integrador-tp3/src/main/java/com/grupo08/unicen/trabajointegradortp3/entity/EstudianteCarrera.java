@@ -20,14 +20,14 @@ public class EstudianteCarrera implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Carrera carrera;
 
-    private int antiguedad;
+    private int anioIngreso;
     private boolean graduado;
     private Integer anioGraduado; // es de tipo Integer para que pueda ser null en un inicio
 
     public EstudianteCarrera(Estudiante estudiante, Carrera carrera) {
         this.estudiante = estudiante;
         this.carrera = carrera;
-        this.antiguedad = 0;
+        this.anioIngreso = 2021;
         this.graduado = false;
     }
 }

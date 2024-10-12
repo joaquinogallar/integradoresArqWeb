@@ -20,7 +20,7 @@ public class EgresadoDTO {
         this.nombre = estudiante.getNombre();
         this.apellido = estudiante.getApellido();
         this.numeroLibretaUniversitaria = estudiante.getNumeroLibretaUniversitaria();
-        this.anioInscripcion = 2021;
+        this.anioInscripcion = estudianteCarrera.getAnioIngreso();
         this.anioEgreso = estudianteCarrera.getAnioGraduado();
     }
 }
