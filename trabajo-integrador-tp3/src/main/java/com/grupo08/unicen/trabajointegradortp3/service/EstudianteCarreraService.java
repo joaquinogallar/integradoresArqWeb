@@ -4,6 +4,7 @@ import com.grupo08.unicen.trabajointegradortp3.entity.Carrera;
 import com.grupo08.unicen.trabajointegradortp3.entity.Estudiante;
 import com.grupo08.unicen.trabajointegradortp3.entity.EstudianteCarrera;
 import com.grupo08.unicen.trabajointegradortp3.exception.CarreraNoEncontradaException;
+import com.grupo08.unicen.trabajointegradortp3.exception.EstudianteCarreraNoEncontradoException;
 import com.grupo08.unicen.trabajointegradortp3.exception.EstudianteNoEncontradoException;
 import com.grupo08.unicen.trabajointegradortp3.repository.CarreraRepository;
 import com.grupo08.unicen.trabajointegradortp3.repository.EstudianteCarreraRepository;
@@ -73,5 +74,13 @@ public class EstudianteCarreraService {
         EstudianteCarrera estudianteCarrera = new EstudianteCarrera(estudiante, carrera);
 
         estudianteCarreraRepository.save(estudianteCarrera);
+    }
+
+    public void darAltaEstudiante(Long estudianteId, Long carreraId) {
+        EstudianteCarrera estudianteCarrera = estudianteCarreraRepository.findByEstudianteIdAndCarreraId(estudianteId, carreraId);
+        if(estudianteCarrera == null)
+            throw new EstudianteCarreraNoEncontradoException("No se encontro la relacion entra el estudiante con el id: " + estudianteId + " y la carrera con el id: " + carreraId);
+
+        estudianteCarreraRepository.delete(estudianteCarrera);
     }
 }

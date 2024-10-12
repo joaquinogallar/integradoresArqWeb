@@ -56,4 +56,5 @@ public class EstudianteController {
     public List<EstudianteDTO> getEstudiantesByGenero(@PathVariable String genero) {
         return estudianteService.findAllByGenero(genero);
     }
+
 }
