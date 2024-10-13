@@ -37,8 +37,8 @@ public class CarreraService {
         return new CarreraDTO(carrera);
     }
 
-    public void createCarrera(Carrera carrera) {
-        carreraRepository.save(carrera);
+    public void createCarrera(List<Carrera> carreras) {
+        carreras.forEach(carrera -> carreraRepository.save(carrera));
     }
 
     public void updateCarrera(Long id, Carrera carreraUpdate) {

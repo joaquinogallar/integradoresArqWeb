@@ -27,8 +27,8 @@ public class CarreraController {
     }
 
     @PostMapping
-    public void addCarrera(@RequestBody Carrera carrera) {
-        carreraService.createCarrera(carrera);
+    public void addCarrera(@RequestBody List<Carrera> carreras) {
+        carreraService.createCarrera(carreras);
     }
 
     @PutMapping("/{id}")

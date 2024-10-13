@@ -42,6 +42,16 @@ public class EstudianteController {
     }
 
     // METODOS TP
+    @PostMapping("/inscribir")
+    public void inscribirEstudianteACarrera(@RequestParam Long idEstudiante, @RequestParam Long idCarrera) {
+        estudianteService.inscribirEstudianteACarrera(idEstudiante, idCarrera);
+    }
+
+    @DeleteMapping("/alta")
+    public String darAltaEstudianteDeCarrera(@RequestParam Long idEstudiante, @RequestParam Long idCarrera) {
+        return estudianteService.darAltaEstudianteDeCarrera(idEstudiante, idCarrera);
+    }
+
     @GetMapping("/ordenado")
     public List<EstudianteDTO> getEstudiantesOrderByApellido() {
         return estudianteService.getEstudiantesOrderByApellido();

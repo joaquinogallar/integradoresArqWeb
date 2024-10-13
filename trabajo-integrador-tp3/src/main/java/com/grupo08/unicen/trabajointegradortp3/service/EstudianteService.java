@@ -6,6 +6,7 @@ import com.grupo08.unicen.trabajointegradortp3.entity.Carrera;
 import com.grupo08.unicen.trabajointegradortp3.entity.Estudiante;
 import com.grupo08.unicen.trabajointegradortp3.entity.EstudianteCarrera;
 import com.grupo08.unicen.trabajointegradortp3.exception.CarreraNoEncontradaException;
+import com.grupo08.unicen.trabajointegradortp3.exception.EstudianteCarreraNoEncontradoException;
 import com.grupo08.unicen.trabajointegradortp3.exception.EstudianteNoEncontradoException;
 import com.grupo08.unicen.trabajointegradortp3.repository.CarreraRepository;
 import com.grupo08.unicen.trabajointegradortp3.repository.EstudianteCarreraRepository;
@@ -98,6 +99,24 @@ public class EstudianteService {
     }
 
     // METODOS TP
+    public void inscribirEstudianteACarrera(Long idEstudiante, Long idCarrera) {
+        Carrera carrera = carreraRepository.findById(idCarrera).orElse(null);
+        if(carrera == null) throw new CarreraNoEncontradaException("No se encontro la carrera con el id: " + idCarrera);
+        Estudiante estudiante = estudianteRepository.findById(idEstudiante).orElse(null);
+        if(estudiante == null) throw new EstudianteCarreraNoEncontradoException("No se encontro el estudiante con el id: " + idEstudiante);
+
+        EstudianteCarrera estudianteCarrera = new EstudianteCarrera(estudiante, carrera);
+        estudianteCarreraRepository.save(estudianteCarrera);
+    }
+
+    public String darAltaEstudianteDeCarrera(Long idEstudiante, Long idCarrera) {
+        EstudianteCarrera estudianteCarrera = estudianteCarreraRepository.findByEstudianteIdAndCarreraId(idEstudiante, idCarrera);
+        if(estudianteCarrera == null) throw new EstudianteCarreraNoEncontradoException("No se encontro la relacion entre el estudiante con el id: " + idEstudiante + " y la carrera con el id: " + idCarrera);
+
+        estudianteCarreraRepository.delete(estudianteCarrera);
+        return "El estudiante " + idEstudiante + " ha sido dado de baja de la carrera " + idCarrera;
+    }
+
     public List<EstudianteDTO> getEstudiantesOrderByApellido() {
         List<Estudiante> estudiantes = estudianteRepository.findAllByOrderByApellidoAsc();
         List<EstudianteDTO> estudianteDTO = new ArrayList<>();
