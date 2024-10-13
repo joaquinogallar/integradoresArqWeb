@@ -5,6 +5,8 @@ import com.grupo08.unicen.trabajointegradortp3.dtos.ReporteCarreraDTO;
 import com.grupo08.unicen.trabajointegradortp3.entity.Carrera;
 import com.grupo08.unicen.trabajointegradortp3.service.CarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,38 +19,44 @@ public class CarreraController {
     private CarreraService carreraService;
 
     @GetMapping
-    public List<CarreraDTO> getAllCarreras() {
-        return carreraService.getAllCarreras();
-    }
+    public ResponseEntity<List<CarreraDTO>> getAllCarreras() {
+        List<CarreraDTO> carreras = carreraService.getAllCarreras();
+        return new ResponseEntity<>(carreras, HttpStatus.OK);    }
+
 
     @GetMapping("/{id}")
-    public CarreraDTO getCarreraById(@PathVariable("id") Long id) {
-        return carreraService.getCarreraById(id);
+    public ResponseEntity<CarreraDTO> getCarreraById(@PathVariable("id") Long id) {
+        CarreraDTO carrera = carreraService.getCarreraById(id);
+        return new ResponseEntity<>(carrera, HttpStatus.OK);
     }
 
     @PostMapping
-    public void addCarrera(@RequestBody List<Carrera> carreras) {
+    public ResponseEntity<Void> addCarrera(@RequestBody List<Carrera> carreras) {
         carreraService.createCarrera(carreras);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public void updateCarrera(@PathVariable("id") Long id, @RequestBody Carrera carrera) {
+    public ResponseEntity<Void> updateCarrera(@PathVariable("id") Long id, @RequestBody Carrera carrera) {
         carreraService.updateCarrera(id, carrera);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public CarreraDTO deleteCarrera(@PathVariable("id") Long id) {
-        return carreraService.deleteCarrera(id);
+    public ResponseEntity<CarreraDTO> deleteCarrera(@PathVariable("id") Long id) {
+        CarreraDTO carreraEliminada = carreraService.deleteCarrera(id);
+        return new ResponseEntity<>(carreraEliminada, HttpStatus.OK);
     }
-
     // METODOS TP
     @GetMapping("/ordenado/inscriptos")
-    public List<CarreraDTO> findCarrerasConEstudiantesOrdenadasPorInscritos() {
-        return carreraService.findCarrerasConEstudiantesOrdenadasPorInscritos();
+    public ResponseEntity<List<CarreraDTO>> findCarrerasConEstudiantesOrdenadasPorInscritos() {
+        List<CarreraDTO> carreras = carreraService.findCarrerasConEstudiantesOrdenadasPorInscritos();
+        return new ResponseEntity<>(carreras, HttpStatus.OK);
     }
 
     @GetMapping("/reporte")
-    public List<ReporteCarreraDTO> generarReportes() {
-        return carreraService.generarReporte();
+    public ResponseEntity<List<ReporteCarreraDTO>> generarReportes() {
+        List<ReporteCarreraDTO> reportes = carreraService.generarReporte();
+        return new ResponseEntity<>(reportes, HttpStatus.OK);
     }
 }

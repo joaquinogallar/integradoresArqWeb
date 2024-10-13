@@ -4,6 +4,8 @@ import com.grupo08.unicen.trabajointegradortp3.dtos.EstudianteDTO;
 import com.grupo08.unicen.trabajointegradortp3.entity.Estudiante;
 import com.grupo08.unicen.trabajointegradortp3.service.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,55 +18,67 @@ public class EstudianteController {
     @Autowired
     private EstudianteService estudianteService;
 
+
     @GetMapping
-    public List<EstudianteDTO> getEstudiantes() {
-        return estudianteService.getEstudiantes();
+    public ResponseEntity<List<EstudianteDTO>> getEstudiantes() {
+        List<EstudianteDTO> estudiantes = estudianteService.getEstudiantes();
+        return new ResponseEntity<>(estudiantes, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public EstudianteDTO getEstudianteById(@PathVariable Long id) {
-        return estudianteService.getEstudianteById(id);
+    public ResponseEntity<EstudianteDTO> getEstudianteById(@PathVariable Long id) {
+        EstudianteDTO estudiante = estudianteService.getEstudianteById(id);
+        return new ResponseEntity<>(estudiante, HttpStatus.OK);
     }
 
     @PostMapping
-    public void createEstudiante(@RequestBody List<Estudiante> estudiante) {
-        estudianteService.createEstudiante(estudiante);
+    public ResponseEntity<Void> createEstudiante(@RequestBody List<Estudiante> estudiantes) {
+        estudianteService.createEstudiante(estudiantes);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public void updateEstudiante(@PathVariable Long id, @RequestBody Estudiante estudiante) {
+    public ResponseEntity<Void> updateEstudiante(@PathVariable Long id, @RequestBody Estudiante estudiante) {
         estudianteService.updateEstudiante(id, estudiante);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public Estudiante deleteEstudiante(@PathVariable Long id) {
-        return estudianteService.deleteEstudiante(id);
+    public ResponseEntity<Estudiante> deleteEstudiante(@PathVariable Long id) {
+        Estudiante estudianteEliminado = estudianteService.deleteEstudiante(id);
+        return new ResponseEntity<>(estudianteEliminado, HttpStatus.OK);
     }
+
 
     // METODOS TP
     @PostMapping("/inscribir")
-    public void inscribirEstudianteACarrera(@RequestParam Long idEstudiante, @RequestParam Long idCarrera) {
+    public ResponseEntity<Void> inscribirEstudianteACarrera(@RequestParam Long idEstudiante, @RequestParam Long idCarrera) {
         estudianteService.inscribirEstudianteACarrera(idEstudiante, idCarrera);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/alta")
-    public String darAltaEstudianteDeCarrera(@RequestParam Long idEstudiante, @RequestParam Long idCarrera) {
-        return estudianteService.darAltaEstudianteDeCarrera(idEstudiante, idCarrera);
+    public ResponseEntity<String> darAltaEstudianteDeCarrera(@RequestParam Long idEstudiante, @RequestParam Long idCarrera) {
+        String resultado = estudianteService.darAltaEstudianteDeCarrera(idEstudiante, idCarrera);
+        return new ResponseEntity<>(resultado, HttpStatus.OK);
     }
 
     @GetMapping("/ordenado")
-    public List<EstudianteDTO> getEstudiantesOrderByApellido() {
-        return estudianteService.getEstudiantesOrderByApellido();
+    public ResponseEntity<List<EstudianteDTO>> getEstudiantesOrderByApellido() {
+        List<EstudianteDTO> estudiantes = estudianteService.getEstudiantesOrderByApellido();
+        return new ResponseEntity<>(estudiantes, HttpStatus.OK);
     }
 
     @GetMapping("/libreta/{numeroLibreta}")
-    public EstudianteDTO getEstudianteByNumeroLibretaUniversitaria(@PathVariable String numeroLibreta) {
-        return estudianteService.findEstudianteByNumeroLibretaUniversitaria(numeroLibreta);
+    public ResponseEntity<EstudianteDTO> getEstudianteByNumeroLibretaUniversitaria(@PathVariable String numeroLibreta) {
+        EstudianteDTO estudiante = estudianteService.findEstudianteByNumeroLibretaUniversitaria(numeroLibreta);
+        return new ResponseEntity<>(estudiante, HttpStatus.OK);
     }
 
     @GetMapping("/genero/{genero}")
-    public List<EstudianteDTO> getEstudiantesByGenero(@PathVariable String genero) {
-        return estudianteService.findAllByGenero(genero);
+    public ResponseEntity<List<EstudianteDTO>> getEstudiantesByGenero(@PathVariable String genero) {
+        List<EstudianteDTO> estudiantes = estudianteService.findAllByGenero(genero);
+        return new ResponseEntity<>(estudiantes, HttpStatus.OK);
     }
 
 }
