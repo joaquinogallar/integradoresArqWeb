@@ -1,11 +1,13 @@
 package com.grupo08.unicen.trabajointegradortp3.controller;
 
+import com.grupo08.unicen.trabajointegradortp3.dtos.EstudianteCarreraDTO;
 import com.grupo08.unicen.trabajointegradortp3.entity.EstudianteCarrera;
 import com.grupo08.unicen.trabajointegradortp3.service.EstudianteCarreraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,13 +18,18 @@ public class EstudianteCarreraController {
     private EstudianteCarreraService estudianteCarreraService;
 
     @GetMapping
-    public List<EstudianteCarrera> getEstudiantesCarreras() {
-        return estudianteCarreraService.getEstudiantesCarreras();
+    public List<EstudianteCarreraDTO> getEstudiantesCarreras() {
+        List<EstudianteCarrera> estudianteCarreras = estudianteCarreraService.getEstudiantesCarreras();
+        List<EstudianteCarreraDTO> estudianteCarreraDTO = new ArrayList<>();
+        estudianteCarreras.forEach(estudianteCarrera -> estudianteCarreraDTO.add(new EstudianteCarreraDTO(estudianteCarrera)));
+
+        return estudianteCarreraDTO;
     }
 
     @GetMapping("/{id}")
-    public EstudianteCarrera getEstudianteCarreraById(@PathVariable Long id) {
-        return estudianteCarreraService.getEstudianteCarreraById(id);
+    public EstudianteCarreraDTO getEstudianteCarreraById(@PathVariable Long id) {
+        EstudianteCarreraDTO estudianteCarreraDTO = new EstudianteCarreraDTO(estudianteCarreraService.getEstudianteCarreraById(id));
+        return estudianteCarreraDTO;
     }
 
     @PostMapping
@@ -36,8 +43,9 @@ public class EstudianteCarreraController {
     }
 
     @DeleteMapping("/{id}")
-    public EstudianteCarrera deleteEstudianteCarrera(@PathVariable Long id) {
-        return estudianteCarreraService.deleteEstudianteCarrera(id);
+    public EstudianteCarreraDTO deleteEstudianteCarrera(@PathVariable Long id) {
+        EstudianteCarreraDTO estudianteCarreraDTO = new EstudianteCarreraDTO(estudianteCarreraService.deleteEstudianteCarrera(id));
+        return estudianteCarreraDTO;
     }
 
     // METODOS TP

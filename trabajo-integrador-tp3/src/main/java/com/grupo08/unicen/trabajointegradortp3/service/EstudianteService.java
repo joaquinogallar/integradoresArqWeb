@@ -99,14 +99,17 @@ public class EstudianteService {
     }
 
     // METODOS TP
-    public void inscribirEstudianteACarrera(Long idEstudiante, Long idCarrera) {
+    public String inscribirEstudianteACarrera(Long idEstudiante, Long idCarrera) {
         Carrera carrera = carreraRepository.findById(idCarrera).orElse(null);
         if(carrera == null) throw new CarreraNoEncontradaException("No se encontro la carrera con el id: " + idCarrera);
         Estudiante estudiante = estudianteRepository.findById(idEstudiante).orElse(null);
         if(estudiante == null) throw new EstudianteCarreraNoEncontradoException("No se encontro el estudiante con el id: " + idEstudiante);
 
+        if(estudianteCarreraRepository.findByEstudianteIdAndCarreraId(estudiante.getId(), idCarrera) != null)         return "El estudiante " + idEstudiante + " ya esta inscripto en la carrera " + idCarrera;
+
         EstudianteCarrera estudianteCarrera = new EstudianteCarrera(estudiante, carrera);
         estudianteCarreraRepository.save(estudianteCarrera);
+        return "Estudiante inscripto en la carrera " + idCarrera;
     }
 
     public String darAltaEstudianteDeCarrera(Long idEstudiante, Long idCarrera) {

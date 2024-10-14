@@ -75,15 +75,23 @@ public class CarreraService {
     public List<ReporteCarreraDTO> generarReporte() {
         List<Carrera> carreras = carreraRepository.findCarrerasByOrderByNombreCarrera();
         List<ReporteCarreraDTO> reporteDTO = new ArrayList<>();
+
         carreras.forEach(carrera -> {
-            ReporteCarreraDTO reporte = new ReporteCarreraDTO(carrera);
+            ReporteCarreraDTO reporte = new ReporteCarreraDTO(new CarreraDTO(carrera));
 
             estudianteService.findEstudiantesByIdCarrera(carrera.getId())
-                    .forEach(estudiante -> reporte.getInscriptos().add(estudiante));
+                    .forEach(estudiante -> {
+                        System.out.println(estudiante);
+                        reporte.getInscriptos().add(estudiante);
+                    });
 
             estudianteService.findEgresadosByIdCarrera(carrera.getId())
-                    .forEach(egresado -> reporte.getEgresados().add(egresado));
+                    .forEach(egresado -> {
+                        System.out.println(egresado);
+                        reporte.getEgresados().add(egresado);
+                    });
 
+            reporteDTO.add(reporte);
         });
         return reporteDTO;
     }

@@ -1,5 +1,6 @@
 package com.grupo08.unicen.trabajointegradortp3.controller;
 
+import com.grupo08.unicen.trabajointegradortp3.dtos.EgresadoDTO;
 import com.grupo08.unicen.trabajointegradortp3.dtos.EstudianteDTO;
 import com.grupo08.unicen.trabajointegradortp3.entity.Estudiante;
 import com.grupo08.unicen.trabajointegradortp3.service.EstudianteService;
@@ -41,10 +42,20 @@ public class EstudianteController {
         return estudianteService.deleteEstudiante(id);
     }
 
+    @GetMapping("/carrera/{idCarrera}")
+    public List<EstudianteDTO> findEstudiantesByIdCarrera(@PathVariable Long idCarrera) {
+       return estudianteService.findEstudiantesByIdCarrera(idCarrera);
+    }
+
+    @GetMapping("/carrera/egresado/{idCarrera}")
+    public List<EgresadoDTO> findEgresadosByIdCarrera(@PathVariable Long idCarrera) {
+        return estudianteService.findEgresadosByIdCarrera(idCarrera);
+    }
+
     // METODOS TP
     @PostMapping("/inscribir")
-    public void inscribirEstudianteACarrera(@RequestParam Long idEstudiante, @RequestParam Long idCarrera) {
-        estudianteService.inscribirEstudianteACarrera(idEstudiante, idCarrera);
+    public String inscribirEstudianteACarrera(@RequestParam Long idEstudiante, @RequestParam Long idCarrera) {
+        return estudianteService.inscribirEstudianteACarrera(idEstudiante, idCarrera);
     }
 
     @DeleteMapping("/alta")
