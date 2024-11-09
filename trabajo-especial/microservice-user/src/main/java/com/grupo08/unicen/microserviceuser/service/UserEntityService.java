@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserEntityService {
 
-    private UserEntityRepository userEntityRepository;
+    private final UserEntityRepository userEntityRepository;
 
     // dependency injection
     public UserEntityService(UserEntityRepository userEntityRepository) {
