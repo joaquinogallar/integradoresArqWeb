@@ -23,22 +23,22 @@ public class AccountController {
     // basic methods
     @GetMapping
     public ResponseEntity<List<Account>> getAllUsers() {
-        return null;
+        return accountService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Account> getUserById(@PathVariable UUID accountId) {
-        return null;
+        return accountService.getUserById(accountId);
     }
 
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody Account newAccount) {
-        return null;
+        return accountService.createUser(newAccount);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Account> deleteUserById(@PathVariable UUID accountId) {
-        return null;
+        return accountService.deleteUserById(accountId);
     }
 
     // custom methods
