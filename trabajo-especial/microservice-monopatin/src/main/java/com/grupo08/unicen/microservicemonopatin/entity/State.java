@@ -1,4 +1,4 @@
-package entity;
+package com.grupo08.unicen.microservicemonopatin.entity;
 
 public enum State {
     AVAILABLE,
