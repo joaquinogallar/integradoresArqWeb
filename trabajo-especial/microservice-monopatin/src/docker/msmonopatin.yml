@@ -1,10 +1,8 @@
 services:
   db:
     container_name: monopatin
-    image: postgres:14.4
+    image: mongo:6.0
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_DB=monopatin
+      - MONGO_INITDB_DATABASE=monopatin
     ports:
-      - "127.0.0.1:5432:5432"
-    command: postgres -c 'log_statement=all'
+      - "127.0.0.1:27017:27017"
