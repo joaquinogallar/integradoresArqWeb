@@ -1,0 +1,8 @@
+services:
+  db:
+    container_name: monopatin
+    image: mongo:6.0
+    environment:
+      - MONGO_INITDB_DATABASE=monopatin
+    ports:
+      - "127.0.0.1:27017:27017"
