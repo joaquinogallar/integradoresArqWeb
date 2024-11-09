@@ -1,0 +1,10 @@
+services:
+  db:
+    container_name: user
+    image: postgres:14.4
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=user
+    ports:
+      - "127.0.0.1:5432:5432"
+    command: postgres -c 'log_statement=all'
