@@ -21,21 +21,21 @@ public class UserEntityController {
 
     @GetMapping
     public ResponseEntity<List<UserEntity>> getAllUsers() {
-        return null;
+        return userEntityService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable UUID userId) {
-        return null;
+        return userEntityService.getUserById(userId);
     }
 
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody UserEntity newUser) {
-        return null;
+        return userEntityService.createUser(newUser);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserEntity> deleteUserById(@PathVariable UUID userId) {
-        return null;
+        return userEntityService.deleteUserById(userId);
     }
 }
