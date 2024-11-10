@@ -1,7 +1,7 @@
 services:
   maintenancedb:
     container_name: maintenance
-    image: mongo:6.0
+    image: mongo:4.4
     environment:
       - MONGO_INITDB_DATABASE=maintenance
     ports:

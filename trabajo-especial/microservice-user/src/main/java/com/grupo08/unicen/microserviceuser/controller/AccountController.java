@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping(value = "/api/accounts")
 public class AccountController {
 
     private AccountService accountService;

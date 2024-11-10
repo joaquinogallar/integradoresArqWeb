@@ -18,6 +18,7 @@
     <name>trabajo-especial</name>
     <description>trabajo-especial</description>
     <modules>
+        <module>microservice-report</module>
         <module>microservice-maintenance</module>
         <module>microservice-payment</module>
         <module>microservice-journey</module>

@@ -6,7 +6,6 @@
         <groupId>com.grupo08.unicen</groupId>
         <artifactId>trabajo-especial</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.grupo08.unicen.configservice</groupId>
     <artifactId>config-service</artifactId>
