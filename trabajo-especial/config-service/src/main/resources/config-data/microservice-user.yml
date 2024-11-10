@@ -6,7 +6,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5437/user?createDatabaseIfNotExist=true
-    username: postgres
+    username: admin
   jpa:
     hibernate:
       ddl-auto: update
