@@ -15,30 +15,11 @@ spring:
     gateway:
       mvc:
         routes:
-          - id: microserivice-jourmey
+          - id: microserivice-journey
             uri: lb://microservice-journey
             predicates:
               - Path=/api/journeys/**
-          - id: microserivice-maintenance
-            uri: lb://microservice-maintenance
-            predicates:
-              - Path=/api/maintenances/**
-          - id: microservice-monopatin
-            uri: lb://microservice-monopatin
-            predicates:
-              - Path=/api/monopatines/**
-          - id: microservice-payment
-            uri: lb://microservice-payment
-            predicates:
-                - Path=/api/payments/**
-          - id: microservice-report
-            uri: lb://microservice-report
-            predicates:
-              - Path=/api/reports/**
-          - id: microservice-user
-            uri: lb://microservice-user
-            predicates:
-              - Path=/api/user/**
+
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
