@@ -1,8 +1,8 @@
 services:
-  db:
-    container_name: monopatin
+  maintenancedb:
+    container_name: maintenance
     image: mongo:6.0
     environment:
-      - MONGO_INITDB_DATABASE=monopatin
+      - MONGO_INITDB_DATABASE=maintenance
     ports:
       - "127.0.0.1:27017:27017"
