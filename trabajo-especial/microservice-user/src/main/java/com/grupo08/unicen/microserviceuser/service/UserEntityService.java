@@ -1,5 +1,6 @@
 package com.grupo08.unicen.microserviceuser.service;
 
+import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
 import com.grupo08.unicen.microserviceuser.exception.UserNotFoundException;
 import com.grupo08.unicen.microserviceuser.repository.UserEntityRepository;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,25 +23,28 @@ public class UserEntityService {
     }
 
     // basic methods
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
+    public ResponseEntity<List<UserEntityDto>> getAllUsers() {
         try {
             List<UserEntity> users = userEntityRepository.findAll();
-            return ResponseEntity.ok(users);
+            List<UserEntityDto> userDtos = new ArrayList<>();
+            users.forEach(u -> userDtos.add(new UserEntityDto(u)));
+            return ResponseEntity.ok(userDtos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
     }
 
-    public ResponseEntity<UserEntity> getUserById(UUID userId) {
+    public ResponseEntity<UserEntityDto> getUserById(UUID userId) {
         UserEntity user = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.toString()));
-        return ResponseEntity.ok(user);
+        UserEntityDto userDto = new UserEntityDto(user);
+        return ResponseEntity.ok(userDto);
     }
 
-    public ResponseEntity<String> createUser(UserEntity newUser) {
+    public ResponseEntity<String> createUser(UserEntityDto newUser) {
         try {
-            userEntityRepository.save(newUser);
+            userEntityRepository.save(new UserEntity(newUser));
             return ResponseEntity.ok("User created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(500)
@@ -47,12 +52,13 @@ public class UserEntityService {
         }
     }
 
-    public ResponseEntity<UserEntity> deleteUserById(UUID userId) {
+    public ResponseEntity<UserEntityDto> deleteUserById(UUID userId) {
         UserEntity user = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.toString()));
+        UserEntityDto userDto = new UserEntityDto(user);
         userEntityRepository.delete(user);
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userDto);
     }
 
 }
