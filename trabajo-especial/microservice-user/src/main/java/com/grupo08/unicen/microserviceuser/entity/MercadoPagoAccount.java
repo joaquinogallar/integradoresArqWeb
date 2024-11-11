@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,9 +17,10 @@ public class MercadoPagoAccount {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "accountId", nullable = false)
-    private Account account;
+    @OneToMany(mappedBy = "mercadoPagoAccount")
+    private List<Account> accounts;
+
+    private Double balance;
 
     private String mercadoPagoId;
 }

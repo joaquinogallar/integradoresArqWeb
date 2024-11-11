@@ -1,5 +1,6 @@
 package com.grupo08.unicen.microservicemonopatin.controller;
 
+import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.entity.Stop;
 import com.grupo08.unicen.microservicemonopatin.service.StopService;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,15 @@ public class StopController {
     @PostMapping
     public ResponseEntity<String> createStop(@RequestBody Stop newStop) {
         return  stopService.createStop(newStop);
+    }
+
+    @GetMapping("/{stopId}/monopatines")
+    public ResponseEntity<List<Monopatin>> getMonopatinesByStopId(@PathVariable UUID stopId) {
+        return stopService.getMonopatinesByStopId(stopId);
+    }
+
+    @PutMapping("/{stopId}/monopatines/{monopatinId}")
+    public ResponseEntity<String> addMonopatinToStop(@PathVariable UUID stopId, @PathVariable UUID monopatinId) {
+        return stopService.addMonopatinToStop(stopId, monopatinId);
     }
 }

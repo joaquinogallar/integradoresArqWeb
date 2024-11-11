@@ -1,9 +1,11 @@
 package com.grupo08.unicen.microserviceuser.service;
 
 import com.grupo08.unicen.microserviceuser.entity.Account;
+import com.grupo08.unicen.microserviceuser.entity.MercadoPagoAccount;
 import com.grupo08.unicen.microserviceuser.exception.AccountNotFoundException;
 import com.grupo08.unicen.microserviceuser.exception.UserNotFoundException;
 import com.grupo08.unicen.microserviceuser.repository.AccountRepository;
+import com.grupo08.unicen.microserviceuser.repository.MercadoPagoAccountRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,12 @@ import java.util.UUID;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final MercadoPagoAccountRepository mercadoPagoAccountRepository;
 
     // dependency injection
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, MercadoPagoAccountRepository mercadoPagoAccountRepository) {
         this.accountRepository = accountRepository;
+        this.mercadoPagoAccountRepository = mercadoPagoAccountRepository;
     }
 
     // basic methods
@@ -72,5 +76,15 @@ public class AccountService {
         accountRepository.save(account);
 
         return ResponseEntity.ok("Successful transaction. $" + quantity + " were added to account " + accountId);
+    }
+
+    public ResponseEntity<String> linkMercadoPagoToAccount(UUID accountId, UUID mercadoPagoId) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new AccountNotFoundException(accountId.toString()));
+        MercadoPagoAccount mercadoPagoAccount = mercadoPagoAccountRepository.findById(mercadoPagoId)
+                .orElseThrow(() -> new AccountNotFoundException(mercadoPagoId.toString()));
+        account.setMercadoPagoAccount(mercadoPagoAccount);
+        accountRepository.save(account);
+        return ResponseEntity.ok("Successful transaction");
     }
 }
