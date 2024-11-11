@@ -11,7 +11,7 @@ public class TarifaDTO {
 
     public TarifaDTO(Tarifa t) {
         this.tarifa = t.getTarifa();
-        this.tipo_tarifa = t.getTipo_tarifa();
+      
 
     }
 
