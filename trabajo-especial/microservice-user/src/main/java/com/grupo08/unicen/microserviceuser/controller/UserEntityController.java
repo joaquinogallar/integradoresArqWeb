@@ -24,7 +24,7 @@ public class UserEntityController {
         return userEntityService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable UUID userId) {
         return userEntityService.getUserById(userId);
     }
@@ -34,7 +34,7 @@ public class UserEntityController {
         return userEntityService.createUser(newUser);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<UserEntity> deleteUserById(@PathVariable UUID userId) {
         return userEntityService.deleteUserById(userId);
     }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,10 +23,12 @@ public class Account {
 
     private Double balance;
 
+    @ManyToMany(mappedBy = "accounts")
+    private List<UserEntity> users;
+
     // assign the date before persist
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
     }
-
 }

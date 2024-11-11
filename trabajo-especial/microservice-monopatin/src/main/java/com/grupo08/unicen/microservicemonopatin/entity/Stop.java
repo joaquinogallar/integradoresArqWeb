@@ -1,13 +1,11 @@
 package com.grupo08.unicen.microservicemonopatin.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,4 +20,7 @@ public class Stop {
     private String location;
 
     private String address;
+
+    @OneToMany
+    private List<Monopatin> monopatines;
 }
