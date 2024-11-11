@@ -46,9 +46,4 @@ public class AccountController {
     public ResponseEntity<String> addMoney(@PathVariable UUID accountId, @RequestParam Double quantity) {
         return accountService.addMoney(accountId, quantity);
     }
-
-    @PutMapping("/{accountId}/mercadoPago/{mercadoPagoId}")
-    public ResponseEntity<String> linkMercadoPagoToAccount(@PathVariable UUID accountId, @PathVariable UUID mercadoPagoId) {
-        return accountService.linkMercadoPagoToAccount(accountId, mercadoPagoId);
-    }
 }
