@@ -26,17 +26,9 @@ public class Account {
     @ManyToMany(mappedBy = "accounts")
     private List<UserEntity> users;
 
-    @ManyToOne
-    private MercadoPagoAccount mercadoPagoAccount;
-
     // assign the date before persist
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
-    }
-
-    public Account(MercadoPagoAccount mercadoPagoAccount) {
-        this.mercadoPagoAccount = Account.this.mercadoPagoAccount;
-        this.balance = Account.this.mercadoPagoAccount.getBalance();
     }
 }
