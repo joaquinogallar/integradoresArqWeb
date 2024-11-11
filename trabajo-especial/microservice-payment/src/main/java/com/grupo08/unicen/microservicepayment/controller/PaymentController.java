@@ -13,20 +13,34 @@ public class PaymentController {
 	@Autowired
     private PaymentService paymentService;
 
-    @GetMapping("/transactions")
+    @GetMapping("/transacciones")
     public List<Transaction> getAllTransactions() {
         return paymentService.getAllTransactions();
     }
 
-    @GetMapping("/transactions/{id}")
+    @GetMapping("/transaccion/{id}")
     public Transaction getTransactionById(@PathVariable UUID id) {
         return paymentService.getTransactionById(id);
     }
 
-    @PostMapping("/transactions")
+    @PostMapping("/transaccion")
     public Transaction createTransaction(@RequestBody Transaction transaction) {
         return paymentService.createTransaction(transaction);
     }
     
-    // Similar endpoints para tarifas
+    @GetMapping("/tarifas")
+    public List<Transaction> getAllTariffs() {
+        return paymentService.getAllTransactions();
+    }
+
+    @GetMapping("/tarifa/{id}")
+    public Transaction getTariffById(@PathVariable UUID id) {
+        return paymentService.getTariffById(id);
+    }
+
+    @PostMapping("/tarifa")
+    public Transaction createTariff(@RequestBody Transaction transaction) {
+        return paymentService.createTariff(transaction);
+    }
+    
 }

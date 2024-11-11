@@ -31,7 +31,7 @@ public class PaymentService {
         return transactionRepository.save(transaction);
     }
 
-    // Métodos para gestionar tarifas...
+    // Tarifas
     public List<Tariff> getAllTariffs() {
     	return tariffRepository.findAll();
     }
