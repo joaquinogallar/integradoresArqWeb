@@ -1,5 +1,6 @@
 package com.grupo08.unicen.microserviceuser.service;
 
+import com.grupo08.unicen.microserviceuser.dto.AccountDto;
 import com.grupo08.unicen.microserviceuser.entity.Account;
 import com.grupo08.unicen.microserviceuser.exception.AccountNotFoundException;
 import com.grupo08.unicen.microserviceuser.exception.UserNotFoundException;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,25 +24,28 @@ public class AccountService {
     }
 
     // basic methods
-    public ResponseEntity<List<Account>> getAllUsers() {
+    public ResponseEntity<List<AccountDto>> getAllUsers() {
         try {
-            List<Account> users = accountRepository.findAll();
-            return ResponseEntity.ok(users);
+            List<Account> accounts = accountRepository.findAll();
+            List<AccountDto> accountDtos = new ArrayList<>();
+            accounts.forEach(a -> accountDtos.add(new AccountDto(a)));
+            return ResponseEntity.ok(accountDtos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
     }
 
-    public ResponseEntity<Account> getUserById(UUID accountId) {
+    public ResponseEntity<AccountDto> getUserById(UUID accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new UserNotFoundException(accountId.toString()));
-        return ResponseEntity.ok(account);
+        return ResponseEntity.ok(new AccountDto(account));
     }
 
-    public ResponseEntity<String> createUser(Account newUser) {
+    public ResponseEntity<String> createUser(AccountDto newAccount) {
         try {
-            accountRepository.save(newUser);
+            Account account = new Account(newAccount);
+            accountRepository.save(account);
             return ResponseEntity.ok("User created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(500)
@@ -48,12 +53,12 @@ public class AccountService {
         }
     }
 
-    public ResponseEntity<Account> deleteUserById(UUID accountId) {
+    public ResponseEntity<AccountDto> deleteUserById(UUID accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new UserNotFoundException(accountId.toString()));
         accountRepository.delete(account);
 
-        return ResponseEntity.ok(account);
+        return ResponseEntity.ok(new AccountDto(account));
     }
 
     /**
