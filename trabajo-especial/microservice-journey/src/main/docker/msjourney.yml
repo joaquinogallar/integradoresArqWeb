@@ -1,10 +1,11 @@
 services:
-  db:
+  journeydb:
     container_name: journey
     image: postgres:14.4
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_DB=journey
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:5433:5432"
     command: postgres -c 'log_statement=all'

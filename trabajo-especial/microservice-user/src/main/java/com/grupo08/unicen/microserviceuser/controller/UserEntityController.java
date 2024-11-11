@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = "/api/users")
 public class UserEntityController {
 
     private UserEntityService userEntityService;

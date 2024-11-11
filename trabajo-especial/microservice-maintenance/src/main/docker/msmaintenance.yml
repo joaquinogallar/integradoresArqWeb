@@ -1,8 +1,9 @@
 services:
   maintenancedb:
     container_name: maintenance
-    image: mongo:6.0
+    image: mongo:4.4
     environment:
       - MONGO_INITDB_DATABASE=maintenance
+      - MONGO_INITDB_AUTH=false
     ports:
       - "127.0.0.1:27017:27017"
