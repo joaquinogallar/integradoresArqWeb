@@ -1,5 +1,6 @@
 package com.grupo08.unicen.microserviceuser.controller;
 
+import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
 import com.grupo08.unicen.microserviceuser.service.UserEntityService;
 import org.springframework.http.ResponseEntity;
@@ -20,22 +21,22 @@ public class UserEntityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
+    public ResponseEntity<List<UserEntityDto>> getAllUsers() {
         return userEntityService.getAllUsers();
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable UUID userId) {
+    public ResponseEntity<UserEntityDto> getUserById(@PathVariable UUID userId) {
         return userEntityService.getUserById(userId);
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UserEntity newUser) {
+    public ResponseEntity<String> createUser(@RequestBody UserEntityDto newUser) {
         return userEntityService.createUser(newUser);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<UserEntity> deleteUserById(@PathVariable UUID userId) {
+    public ResponseEntity<UserEntityDto> deleteUserById(@PathVariable UUID userId) {
         return userEntityService.deleteUserById(userId);
     }
 }

@@ -3,7 +3,11 @@ package com.grupo08.unicen.microserviceuser.dto;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+import java.util.ArrayList;
+
+@Data
 public class UserEntityDto {
 
 
@@ -25,5 +29,12 @@ public class UserEntityDto {
         this.lastname = userEntity.getLastname();
         this.email = userEntity.getEmail();
         this.phoneNumber = userEntity.getPhoneNumber();
+    }
+
+    public UserEntityDto(String name, String lastname, String email, String phoneNumber) {
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 }

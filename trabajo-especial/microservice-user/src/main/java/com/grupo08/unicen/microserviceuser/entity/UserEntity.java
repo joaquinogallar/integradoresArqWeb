@@ -1,5 +1,6 @@
 package com.grupo08.unicen.microserviceuser.entity;
 
+import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -35,6 +36,14 @@ public class UserEntity {
         this.lastname = lastname;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        accounts = new ArrayList<>();
+    }
+
+    public UserEntity(UserEntityDto userEntityDto) {
+        this.name = userEntityDto.getName();
+        this.lastname = userEntityDto.getLastname();
+        this.email = userEntityDto.getEmail();
+        this.phoneNumber = userEntityDto.getPhoneNumber();
         accounts = new ArrayList<>();
     }
 }
