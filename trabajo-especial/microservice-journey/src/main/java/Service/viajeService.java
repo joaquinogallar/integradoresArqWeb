@@ -2,9 +2,16 @@ package Service;
 
 import DTOS.viajeDTO;
 import Entitys.Pausa;
+import Entitys.Tarifa;
 import Entitys.Viaje;
 import FeignClients.MonopatinFeignClient;
+import FeignClients.ParadaFeignClient;
 import FeignClients.UserFeignClient;
+import Repository.TarifaRepository;
+import com.example.microservicioMonopatin.entity.Monopatin;
+import com.example.microservicioMonopatin.entity.MonopatinDTO;
+import com.example.microserviciouser.DTOS.userDTO;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Repository.viajeRepository ;
@@ -23,7 +30,9 @@ public class viajeService {
     @Autowired
     MonopatinFeignClient monopatinFeignClient;
     @Autowired
-    PausaService pausaService;
+    ParadaFeignClient paradaFeignClient;
+    @Autowired
+    TarifaRepository tarifaRepository ;
     public List<viajeDTO> getAll() {
         try{
             List<Viaje> viajes  =   this.viajeRepository.findAll() ;
@@ -56,25 +65,52 @@ public class viajeService {
         return viajeRepository.findMonopatinesByViaje(anio,cantidad);
     }
 
-    /*public viajeDTO endViaje(Long idViaje){
+    public viajeDTO endViaje(Long idViaje){
+        int xfinal = 0 ;
+        int yfinal = 0;
         Viaje v  = viajeRepository.findById(idViaje).orElse(null);
-
         if(v!=null){
-            v.setFecha_fin(LocalDate.now());
-            //SETEAR KILOMETROS RECORRIDOS ?
-            viajeRepository.save(v);
-            List<Pausa>pausas = viajeRepository.findPausasByIdViaje(idViaje);
-            double TarifaXpausas = 0 ;
-            for (Pausa pausa : pausas) {
-                Long minutos = ChronoUnit.MINUTES.between(pausa.getHora_inicio(), pausa.getHora_fin());
-                if(minutos>15) {
-                    Long minutosFinal = minutos-15 ;
-                    minutosFinal = minutosFinal*
 
+          MonopatinDTO m = monopatinFeignClient.getMonopatinById(v.getId_monopatin()).getBody();
+          if(m!=null){
+                if(paradaFeignClient.getParadaByX(m.getX(),m.getY())!=null){
+                    v.setFecha_fin(LocalDate.now());
+                    m.setDisponible(true);
+                    if(v.getXOrigen()- m.getX() <0)
+                    xfinal = (v.getXOrigen()- m.getX())*-1  ;
+                    else
+                        xfinal = v.getXOrigen()- m.getX();
+                    }
+                if(v.getYOrigen()- m.getY() <0)
+                    yfinal = (v.getYOrigen()- m.getY())*-1  ;
+                else
+                    yfinal = v.getYOrigen()- m.getY();
+
+                v.setkmRecorridos(xfinal+yfinal);
+                    viajeRepository.save(v);
+                    List<Pausa>pausas = viajeRepository.findPausasByIdViaje(idViaje);
+                    double tarifaXpausas = 0 ;
+                    double tarifaNormal = 0;
+                    Tarifa ta = tarifaRepository.getTarifaNormalEnPlazoValido();
+
+                    tarifaNormal = (xfinal+yfinal)*ta.getTarifa();
+                    for (Pausa pausa : pausas) {
+                        Long minutos = ChronoUnit.MINUTES.between(pausa.getHora_inicio(), pausa.getHora_fin());
+                        if(minutos>15) {
+                            Tarifa tarifaEspecial = tarifaRepository.getTarifaExtraEnPlazoValido();
+                            Long minutosFinal = minutos-15 ;
+                             tarifaXpausas = minutosFinal*tarifaEspecial.getTarifaEspecial();
+                }
+
+            }
+                userDTO u  = userFeignClient.getUsuarioById(v.getId_usuario()).getBody();
+                u.setBalance(tarifaNormal+tarifaXpausas);
+              return new viajeDTO(v);
                 }
             }
 
-        */
-        
+       throw new RuntimeException();
+    }
+        }
 
-}
+

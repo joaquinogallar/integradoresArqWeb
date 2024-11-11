@@ -28,6 +28,8 @@ public class Viaje {
     private Double kmRecorridos;
     private Long id_usuario;
     private Long id_monopatin;
+    private int xOrigen ;
+    private int yOrigen;
 
 
     @OneToOne

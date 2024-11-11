@@ -20,16 +20,7 @@ public class Tarifa {
 
     @Column
     private Double tarifa;
-    private String tipoTarifa;
-    private Date fechaInicio;
-    private Double precioTarifaPausa;
+    private Double tarifaEspecial;
+    private Date fecha_inicio;
 
-
-    public Double getTarifa(){
-        return this.tarifa;
-    }
-
-    public String getTipo_tarifa(){
-        return this.tipoTarifa ;
-    }
 }

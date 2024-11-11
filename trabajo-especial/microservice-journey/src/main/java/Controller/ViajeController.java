@@ -34,14 +34,14 @@ public class ViajeController {
         }
     }
 
-//    @PutMapping("/endViaje/{idViaje}")
-//    public ResponseEntity<?> endViaje(@PathVariable Long idViaje){
-//        try {
-//            return ResponseEntity.status(HttpStatus.OK).body(viajeService.endViaje(idViaje));
-//        }catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        }
-//    }
+    @PutMapping("/endViaje/{idViaje}")
+    public ResponseEntity<?> endViaje(@PathVariable Long idViaje){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(viajeService.endViaje(idViaje));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
    @PostMapping("/crear/{monopatinId}/usuario/{usuarioId}")
         public void createViaje(@PathVariable("monopatinId") Long monopatinId, @PathVariable("usuarioId") Long usuarioId){
       viajeService.createViaje(monopatinId,usuarioId);
