@@ -62,7 +62,7 @@ public class StopService {
             return ResponseEntity.ok("Monopatin added successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error: " + e);
+                    .body("Error: " + e.getMessage());
         }
     }
 
