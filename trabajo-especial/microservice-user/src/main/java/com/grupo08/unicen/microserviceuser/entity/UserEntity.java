@@ -20,14 +20,10 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotNull(message = "Name cant be null")
-    @NotEmpty(message = "Name cant be empty")
     private String name;
-    @NotNull(message = "Lastname cant be null")
-    @NotEmpty(message = "Lastname cant be empty")
+
     private String lastname;
-    @NotNull(message = "Email cant be null")
-    @NotEmpty(message = "Email cant be empty")
+
     private String email;
     private String phoneNumber;
 

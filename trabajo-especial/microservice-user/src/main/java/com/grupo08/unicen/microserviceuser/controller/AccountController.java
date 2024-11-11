@@ -1,5 +1,6 @@
 package com.grupo08.unicen.microserviceuser.controller;
 
+import com.grupo08.unicen.microserviceuser.dto.AccountDto;
 import com.grupo08.unicen.microserviceuser.entity.Account;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
 import com.grupo08.unicen.microserviceuser.service.AccountService;
@@ -22,22 +23,22 @@ public class AccountController {
 
     // basic methods
     @GetMapping
-    public ResponseEntity<List<Account>> getAllUsers() {
+    public ResponseEntity<List<AccountDto>> getAllUsers() {
         return accountService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Account> getUserById(@PathVariable UUID accountId) {
+    public ResponseEntity<AccountDto> getUserById(@PathVariable UUID accountId) {
         return accountService.getUserById(accountId);
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody Account newAccount) {
+    public ResponseEntity<String> createUser(@RequestBody AccountDto newAccount) {
         return accountService.createUser(newAccount);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Account> deleteUserById(@PathVariable UUID accountId) {
+    public ResponseEntity<AccountDto> deleteUserById(@PathVariable UUID accountId) {
         return accountService.deleteUserById(accountId);
     }
 

@@ -1,17 +1,18 @@
 package com.grupo08.unicen.microserviceuser.entity;
 
+import com.grupo08.unicen.microserviceuser.dto.AccountDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
-@NoArgsConstructor
 @ToString
 public class Account {
 
@@ -26,9 +27,15 @@ public class Account {
     @ManyToMany(mappedBy = "accounts")
     private List<UserEntity> users;
 
-    // assign the date before persist
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
+    public Account() {
+        this.createdAt = LocalDateTime.now();
+        this.balance = 0.0;
+        this.users = new ArrayList<>();
+    }
+
+    public Account(AccountDto accountDto) {
+        this.createdAt = accountDto.getCreatedAt();
+        this.balance = accountDto.getBalance();
+        this.users = new ArrayList<>();
     }
 }
