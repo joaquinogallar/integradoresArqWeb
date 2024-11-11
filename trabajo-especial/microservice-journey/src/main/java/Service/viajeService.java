@@ -1,6 +1,7 @@
 package Service;
 
 import DTOS.viajeDTO;
+import Entitys.Pausa;
 import Entitys.Viaje;
 import FeignClients.MonopatinFeignClient;
 import FeignClients.UserFeignClient;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import Repository.viajeRepository ;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class viajeService {
     UserFeignClient userFeignClient;
     @Autowired
     MonopatinFeignClient monopatinFeignClient;
+    @Autowired
+    PausaService pausaService;
     public List<viajeDTO> getAll() {
         try{
             List<Viaje> viajes  =   this.viajeRepository.findAll() ;
@@ -38,4 +42,39 @@ public class viajeService {
             viajeRepository.save(viaje);
         }
     }
+
+    public List<viajeDTO> getViajeByMonopatin(Long idMonopatin) {
+        List<Viaje> viajes= viajeRepository.FindViajesPorId_monopatin(idMonopatin);
+        List<viajeDTO> aux = new ArrayList<>();
+        for (Viaje v : viajes) {
+            aux.add(new viajeDTO(v)) ;
+        }
+        return aux;
+
+    }
+    public List<Long>getMonopatinesByViajes(int cantidad, int anio){
+        return viajeRepository.findMonopatinesByViaje(anio,cantidad);
+    }
+
+    /*public viajeDTO endViaje(Long idViaje){
+        Viaje v  = viajeRepository.findById(idViaje).orElse(null);
+
+        if(v!=null){
+            v.setFecha_fin(LocalDate.now());
+            //SETEAR KILOMETROS RECORRIDOS ?
+            viajeRepository.save(v);
+            List<Pausa>pausas = viajeRepository.findPausasByIdViaje(idViaje);
+            double TarifaXpausas = 0 ;
+            for (Pausa pausa : pausas) {
+                Long minutos = ChronoUnit.MINUTES.between(pausa.getHora_inicio(), pausa.getHora_fin());
+                if(minutos>15) {
+                    Long minutosFinal = minutos-15 ;
+                    minutosFinal = minutosFinal*
+
+                }
+            }
+
+        */
+
+
 }
