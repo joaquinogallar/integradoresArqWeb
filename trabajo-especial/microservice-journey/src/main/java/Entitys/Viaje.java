@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import Model.MonopatinDTO;
+
 @Entity
 
 @Data
@@ -27,7 +29,7 @@ public class Viaje {
     private LocalDate fecha_fin;
     private Double kmRecorridos;
     private Long id_usuario;
-    private Long id_monopatin;
+    private MonopatinDTO monopatin;
     private int xOrigen ;
     private int yOrigen;
 
@@ -38,10 +40,10 @@ public class Viaje {
 
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL)
     private List<Pausa> pausas;
-    public Viaje (LocalDate fecha_inicio, Long id_usuario, Long id_monopatin){
+    public Viaje (LocalDate fecha_inicio, Long id_usuario, MonopatinDTO monopatin){
     this.fecha_inicio = fecha_inicio;
     this.id_usuario = id_usuario;
-    this.id_monopatin = id_monopatin;
+    this.monopatin = monopatin;
     }
     public double getkmRecorridos() {
         return kmRecorridos;

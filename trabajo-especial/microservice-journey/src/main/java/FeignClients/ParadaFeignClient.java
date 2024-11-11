@@ -11,5 +11,5 @@ public interface ParadaFeignClient {
     ResponseEntity<?> getParadaById(@PathVariable Long idParada);
 
     @GetMapping("/parada/{x}/{y}")
-    ResponseEntity<p> getParadaByX(@PathVariable double x, @PathVariable double y);
+    ResponseEntity<?> getParadaByX(@PathVariable double x, @PathVariable double y);
 }

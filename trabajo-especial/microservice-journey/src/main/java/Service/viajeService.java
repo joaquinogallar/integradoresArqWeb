@@ -7,10 +7,11 @@ import Entitys.Viaje;
 import FeignClients.MonopatinFeignClient;
 import FeignClients.ParadaFeignClient;
 import FeignClients.UserFeignClient;
+import Model.MonopatinDTO;
+import Model.UserDTO;
 import Repository.TarifaRepository;
-import com.example.microservicioMonopatin.entity.Monopatin;
-import com.example.microservicioMonopatin.entity.MonopatinDTO;
-import com.example.microserviciouser.DTOS.userDTO;
+
+
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class viajeService {
     }
     public void createViaje(Long monopatinId, Long usuarioId){
         if (monopatinFeignClient.getMonopatinById(monopatinId) != null && userFeignClient.getUsuarioById(usuarioId)!=null) {
-            Viaje viaje = new Viaje(LocalDate.now(), monopatinId, usuarioId);
+            Viaje viaje = new Viaje(LocalDate.now(),usuarioId,monopatinFeignClient.getMonopatinById(monopatinId));
             viajeRepository.save(viaje);
         }
     }
@@ -66,15 +67,16 @@ public class viajeService {
     }
 
     public viajeDTO endViaje(Long idViaje){
-        int xfinal = 0 ;
-        int yfinal = 0;
+        double xfinal = 0 ;
+        double yfinal = 0;
         Viaje v  = viajeRepository.findById(idViaje).orElse(null);
         if(v!=null){
 
-          MonopatinDTO m = monopatinFeignClient.getMonopatinById(v.getId_monopatin()).getBody();
-          if(m!=null){
+            MonopatinDTO m = v.getMonopatin();
+          if(v.getMonopatin()!=null){
                 if(paradaFeignClient.getParadaByX(m.getX(),m.getY())!=null){
                     v.setFecha_fin(LocalDate.now());
+                   
                     m.setDisponible(true);
                     if(v.getXOrigen()- m.getX() <0)
                     xfinal = (v.getXOrigen()- m.getX())*-1  ;
@@ -103,7 +105,7 @@ public class viajeService {
                 }
 
             }
-                userDTO u  = userFeignClient.getUsuarioById(v.getId_usuario()).getBody();
+                UserDTO u  =  userFeignClient.getUsuarioById(v.getId_usuario()).getBody();
                 u.setBalance(tarifaNormal+tarifaXpausas);
               return new viajeDTO(v);
                 }
