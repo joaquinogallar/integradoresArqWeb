@@ -38,5 +38,4 @@ public class viajeService {
             viajeRepository.save(viaje);
         }
     }
-    public void
 }
