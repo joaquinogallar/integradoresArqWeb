@@ -1,4 +1,4 @@
-package FeignClients;
+package com.grupo08.unicen.microservicejourney.client;
 
 
 
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import Model.UserDTO;
+import com.grupo08.unicen.microservicejourney.model.UserDTO;
 
 @FeignClient(name = "usuario-service", url = "http://localhost:8086")
 public interface UserFeignClient {

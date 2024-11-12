@@ -19,7 +19,8 @@ public class Monopatin {
 
     @Enumerated(EnumType.STRING)
     private State state;
-    private String location;
+    private Double x;
+    private Double y;
     private BigDecimal kmTraveled;
     private BigDecimal useTime;
 }

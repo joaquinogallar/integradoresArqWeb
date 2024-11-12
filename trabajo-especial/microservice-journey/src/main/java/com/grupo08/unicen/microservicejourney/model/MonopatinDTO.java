@@ -1,4 +1,4 @@
-package Model;
+package com.grupo08.unicen.microservicejourney.model;
 
 public class MonopatinDTO {
     private int x ;

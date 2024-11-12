@@ -1,8 +1,8 @@
-package Service;
+package com.grupo08.unicen.microservicejourney.service;
 
-import DTOS.TarifaDTO;
-import Entitys.Tarifa;
-import Repository.TarifaRepository;
+import com.grupo08.unicen.microservicejourney.dto.TarifaDTO;
+import com.grupo08.unicen.microservicejourney.entity.Tarifa;
+import com.grupo08.unicen.microservicejourney.repository.TarifaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

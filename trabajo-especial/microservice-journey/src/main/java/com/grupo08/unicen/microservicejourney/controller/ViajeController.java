@@ -1,7 +1,7 @@
-package Controller;
+package com.grupo08.unicen.microservicejourney.controller;
 
 
-import Service.viajeService;
+import com.grupo08.unicen.microservicejourney.service.viajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

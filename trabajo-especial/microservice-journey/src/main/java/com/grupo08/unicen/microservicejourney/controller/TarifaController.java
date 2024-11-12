@@ -1,7 +1,7 @@
-package Controller;
+package com.grupo08.unicen.microservicejourney.controller;
 
-import Entitys.Tarifa;
-import Service.TarifaService;
+import com.grupo08.unicen.microservicejourney.entity.Tarifa;
+import com.grupo08.unicen.microservicejourney.service.TarifaService;
 
 
 

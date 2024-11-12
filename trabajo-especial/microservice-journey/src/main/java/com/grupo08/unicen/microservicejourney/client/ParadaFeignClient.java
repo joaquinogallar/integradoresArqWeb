@@ -1,4 +1,4 @@
-package FeignClients;
+package com.grupo08.unicen.microservicejourney.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

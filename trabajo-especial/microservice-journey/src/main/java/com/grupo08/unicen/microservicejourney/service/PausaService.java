@@ -1,12 +1,12 @@
-package Service;
+package com.grupo08.unicen.microservicejourney.service;
 
-import DTOS.PausaDTO;
-import Entitys.Pausa;
-import Entitys.Viaje;
-import Repository.PausaRepository;
+import com.grupo08.unicen.microservicejourney.dto.PausaDTO;
+import com.grupo08.unicen.microservicejourney.entity.Pausa;
+import com.grupo08.unicen.microservicejourney.entity.Viaje;
+import com.grupo08.unicen.microservicejourney.repository.PausaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import Repository.viajeRepository ;
+import com.grupo08.unicen.microservicejourney.repository.viajeRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

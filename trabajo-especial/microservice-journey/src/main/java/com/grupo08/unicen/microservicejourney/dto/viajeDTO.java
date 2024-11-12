@@ -1,6 +1,6 @@
-package DTOS;
+package com.grupo08.unicen.microservicejourney.dto;
 
-import Entitys.Viaje;
+import com.grupo08.unicen.microservicejourney.entity.Viaje;
 
 public class viajeDTO {
 

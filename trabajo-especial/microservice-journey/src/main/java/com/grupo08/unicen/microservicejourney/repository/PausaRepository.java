@@ -1,6 +1,6 @@
-package Repository;
+package com.grupo08.unicen.microservicejourney.repository;
 
-import Entitys.Pausa;
+import com.grupo08.unicen.microservicejourney.entity.Pausa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

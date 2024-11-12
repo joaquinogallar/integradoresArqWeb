@@ -1,21 +1,20 @@
-package Service;
+package com.grupo08.unicen.microservicejourney.service;
 
-import DTOS.viajeDTO;
-import Entitys.Pausa;
-import Entitys.Tarifa;
-import Entitys.Viaje;
-import FeignClients.MonopatinFeignClient;
-import FeignClients.ParadaFeignClient;
-import FeignClients.UserFeignClient;
-import Model.MonopatinDTO;
-import Model.UserDTO;
-import Repository.TarifaRepository;
+import com.grupo08.unicen.microservicejourney.dto.viajeDTO;
+import com.grupo08.unicen.microservicejourney.entity.Pausa;
+import com.grupo08.unicen.microservicejourney.entity.Tarifa;
+import com.grupo08.unicen.microservicejourney.entity.Viaje;
+import com.grupo08.unicen.microservicejourney.client.MonopatinFeignClient;
+import com.grupo08.unicen.microservicejourney.client.ParadaFeignClient;
+import com.grupo08.unicen.microservicejourney.client.UserFeignClient;
+import com.grupo08.unicen.microservicejourney.model.MonopatinDTO;
+import com.grupo08.unicen.microservicejourney.model.UserDTO;
+import com.grupo08.unicen.microservicejourney.repository.TarifaRepository;
 
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import Repository.viajeRepository ;
+import com.grupo08.unicen.microservicejourney.repository.viajeRepository;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

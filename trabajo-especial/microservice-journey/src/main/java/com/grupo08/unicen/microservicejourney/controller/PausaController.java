@@ -1,4 +1,4 @@
-package Controller;
+package com.grupo08.unicen.microservicejourney.controller;
 
 
 
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import Service.PausaService ;
+import com.grupo08.unicen.microservicejourney.service.PausaService;
 
 @RestController
 @RequestMapping("/pausas")
