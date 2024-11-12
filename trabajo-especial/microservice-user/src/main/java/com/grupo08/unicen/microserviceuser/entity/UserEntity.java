@@ -1,6 +1,7 @@
 package com.grupo08.unicen.microserviceuser.entity;
 
 import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
+import com.grupo08.unicen.microserviceuser.model.JourneyDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -31,12 +32,16 @@ public class UserEntity {
     @ManyToMany
     private List<Account> accounts;
 
+    @ElementCollection
+    private List<UUID> journeys;
+
     public UserEntity(String name, String lastname, String email, String phoneNumber) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
         this.phoneNumber = phoneNumber;
         accounts = new ArrayList<>();
+
     }
 
     public UserEntity(UserEntityDto userEntityDto) {
