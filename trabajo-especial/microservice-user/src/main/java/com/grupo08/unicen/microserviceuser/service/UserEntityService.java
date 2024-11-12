@@ -1,6 +1,8 @@
 package com.grupo08.unicen.microserviceuser.service;
 
+import com.grupo08.unicen.microservicejourney.dto.JourneyDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
+import com.grupo08.unicen.microserviceuser.client.JourneyFeignClient;
 import com.grupo08.unicen.microserviceuser.client.MonopatinFeignClient;
 import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
@@ -20,6 +22,8 @@ public class UserEntityService {
 
     private final UserEntityRepository userEntityRepository;
     private MonopatinFeignClient monopatinFeignClient;
+    @Autowired
+    private JourneyFeignClient journeyFeignClient;
 
     // dependency injection
     public UserEntityService(UserEntityRepository userEntityRepository, MonopatinFeignClient monopatinFeignClient) {
@@ -66,13 +70,13 @@ public class UserEntityService {
         return ResponseEntity.ok(userDto);
     }
 
-    public ResponseEntity<String> activateMonopatinByQr(UUID monopatinId) {
+    public ResponseEntity<JourneyDto> activateMonopatinByQr(UUID monopatinId, UUID userId) {
         try {
             Monopatin monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
-            return null;
+            return journeyFeignClient.createViaje(monopatinId, userId);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error: " + e.getMessage());
+                    .body(null);
         }
     }
 

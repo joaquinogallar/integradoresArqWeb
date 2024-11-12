@@ -13,7 +13,7 @@ import com.grupo08.unicen.microservicejourney.model.UserDto;
 
 import java.util.UUID;
 
-@FeignClient(name = "usuario-service", url = "http://localhost:8086")
+@FeignClient("MICROSERVICE-USER")
 public interface UserFeignClient {
 
     @GetMapping("/api/users/{userId}")
