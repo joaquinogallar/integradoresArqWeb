@@ -48,7 +48,8 @@ public class viajeService {
     }
     public void createViaje(Long monopatinId, Long usuarioId){
         if (monopatinFeignClient.getMonopatinById(monopatinId) != null && userFeignClient.getUsuarioById(usuarioId)!=null) {
-            Viaje viaje = new Viaje(LocalDate.now(),usuarioId,monopatinFeignClient.getMonopatinById(monopatinId));
+            MonopatinDTO m = monopatinFeignClient.getMonopatinById(monopatinId);
+            Viaje viaje = new Viaje(LocalDate.now(),usuarioId,monopatinFeignClient.getMonopatinById(monopatinId),m.getX(),m.getY());
             viajeRepository.save(viaje);
         }
     }

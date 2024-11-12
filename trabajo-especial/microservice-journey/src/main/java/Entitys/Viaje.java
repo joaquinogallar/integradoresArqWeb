@@ -32,7 +32,7 @@ public class Viaje {
     private MonopatinDTO monopatin;
     private int xOrigen ;
     private int yOrigen;
-
+    
 
     @OneToOne
     @JoinColumn(name = "id_tarifa")
@@ -40,10 +40,12 @@ public class Viaje {
 
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL)
     private List<Pausa> pausas;
-    public Viaje (LocalDate fecha_inicio, Long id_usuario, MonopatinDTO monopatin){
+    public Viaje (LocalDate fecha_inicio, Long id_usuario, MonopatinDTO monopatin,int x, int y){
     this.fecha_inicio = fecha_inicio;
     this.id_usuario = id_usuario;
     this.monopatin = monopatin;
+    this.xOrigen = x;
+    this.yOrigen = y;
     }
     public double getkmRecorridos() {
         return kmRecorridos;

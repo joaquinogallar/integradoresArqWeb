@@ -3,11 +3,11 @@ package Model;
 public class MonopatinDTO {
     private int x ;
     private int y ;
-    public double getX() {
+    public int getX() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getX'");
     }
-    public double getY() {
+    public int getY() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getY'");
     }
@@ -15,4 +15,5 @@ public class MonopatinDTO {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setDisponible'");
     }
+    
 }
