@@ -43,8 +43,8 @@ public class UserEntityController {
         return userEntityService.deleteUserById(userId);
     }
 
-    @PostMapping("/{userId}/qr/{monopatinId}")
-    public ResponseEntity<JourneyDto> activateMonopatinByQr(@PathVariable UUID userId, @PathVariable UUID monopatinId) {
-        return userEntityService.activateMonopatinByQr(userId, monopatinId);
+    @PostMapping("/{userId}/accounts/{accountId}/qr/{monopatinId}")
+    public ResponseEntity<JourneyDto> activateMonopatinByQr(@PathVariable UUID userId,  @PathVariable UUID accountId, @PathVariable UUID monopatinId) {
+        return userEntityService.activateMonopatinByQr(userId, monopatinId, accountId);
     }
 }
