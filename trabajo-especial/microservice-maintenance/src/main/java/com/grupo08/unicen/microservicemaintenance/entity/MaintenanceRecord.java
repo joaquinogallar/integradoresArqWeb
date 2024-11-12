@@ -1,8 +1,6 @@
 package com.grupo08.unicen.microservicemaintenance.entity;
 
 import com.grupo08.unicen.microservicemaintenance.dto.MaintenanceRecordDto;
-import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,10 +9,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
+
+
 @Data
 @NoArgsConstructor
 @ToString
+@Entity
 public class MaintenanceRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

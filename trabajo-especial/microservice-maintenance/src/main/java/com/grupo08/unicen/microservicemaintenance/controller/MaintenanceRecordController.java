@@ -2,6 +2,7 @@ package com.grupo08.unicen.microservicemaintenance.controller;
 
 
 import com.grupo08.unicen.microservicemaintenance.dto.MaintenanceRecordDto;
+import com.grupo08.unicen.microservicemaintenance.dto.ReporteMonopatinesMantenimientoDTO;
 import com.grupo08.unicen.microservicemaintenance.entity.MaintenanceRecord;
 import com.grupo08.unicen.microservicemaintenance.service.MaintenanceRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,9 @@ public class MaintenanceRecordController {
     public ResponseEntity<MaintenanceRecordDto> deleteMaintenanceRecordById(@PathVariable UUID maintenanceId) {
         return maintenanceRecordService.deleteMaintenanceRecordById(maintenanceId);
     }
+
+    //@GetMapping("/monopatines/maintence")
+   // public ResponseEntity<ReporteMonopatinesMantenimientoDTO>GetReporteMonopatinesActivos(){
+        
+    //}
 }

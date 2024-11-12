@@ -83,6 +83,35 @@ public class MonopatinService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'putMonopatin'");
     }
+
+    public ResponseEntity <List<MonopatinDto>> getMonopatinesInMaintenance() {
+        try {
+            List<Monopatin>m = monopatinRepository.getMonopatinesInMaintenance();
+        List<MonopatinDto> aux = new ArrayList<>();
+        for (Monopatin monopatin : m) {
+            aux.add(new MonopatinDto(monopatin));
+        }
+        return ResponseEntity.ok(aux);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
+        }
+        
+    }
+
+    public ResponseEntity<List<MonopatinDto>> getActivesMonopatines() {
+        try {
+            List<Monopatin>m = monopatinRepository.getActivesMonopatines();
+        List<MonopatinDto> aux = new ArrayList<>();
+        for (Monopatin monopatin : m) {
+            aux.add(new MonopatinDto(monopatin));
+        }
+        return ResponseEntity.ok(aux);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
+    }
+}
 }
 
 

@@ -3,7 +3,7 @@ package com.grupo08.unicen.microservicejourney.controller;
 import com.grupo08.unicen.microservicejourney.entity.Fee;
 import com.grupo08.unicen.microservicejourney.service.FeeService;
 
-
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class FeeController {
     }
 
     @GetMapping("/{tarifaId}")
-    public ResponseEntity<?> getTarifaById(@PathVariable Long tarifaId) {
+    public ResponseEntity<?> getTarifaById(@PathVariable UUID tarifaId) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(tarifaService.getById(tarifaId));
         }catch (Exception e) {

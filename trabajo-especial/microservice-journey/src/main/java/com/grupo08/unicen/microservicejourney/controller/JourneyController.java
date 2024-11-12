@@ -3,13 +3,16 @@ package com.grupo08.unicen.microservicejourney.controller;
 
 import com.grupo08.unicen.microservicejourney.dto.JourneyDto;
 import com.grupo08.unicen.microservicejourney.service.JourneyService;
+
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 
 @RestController
@@ -33,6 +36,7 @@ public class JourneyController {
     }
 
     @PutMapping("/endViaje/{idViaje}")
+
     public ResponseEntity<JourneyDto> endViaje(@PathVariable UUID idViaje){
         try {
             return ResponseEntity.ok(viajeService.endViaje(idViaje));

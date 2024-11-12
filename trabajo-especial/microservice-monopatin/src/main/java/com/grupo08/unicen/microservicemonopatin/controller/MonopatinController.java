@@ -34,20 +34,28 @@ public class MonopatinController {
         return monopatinService.createMonopatin(newMonopatin);
     }
 
-    @GetMapping("/order/tiempo-uso/con-pausa")
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesConTiempoPausa()  {
+    @GetMapping("/order/use-time/with-pause")
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesWithTimePause()  {
         return monopatinService.getMonopatinesConTiempoPausa();
     }
 
 
-    @GetMapping("/order/tiempo-uso/sin-pausa")
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesSinTiempoPausa()  {
+    @GetMapping("/order/use-time/without-pause")
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesWithoutTimePause()  {
         return monopatinService.getMonopatinesSinTiempoPausa();
 
     }
     @PutMapping("/{monopatinID}")
-    public ResponseEntity<MonopatinDto>editarMonopatin(@PathVariable Long monopatinID){
+    public ResponseEntity<MonopatinDto>editMonopatin(@PathVariable Long monopatinID){
         return monopatinService.putMonopatin(monopatinID);
     }
-       
+    @GetMapping("/maintenance")
+    public ResponseEntity<List<MonopatinDto>>getMonopatinesInMaintenance(){
+        return monopatinService.getMonopatinesInMaintenance();
+    }   
+
+    @GetMapping("/actives")
+    public ResponseEntity<List<MonopatinDto>>getActivesMonopatines(){
+        return monopatinService.getActivesMonopatines();
+    }
 }

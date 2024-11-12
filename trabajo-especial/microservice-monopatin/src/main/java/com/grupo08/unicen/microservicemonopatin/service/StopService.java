@@ -18,7 +18,7 @@ public class StopService {
 
     private StopRepository stopRepository;
     private MonopatinRepository monopatinRepository;
-ww
+
     public StopService(StopRepository stopRepository, MonopatinRepository monopatinRepository) {
         this.stopRepository = stopRepository;
         this.monopatinRepository = monopatinRepository;

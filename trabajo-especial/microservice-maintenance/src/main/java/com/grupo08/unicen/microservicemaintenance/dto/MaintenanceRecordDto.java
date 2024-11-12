@@ -1,8 +1,6 @@
 package com.grupo08.unicen.microservicemaintenance.dto;
 
 import com.grupo08.unicen.microservicemaintenance.entity.MaintenanceRecord;
-import com.grupo08.unicen.microservicemonopatin.DTO.MonopatinDTO;
-import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

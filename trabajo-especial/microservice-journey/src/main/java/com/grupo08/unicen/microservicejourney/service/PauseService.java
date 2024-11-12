@@ -40,7 +40,7 @@ public class PauseService {
                 throw new RuntimeException();
             }
             Pause p = new Pause();
-            p.setViaje(j);
+            p.setJourney(j);
             p.setStartDate(LocalDateTime.now());
             this.pauseRepository.save(p);
 

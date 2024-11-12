@@ -2,6 +2,8 @@ package com.grupo08.unicen.microservicejourney.controller;
 
 
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ public class PauseController {
      PauseService pausaService;
 
     @PostMapping("viaje/{idViaje}")
-    public ResponseEntity<?> crearPausa(@PathVariable Long idViaje){
+    public ResponseEntity<?> crearPausa(@PathVariable UUID idViaje){
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(pausaService.crearPausa(idViaje));
         } catch (Exception e) {
@@ -30,7 +32,7 @@ public class PauseController {
 
 
     @GetMapping("/viaje/{idViaje}")
-    public ResponseEntity<?> getPausasPorViaje(@PathVariable Long idViaje){
+    public ResponseEntity<?> getPausasPorViaje(@PathVariable UUID idViaje){
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(pausaService.getPausasPorViaje(idViaje));
         } catch (Exception e) {

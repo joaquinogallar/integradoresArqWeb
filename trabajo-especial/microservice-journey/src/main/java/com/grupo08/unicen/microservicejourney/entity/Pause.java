@@ -27,7 +27,7 @@ public class Pause {
 
     @ManyToOne
     @JoinColumn(name = "id_viaje")
-    private Journey viaje;
+    private Journey journey;
 
 
 }
