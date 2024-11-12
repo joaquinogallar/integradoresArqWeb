@@ -11,11 +11,6 @@ import com.grupo08.unicen.microservicejourney.model.MonopatinDTO;
 import com.grupo08.unicen.microservicejourney.model.UserDTO;
 import com.grupo08.unicen.microservicejourney.repository.TarifaRepository;
 
-
-<<<<<<< Updated upstream:trabajo-especial/microservice-journey/src/main/java/com/grupo08/unicen/microservicejourney/service/viajeService.java
-=======
-
->>>>>>> Stashed changes:trabajo-especial/microservice-journey/src/main/java/Service/viajeService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.grupo08.unicen.microservicejourney.repository.viajeRepository;
