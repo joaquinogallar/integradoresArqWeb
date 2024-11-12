@@ -77,10 +77,10 @@ public class UserEntityService {
     public ResponseEntity<JourneyDto> activateMonopatinByQr(UUID monopatinId, UUID userId, UUID accountId) {
         try {
             UserEntity user = userEntityRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId.toString()));
-            Account account = accountRepository.findById(accountId).orElseThrow(() -> new AccountNotFoundException(accountId.toString()));
+            Account account = accountRepository.findById(accountId).orElseThrow(() -> new RuntimeException(accountId.toString()));
 
             if(!user.getAccounts().contains(account))
-                throw new AccountNotFoundException(accountId.toString());
+                throw new RuntimeException(accountId.toString());
 
             Monopatin monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
             return journeyFeignClient.createViaje(monopatinId, userId);
