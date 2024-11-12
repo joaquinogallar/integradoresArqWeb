@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tarifas")
-public class TarifaController {
+public class FeeController {
 
     @Autowired
     FeeService tarifaService;

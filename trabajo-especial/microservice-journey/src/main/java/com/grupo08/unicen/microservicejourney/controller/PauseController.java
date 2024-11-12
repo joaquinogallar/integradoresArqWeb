@@ -12,7 +12,7 @@ import com.grupo08.unicen.microservicejourney.service.PauseService;
 
 @RestController
 @RequestMapping("/pausas")
-public class PausaController {
+public class PauseController {
 
 
      @Autowired

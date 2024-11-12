@@ -15,6 +15,7 @@ import com.grupo08.unicen.microservicemonopatin.entity.State;
 import com.grupo08.unicen.microserviceuser.dto.AccountDto;
 import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.grupo08.unicen.microservicejourney.repository.JourneyRepository;
 
@@ -38,25 +39,24 @@ public class JourneyService {
     @Autowired
     FeeRepository feeRepository ;
 
-    public List<JourneyDto> getAll() {
+    public ResponseEntity<List<JourneyDto>> getAll() {
         try{
             List<Journey> journeys = this.journeyRepository.findAll() ;
             List<JourneyDto> journeyDtos = new ArrayList<>();
             journeys.forEach(j -> journeyDtos.add(new JourneyDto(j)));
 
-            return journeyDtos;
+            return ResponseEntity.ok(journeyDtos);
         }catch (Exception e){
         throw new RuntimeException(e);
         }
     }
 
-    public void createViaje(UUID monopatinId, UUID userId) {
-
+    public ResponseEntity<JourneyDto> createViaje(UUID monopatinId, UUID userId) {
         try {
             Monopatin monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
             UserEntityDto user = userFeignClient.getUserById(userId).getBody();
-            AccountDto account = null;
-            Journey journey = new Journey(monopatinId, userId, UUID.randomUUID(), monopatin.getX(), monopatin.getY());
+            Journey journey = new Journey(monopatinId, userId, monopatin.getX(), monopatin.getY());
+            return ResponseEntity.ok(new JourneyDto(journey));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

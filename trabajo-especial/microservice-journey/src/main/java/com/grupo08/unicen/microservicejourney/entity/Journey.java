@@ -25,9 +25,10 @@ public class Journey {
     private Double kmTraveled;
     private int xOrigin;
     private int yOrigin;
+    private Integer xDestinatio;
+    private Integer yDestinatio;
 
     private UUID userId;
-    private UUID accountId;
     private UUID monopatinId;
 
     @OneToOne
@@ -37,7 +38,7 @@ public class Journey {
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL)
     private List<Pause> pauses;
 
-    public Journey(UUID monopatinId, UUID userId, UUID accountId, int x, int y){
+    public Journey(UUID monopatinId, UUID userId, int x, int y){
         this.startDate = LocalDateTime.now();
         this.userId = userId;
         this.monopatinId = monopatinId;
