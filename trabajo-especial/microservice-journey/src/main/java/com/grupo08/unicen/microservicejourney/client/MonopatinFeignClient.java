@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.grupo08.unicen.microservicejourney.model.MonopatinDTO;
 
-@FeignClient(name = "monopatin-service", url = "http://localhost:8083")
+@FeignClient("MONOPATIN-SERVICE")
 public interface MonopatinFeignClient {
     @GetMapping("/monopatin/{idMonopatin}")
     MonopatinDTO getMonopatinById(@PathVariable Long idMonopatin);
@@ -17,6 +17,5 @@ public interface MonopatinFeignClient {
     @GetMapping("/ubicacion/{id}")
     ResponseEntity<?>getUbicacion(@PathVariable Long idMonopatin);
 
-    //@PutMapping("/")
 }
 
