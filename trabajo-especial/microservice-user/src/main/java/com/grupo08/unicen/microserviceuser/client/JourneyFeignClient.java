@@ -13,15 +13,12 @@ import java.util.UUID;
 
 @FeignClient("MICROSERVICE-JOURNEY")
 public interface JourneyFeignClient {
-    @GetMapping("/")
+    @GetMapping("/api/journeys/")
     public ResponseEntity<List<JourneyDto>> getAll();
 
-    @PostMapping("/crear/{monopatinId}/usuario/{usuarioId}")
-    public void createViaje(@PathVariable("monopatinId") UUID monopatinId, @PathVariable("usuarioId") UUID usuarioId);
+    @PostMapping("/api/journeys/crear/{monopatinId}/usuario/{usuarioId}")
+    public ResponseEntity<JourneyDto> createViaje(@PathVariable("monopatinId") UUID monopatinId, @PathVariable("usuarioId") UUID usuarioId);
 
-    @PutMapping("/endViaje/{idViaje}")
+    @PutMapping("/api/journeys/endViaje/{idViaje}")
     public ResponseEntity<JourneyDto> endViaje(@PathVariable UUID idViaje);
-
-    @PostMapping("/crear/{monopatinId}/usuario/{usuarioId}")
-    public void createViaje(@PathVariable("monopatinId") Long monopatinId, @PathVariable("usuarioId") Long usuarioId);
 }

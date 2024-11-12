@@ -16,13 +16,13 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/viajes")
+@RequestMapping("/api/journeys")
 public class JourneyController {
 
     @Autowired
     JourneyService viajeService ;
 
-    @GetMapping("/")
+    @GetMapping
     public  ResponseEntity<List<JourneyDto>> getAll(){
         return viajeService.getAll();
     }
@@ -46,8 +46,8 @@ public class JourneyController {
     }
 
    @PostMapping("/crear/{monopatinId}/usuario/{usuarioId}")
-   public void createViaje(@PathVariable("monopatinId") UUID monopatinId, @PathVariable("usuarioId") UUID usuarioId){
-       viajeService.createViaje(monopatinId, usuarioId);
+   public ResponseEntity<JourneyDto> createViaje(@PathVariable("monopatinId") UUID monopatinId, @PathVariable("usuarioId") UUID usuarioId){
+       return viajeService.createViaje(monopatinId, usuarioId);
    }
 
     @GetMapping("/monopatin/{monopatinId}")

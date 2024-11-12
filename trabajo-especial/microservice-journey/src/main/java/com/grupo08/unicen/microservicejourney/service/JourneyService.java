@@ -47,7 +47,7 @@ public class JourneyService {
 
             return ResponseEntity.ok(journeyDtos);
         }catch (Exception e){
-        throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -60,12 +60,6 @@ public class JourneyService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-/*        if (monopatinFeignClient.getMonopatinById(monopatinId) != null && userFeignClient.getUsuarioById(usuarioId)!=null) {
-            Monopatin m = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
-            Journey journey = new Journey(LocalDate.now(),usuarioId,monopatinFeignClient.getMonopatinById(monopatinId),m.getX(),m.getY(),LocalDateTime.now());
-            journeyRepository.save(journey);
-        }*/
     }
 
     public List<JourneyDto> getViajeByMonopatin(UUID idMonopatin) {
