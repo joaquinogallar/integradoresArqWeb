@@ -9,15 +9,18 @@ import java.time.LocalDateTime;
 
 @Data
 public class AccountDto {
+    private String name;
     private LocalDateTime createdAt;
     private Double balance;
 
     public AccountDto(Account account) {
+        this.name = account.getName();
         this.createdAt = account.getCreatedAt();
         this.balance = account.getBalance();
     }
 
-    public AccountDto() {
+    public AccountDto(String name) {
+        this.name = name;
         this.createdAt = LocalDateTime.now();
         this.balance = 0.0;
     }

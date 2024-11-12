@@ -14,11 +14,14 @@ import java.util.UUID;
 @Entity
 @Data
 @ToString
+@NoArgsConstructor
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    private String name;
 
     private LocalDateTime createdAt;
 
@@ -27,7 +30,8 @@ public class Account {
     @ManyToMany(mappedBy = "accounts")
     private List<UserEntity> users;
 
-    public Account() {
+    public Account(String name) {
+        this.name = name;
         this.createdAt = LocalDateTime.now();
         this.balance = 0.0;
         this.users = new ArrayList<>();
