@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import com.grupo08.unicen.microservicejourney.service.PausaService;
+import com.grupo08.unicen.microservicejourney.service.PauseService;
 
 @RestController
 @RequestMapping("/pausas")
@@ -16,7 +16,7 @@ public class PausaController {
 
 
      @Autowired
-     PausaService pausaService;
+     PauseService pausaService;
 
     @PostMapping("viaje/{idViaje}")
     public ResponseEntity<?> crearPausa(@PathVariable Long idViaje){

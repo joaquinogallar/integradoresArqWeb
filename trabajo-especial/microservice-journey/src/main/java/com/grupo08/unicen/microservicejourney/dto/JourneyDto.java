@@ -1,12 +1,12 @@
 package com.grupo08.unicen.microservicejourney.dto;
 
-import com.grupo08.unicen.microservicejourney.entity.Viaje;
+import com.grupo08.unicen.microservicejourney.entity.Journey;
 
-public class viajeDTO {
+public class JourneyDto {
 
     private double kmRecorridos ;
 
-    public viajeDTO(Viaje v) {
+    public JourneyDto(Journey v) {
         this.kmRecorridos = v.getkmRecorridos();
     }
 }

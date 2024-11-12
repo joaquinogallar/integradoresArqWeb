@@ -1,6 +1,6 @@
 package com.grupo08.unicen.microservicemonopatin.controller;
 
-import com.grupo08.unicen.microservicemonopatin.DTO.MonopatinDTO;
+import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.service.MonopatinService;
 import org.springframework.http.ResponseEntity;
@@ -20,33 +20,33 @@ public class MonopatinController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Monopatin>> getAllMonopatines() {
+    public ResponseEntity<List<MonopatinDto>> getAllMonopatines() {
         return monopatinService.getAllMonopatines();
     }
 
     @GetMapping("/{monopatinId}")
-    public ResponseEntity<Monopatin> getMonopatinById(@PathVariable UUID monopatinId) {
+    public ResponseEntity<MonopatinDto> getMonopatinById(@PathVariable UUID monopatinId) {
         return monopatinService.getMonopatinById(monopatinId);
     }
 
     @PostMapping
-    public ResponseEntity<String> createMonopatin(@RequestBody Monopatin newMonopatin) {
+    public ResponseEntity<String> createMonopatin(@RequestBody MonopatinDto newMonopatin) {
         return monopatinService.createMonopatin(newMonopatin);
     }
 
     @GetMapping("/order/tiempo-uso/con-pausa")
-    public ResponseEntity<List<MonopatinDTO>> getMonopatinesConTiempoPausa()  {
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesConTiempoPausa()  {
         return monopatinService.getMonopatinesConTiempoPausa();
     }
 
 
     @GetMapping("/order/tiempo-uso/sin-pausa")
-    public ResponseEntity<List<MonopatinDTO>> getMonopatinesSinTiempoPausa()  {
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesSinTiempoPausa()  {
         return monopatinService.getMonopatinesSinTiempoPausa();
 
     }
     @PutMapping("/{monopatinID}")
-    public ResponseEntity<MonopatinDTO>editarMonopatin(@PathVariable Long monopatinID){
+    public ResponseEntity<MonopatinDto>editarMonopatin(@PathVariable Long monopatinID){
         return monopatinService.putMonopatin(monopatinID);
     }
        

@@ -1,6 +1,6 @@
 package com.grupo08.unicen.microservicemonopatin.service;
 
-import com.grupo08.unicen.microservicemonopatin.DTO.MonopatinDTO;
+import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.exception.MonopatinNotFoundException;
 import com.grupo08.unicen.microservicemonopatin.repository.MonopatinRepository;
@@ -22,25 +22,27 @@ public class MonopatinService {
         this.monopatinRepository = monopatinRepository;
     }
 
-    public ResponseEntity<List<Monopatin>> getAllMonopatines() {
+    public ResponseEntity<List<MonopatinDto>> getAllMonopatines() {
         try {
             List<Monopatin> monopatines = monopatinRepository.findAll();
-            return ResponseEntity.ok(monopatines);
+            List<MonopatinDto> monopatinDtos = new ArrayList<>();
+            monopatines.forEach(m -> monopatinDtos.add(new MonopatinDto(m)));
+            return ResponseEntity.ok(monopatinDtos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
     }
 
-    public ResponseEntity<Monopatin> getMonopatinById(UUID monopatinId) {
+    public ResponseEntity<MonopatinDto> getMonopatinById(UUID monopatinId) {
         Monopatin monopatin = monopatinRepository.findById(monopatinId)
                 .orElseThrow(() -> new MonopatinNotFoundException(monopatinId.toString()));
-        return ResponseEntity.ok(monopatin);
+        return ResponseEntity.ok(new MonopatinDto(monopatin));
     }
 
-    public ResponseEntity<String> createMonopatin(Monopatin monopatin) {
+    public ResponseEntity<String> createMonopatin(MonopatinDto monopatin) {
         try {
-            monopatinRepository.save(monopatin);
+            monopatinRepository.save(new Monopatin(monopatin));
             return ResponseEntity.ok("Monopatin created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -48,12 +50,12 @@ public class MonopatinService {
         }
     }
 
-    public ResponseEntity<List<MonopatinDTO>> getMonopatinesConTiempoPausa() {
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesConTiempoPausa() {
            try{
             List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesConTiempoPausa();
-            List<MonopatinDTO> respuesta = new ArrayList<>();
+            List<MonopatinDto> respuesta = new ArrayList<>();
             for (Monopatin monopatin : monopatines) {
-                respuesta.add(new MonopatinDTO(monopatin)) ;
+                respuesta.add(new MonopatinDto(monopatin)) ;
             }
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
@@ -63,12 +65,12 @@ public class MonopatinService {
     }
     
 
-    public ResponseEntity<List<MonopatinDTO>> getMonopatinesSinTiempoPausa() {
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesSinTiempoPausa() {
         try{
             List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesSinTiempoPausa();
-            List<MonopatinDTO> respuesta = new ArrayList<>();
+            List<MonopatinDto> respuesta = new ArrayList<>();
             for (Monopatin monopatin : monopatines) {
-                respuesta.add(new MonopatinDTO(monopatin));
+                respuesta.add(new MonopatinDto(monopatin));
             }
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
@@ -77,11 +79,11 @@ public class MonopatinService {
         }
     }
 
-    public ResponseEntity<MonopatinDTO> putMonopatin(Long monopatinID) {
+    public ResponseEntity<MonopatinDto> putMonopatin(Long monopatinID) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'putMonopatin'");
     }
-    }
+}
 
 
 

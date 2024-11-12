@@ -1,7 +1,7 @@
 package com.grupo08.unicen.microservicejourney.controller;
 
-import com.grupo08.unicen.microservicejourney.entity.Tarifa;
-import com.grupo08.unicen.microservicejourney.service.TarifaService;
+import com.grupo08.unicen.microservicejourney.entity.Fee;
+import com.grupo08.unicen.microservicejourney.service.FeeService;
 
 
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class TarifaController {
 
     @Autowired
-    TarifaService tarifaService;
+    FeeService tarifaService;
 
 
     @GetMapping("/")
@@ -40,7 +40,7 @@ public class TarifaController {
 
 
     @PostMapping("/")
-    public ResponseEntity<?> crateTarifa(@RequestBody Tarifa t) {
+    public ResponseEntity<?> crateTarifa(@RequestBody Fee t) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(tarifaService.crearTarifa(t));
         } catch (Exception e) {

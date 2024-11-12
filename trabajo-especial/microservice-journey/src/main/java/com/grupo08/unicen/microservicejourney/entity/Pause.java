@@ -7,31 +7,27 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pausa {
+public class Pause {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @Column
-    private Date fecha_inicio;
-    private LocalDateTime hora_inicio;
+    private LocalDateTime startDate;
 
     @Column(nullable = true)
-    private  Date fecha_fin;
-
-    @Column(nullable = true)
-    private LocalDateTime hora_fin;
+    private LocalDateTime finishDate;
 
     @ManyToOne
     @JoinColumn(name = "id_viaje")
-    private Viaje viaje;
+    private Journey viaje;
 
 
 }

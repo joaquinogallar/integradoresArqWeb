@@ -6,21 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
-@Table(name="tarifa")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tarifa {
+public class Fee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column
-    private Double tarifa;
-    private Double tarifaEspecial;
-    private Date fecha_inicio;
+    private Double fee;
+    private Double specialFee;
+    private Date startDate;
 
 }

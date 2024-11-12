@@ -1,7 +1,7 @@
 package com.grupo08.unicen.microservicejourney.controller;
 
 
-import com.grupo08.unicen.microservicejourney.service.viajeService;
+import com.grupo08.unicen.microservicejourney.service.JourneyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ViajeController {
 
     @Autowired
-    viajeService viajeService ;
+    JourneyService viajeService ;
 
     @GetMapping("/")
     public  ResponseEntity<?> getAll(){
