@@ -6,6 +6,7 @@ import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
 import com.grupo08.unicen.microserviceuser.exception.UserNotFoundException;
 import com.grupo08.unicen.microserviceuser.repository.UserEntityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,12 @@ import java.util.UUID;
 public class UserEntityService {
 
     private final UserEntityRepository userEntityRepository;
-/*
-    private final MonopatinFeignClient monopatinFeignClient;
-*/
+    private MonopatinFeignClient monopatinFeignClient;
 
     // dependency injection
-    public UserEntityService(UserEntityRepository userEntityRepository) {
+    public UserEntityService(UserEntityRepository userEntityRepository, MonopatinFeignClient monopatinFeignClient) {
         this.userEntityRepository = userEntityRepository;
+        this.monopatinFeignClient = monopatinFeignClient;
     }
 
     // basic methods
@@ -66,7 +66,7 @@ public class UserEntityService {
         return ResponseEntity.ok(userDto);
     }
 
-/*    public ResponseEntity<String> activateMonopatinByQr(UUID monopatinId) {
+    public ResponseEntity<String> activateMonopatinByQr(UUID monopatinId) {
         try {
             Monopatin monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
             return null;
@@ -75,6 +75,6 @@ public class UserEntityService {
                     .body("Error: " + e.getMessage());
         }
 
-    }*/
+    }
 
 }

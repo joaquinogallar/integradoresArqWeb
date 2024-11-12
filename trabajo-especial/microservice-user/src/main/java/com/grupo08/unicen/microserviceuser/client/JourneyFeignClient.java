@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(name = "microservice-journey")
+@FeignClient("MICROSERVICE-JOURNEY")
 public interface JourneyFeignClient {
     @GetMapping("/api/journeys/")
     public ResponseEntity<List<JourneyDto>> getAllJourneys();

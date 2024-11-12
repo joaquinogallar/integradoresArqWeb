@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.UUID;
 
-@FeignClient("MICROSERVICIE-MONOPATIN")
+@FeignClient("MICROSERVICE-MONOPATIN")
 public interface MonopatinFeignClient {
     @GetMapping("api/{monopatinId}")
     public ResponseEntity<Monopatin> getMonopatinById(@PathVariable UUID monopatinId);
