@@ -22,5 +22,5 @@ public class Monopatin {
     private int x;
     private int y;
     private BigDecimal kmTraveled;
-    private BigDecimal useTime;
+    private Long useTime;
 }

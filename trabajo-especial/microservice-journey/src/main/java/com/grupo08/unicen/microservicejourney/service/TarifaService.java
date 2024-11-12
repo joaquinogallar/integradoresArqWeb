@@ -29,7 +29,7 @@ public class TarifaService {
 
     public TarifaDTO getById(Long idTarifa) throws Exception {
         try {
-            return  new TarifaDTO(this.tarifaRepository.getById(idTarifa));
+            return  new TarifaDTO(this.tarifaRepository.findById(idTarifa).orElse(null));
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

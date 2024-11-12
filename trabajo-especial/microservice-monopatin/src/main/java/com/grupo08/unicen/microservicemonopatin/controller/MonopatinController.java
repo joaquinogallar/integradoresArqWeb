@@ -1,5 +1,6 @@
 package com.grupo08.unicen.microservicemonopatin.controller;
 
+import com.grupo08.unicen.microservicemonopatin.DTO.MonopatinDTO;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.service.MonopatinService;
 import org.springframework.http.ResponseEntity;
@@ -32,4 +33,21 @@ public class MonopatinController {
     public ResponseEntity<String> createMonopatin(@RequestBody Monopatin newMonopatin) {
         return monopatinService.createMonopatin(newMonopatin);
     }
+
+    @GetMapping("/order/tiempo-uso/con-pausa")
+    public ResponseEntity<List<MonopatinDTO>> getMonopatinesConTiempoPausa()  {
+        return monopatinService.getMonopatinesConTiempoPausa();
+    }
+
+
+    @GetMapping("/order/tiempo-uso/sin-pausa")
+    public ResponseEntity<List<MonopatinDTO>> getMonopatinesSinTiempoPausa()  {
+        return monopatinService.getMonopatinesSinTiempoPausa();
+
+    }
+    @PutMapping("/{monopatinID}")
+    public ResponseEntity<MonopatinDTO>editarMonopatin(@PathVariable Long monopatinID){
+        return monopatinService.putMonopatin(monopatinID);
+    }
+       
 }

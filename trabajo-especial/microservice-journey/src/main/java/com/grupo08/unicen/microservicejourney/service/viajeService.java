@@ -12,11 +12,17 @@ import com.grupo08.unicen.microservicejourney.model.UserDTO;
 import com.grupo08.unicen.microservicejourney.repository.TarifaRepository;
 
 
+<<<<<<< Updated upstream:trabajo-especial/microservice-journey/src/main/java/com/grupo08/unicen/microservicejourney/service/viajeService.java
+=======
+
+>>>>>>> Stashed changes:trabajo-especial/microservice-journey/src/main/java/Service/viajeService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.grupo08.unicen.microservicejourney.repository.viajeRepository;
 
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +54,7 @@ public class viajeService {
     public void createViaje(Long monopatinId, Long usuarioId){
         if (monopatinFeignClient.getMonopatinById(monopatinId) != null && userFeignClient.getUsuarioById(usuarioId)!=null) {
             MonopatinDTO m = monopatinFeignClient.getMonopatinById(monopatinId);
-            Viaje viaje = new Viaje(LocalDate.now(),usuarioId,monopatinFeignClient.getMonopatinById(monopatinId),m.getX(),m.getY());
+            Viaje viaje = new Viaje(LocalDate.now(),usuarioId,monopatinFeignClient.getMonopatinById(monopatinId),m.getX(),m.getY(),LocalDateTime.now());
             viajeRepository.save(viaje);
         }
     }
@@ -76,6 +82,7 @@ public class viajeService {
           if(v.getMonopatin()!=null){
                 if(paradaFeignClient.getParadaByX(m.getX(),m.getY())!=null){
                     v.setFecha_fin(LocalDate.now());
+                    v.setHorafin(LocalDateTime.now());
                    
                     m.setDisponible(true);
                     if(v.getXOrigen()- m.getX() <0)
@@ -94,6 +101,8 @@ public class viajeService {
                     double tarifaXpausas = 0 ;
                     double tarifaNormal = 0;
                     Tarifa ta = tarifaRepository.getTarifaNormalEnPlazoValido();
+                  Long t =  ChronoUnit.MINUTES.between(v.getHoraInicio(), v.getHorafin());
+                    m.setUseTime(t);
 
                     tarifaNormal = (xfinal+yfinal)*ta.getTarifa();
                     for (Pausa pausa : pausas) {
@@ -103,6 +112,7 @@ public class viajeService {
                             Long minutosFinal = minutos-15 ;
                              tarifaXpausas = minutosFinal*tarifaEspecial.getTarifaEspecial();
                 }
+                
 
             }
                 UserDTO u  =  userFeignClient.getUsuarioById(v.getId_usuario()).getBody();

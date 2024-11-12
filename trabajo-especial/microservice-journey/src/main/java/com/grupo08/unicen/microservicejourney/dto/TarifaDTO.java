@@ -3,6 +3,7 @@ package com.grupo08.unicen.microservicejourney.dto;
 import com.grupo08.unicen.microservicejourney.entity.Tarifa;
 
 import java.util.Date;
+import java.util.Optional;
 
 public class TarifaDTO {
     private Double tarifa;
@@ -14,5 +15,7 @@ public class TarifaDTO {
       
 
     }
+
+    
 
 }
