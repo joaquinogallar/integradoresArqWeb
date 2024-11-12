@@ -17,8 +17,8 @@ public class Stop {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Double x;
-    private Double y;
+    private int x;
+    private int y;
 
     private String address;
 

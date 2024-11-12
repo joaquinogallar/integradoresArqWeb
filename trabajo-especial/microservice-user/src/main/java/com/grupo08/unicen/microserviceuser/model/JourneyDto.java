@@ -17,7 +17,7 @@ public class JourneyDto {
     private Double kmRecorridos;
     private Long id_usuario;
     private Long id_monopatin;
-    private int xOrigen ;
+    private int xOrigen;
     private int yOrigen;
     private FeeDto tarifa;
 }
