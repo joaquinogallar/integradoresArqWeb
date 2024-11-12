@@ -20,6 +20,10 @@ public class PaymentService {
     private TariffRepository tariffRepository;
 
     public List<Transaction> getAllTransactions() {
+    	/*
+        List<Tariff> tariffs = transactionRepository.findAll();
+        List<TarifaDTO> tarifasDTOs = new ArrayList<>();
+        tariffs.forEach(t -> )*/
         return transactionRepository.findAll();
     }
 
@@ -31,7 +35,7 @@ public class PaymentService {
         return transactionRepository.save(transaction);
     }
 
-    // Métodos para gestionar tarifas...
+    // Tarifas
     public List<Tariff> getAllTariffs() {
     	return tariffRepository.findAll();
     }
