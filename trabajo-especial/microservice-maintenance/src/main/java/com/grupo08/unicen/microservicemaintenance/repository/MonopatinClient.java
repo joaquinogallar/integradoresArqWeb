@@ -24,4 +24,6 @@ public interface MonopatinClient {
     @GetMapping("/api/monopatines/order/use-time/with-pause/byKms/{kms}")
     List<MonopatinDto> getMonopatinesWithTimePauseByKms(@PathVariable BigDecimal kms);
 
+    @GetMapping("/api/monopatines/order/use-time/without-pause/byKms/{kms}")
+    List<MonopatinDto> getMonopatinesWithoutTimePauseByKms(@PathVariable BigDecimal kms);
 }

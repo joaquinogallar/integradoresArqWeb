@@ -79,4 +79,15 @@ public class MaintenanceRecordController {
         }
     }
 
+    @GetMapping("/report-need-maintenance/no-pause/{kms}")
+    public ResponseEntity<List<MonopatinDto>>GetReportNeedMaintenanceNoTimePause(@PathVariable BigDecimal kms){
+        try {
+            List<MonopatinDto> reporte = maintenanceRecordService.getMonopatinesWithoutTimePauseByKms(kms);
+            return ResponseEntity.ok(reporte);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
 }

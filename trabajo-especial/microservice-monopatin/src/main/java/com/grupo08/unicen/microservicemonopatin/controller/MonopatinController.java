@@ -50,8 +50,13 @@ public class MonopatinController {
     @GetMapping("/order/use-time/without-pause")
     public ResponseEntity<List<MonopatinDto>> getMonopatinesWithoutTimePause()  {
         return monopatinService.getMonopatinesSinTiempoPausa();
-
     }
+
+    @GetMapping("/order/use-time/without-pause/byKms/{kms}")
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesWithoutTimePause(@PathVariable BigDecimal kms)  {
+        return monopatinService.getMonopatinesSinTiempoPausaPorKms(kms);
+    }
+
     @PutMapping("/{monopatinID}")
     public ResponseEntity<MonopatinDto>editMonopatin(@PathVariable Long monopatinID){
         return monopatinService.putMonopatin(monopatinID);

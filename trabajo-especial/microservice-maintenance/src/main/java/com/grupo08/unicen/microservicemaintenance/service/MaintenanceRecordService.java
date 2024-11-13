@@ -78,5 +78,9 @@ public class MaintenanceRecordService {
         return monopatinClient.getMonopatinesWithTimePauseByKms(kms);
     }
 
+    public List<MonopatinDto> getMonopatinesWithoutTimePauseByKms(BigDecimal kms) {
+        return monopatinClient.getMonopatinesWithoutTimePauseByKms(kms);
+    }
+
 
 }
