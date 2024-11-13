@@ -1,6 +1,5 @@
 package com.grupo08.unicen.microserviceuser.service;
 
-import com.grupo08.unicen.microservicejourney.dto.JourneyDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microserviceuser.client.JourneyFeignClient;
 import com.grupo08.unicen.microserviceuser.client.MonopatinFeignClient;
@@ -8,9 +7,9 @@ import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import com.grupo08.unicen.microserviceuser.entity.Account;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
 import com.grupo08.unicen.microserviceuser.exception.UserNotFoundException;
+import com.grupo08.unicen.microserviceuser.model.JourneyDto;
 import com.grupo08.unicen.microserviceuser.repository.AccountRepository;
 import com.grupo08.unicen.microserviceuser.repository.UserEntityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,15 +23,15 @@ public class UserEntityService {
 
     private final UserEntityRepository userEntityRepository;
     private final AccountRepository accountRepository;
-    private MonopatinFeignClient monopatinFeignClient;
-    @Autowired
-    private JourneyFeignClient journeyFeignClient;
+    private final MonopatinFeignClient monopatinFeignClient;
+    private final JourneyFeignClient journeyFeignClient;
 
     // dependency injection
-    public UserEntityService(UserEntityRepository userEntityRepository, AccountRepository accountRepository, MonopatinFeignClient monopatinFeignClient) {
+    public UserEntityService(UserEntityRepository userEntityRepository, AccountRepository accountRepository, MonopatinFeignClient monopatinFeignClient, JourneyFeignClient journeyFeignClient) {
         this.userEntityRepository = userEntityRepository;
         this.accountRepository = accountRepository;
         this.monopatinFeignClient = monopatinFeignClient;
+        this.journeyFeignClient = journeyFeignClient;
     }
 
     // basic methods

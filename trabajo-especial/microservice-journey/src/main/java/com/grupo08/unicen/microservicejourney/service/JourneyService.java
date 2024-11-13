@@ -7,15 +7,12 @@ import com.grupo08.unicen.microservicejourney.entity.Journey;
 import com.grupo08.unicen.microservicejourney.client.MonopatinFeignClient;
 import com.grupo08.unicen.microservicejourney.client.StopFeignClient;
 import com.grupo08.unicen.microservicejourney.client.UserFeignClient;
+import com.grupo08.unicen.microservicejourney.model.UserEntityDto;
 import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 
 import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.entity.State;
-import com.grupo08.unicen.microservicemonopatin.entity.Stop;
-import com.grupo08.unicen.microserviceuser.dto.AccountDto;
-import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.grupo08.unicen.microservicejourney.repository.JourneyRepository;
@@ -29,16 +26,19 @@ import java.util.UUID;
 
 @Service
 public class JourneyService {
-    @Autowired
     JourneyRepository journeyRepository;
-    @Autowired
     UserFeignClient userFeignClient;
-    @Autowired
     MonopatinFeignClient monopatinFeignClient;
-    @Autowired
     StopFeignClient stopFeignClient;
-    @Autowired
     FeeRepository feeRepository ;
+
+    public JourneyService(JourneyRepository journeyRepository, UserFeignClient userFeignClient, MonopatinFeignClient monopatinFeignClient, StopFeignClient stopFeignClient, FeeRepository feeRepository) {
+        this.journeyRepository = journeyRepository;
+        this.userFeignClient = userFeignClient;
+        this.monopatinFeignClient = monopatinFeignClient;
+        this.stopFeignClient = stopFeignClient;
+        this.feeRepository = feeRepository;
+    }
 
     public ResponseEntity<List<JourneyDto>> getAll() {
         try{
@@ -56,6 +56,9 @@ public class JourneyService {
         try {
             Monopatin monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
             UserEntityDto user = userFeignClient.getUserById(userId).getBody();
+
+            if(monopatin == null || user == null) throw new RuntimeException();
+
             Journey journey = new Journey(monopatinId, userId, monopatin.getX(), monopatin.getY());
             return ResponseEntity.ok(new JourneyDto(journey));
         } catch (Exception e) {
@@ -79,9 +82,12 @@ public class JourneyService {
     public JourneyDto endViaje(UUID journeyId) {
         double xfinal = 0;
         double yfinal = 0;
-        Journey journey  = journeyRepository.findById(journeyId).orElse(null);
+        Journey journey  = journeyRepository.findById(journeyId).orElseThrow();
 
-        MonopatinDto m = new MonopatinDto(monopatinFeignClient.getMonopatinById(journey.getMonopatinId()).getBody());
+        Monopatin monopatin = monopatinFeignClient.getMonopatinById(journey.getMonopatinId()).getBody();
+        if(monopatin == null) throw new RuntimeException();
+
+        MonopatinDto m = new MonopatinDto(monopatin);
         if(stopFeignClient.getParadaByX(m.getX(),m.getY()) != null) {
             journey.setFinishDate(LocalDateTime.now());
             m.setState(State.AVAILABLE);

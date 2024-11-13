@@ -24,7 +24,7 @@ public class PauseService {
 
     public List<PauseDto> getPausasPorViaje(UUID journeyId) {
         List<Pause> p = pauseRepository.findPausasByidviaje(journeyId);
-        List<PauseDto> aux = new ArrayList<PauseDto>();
+        List<PauseDto> aux = new ArrayList<>();
         for (Pause pause : p) {
             aux.add(new PauseDto(pause));
         }

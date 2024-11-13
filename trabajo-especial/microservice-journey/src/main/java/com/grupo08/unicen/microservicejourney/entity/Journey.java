@@ -35,7 +35,7 @@ public class Journey {
     @JoinColumn(name = "id_fee")
     private Fee fee;
 
-    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "journey", cascade = CascadeType.ALL)
     private List<Pause> pauses;
 
     public Journey(UUID monopatinId, UUID userId, int x, int y){

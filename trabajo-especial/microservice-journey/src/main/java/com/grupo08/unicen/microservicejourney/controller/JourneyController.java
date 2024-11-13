@@ -6,7 +6,6 @@ import com.grupo08.unicen.microservicejourney.service.JourneyService;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +18,17 @@ import java.util.List;
 @RequestMapping("/api/journeys")
 public class JourneyController {
 
-    @Autowired
     JourneyService viajeService ;
+
+    public JourneyController(JourneyService journeyService) {
+        this.viajeService = journeyService;
+    }
 
     @GetMapping
     public  ResponseEntity<List<JourneyDto>> getAll(){
         return viajeService.getAll();
     }
+
     @GetMapping("/monopatines/viajes/{cant}/{anio}")
     public ResponseEntity<?> getMonopatinesByViaje(@PathVariable int cant, @PathVariable int anio){
         try {

@@ -1,11 +1,8 @@
 package com.grupo08.unicen.microserviceuser.controller;
 
-import com.grupo08.unicen.microservicejourney.dto.JourneyDto;
-import com.grupo08.unicen.microserviceuser.client.JourneyFeignClient;
 import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
-import com.grupo08.unicen.microserviceuser.entity.UserEntity;
+import com.grupo08.unicen.microserviceuser.model.JourneyDto;
 import com.grupo08.unicen.microserviceuser.service.UserEntityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +41,7 @@ public class UserEntityController {
     }
 
     @PostMapping("/{userId}/accounts/{accountId}/qr/{monopatinId}")
-    public ResponseEntity<JourneyDto> activateMonopatinByQr(@PathVariable UUID userId,  @PathVariable UUID accountId, @PathVariable UUID monopatinId) {
+    public ResponseEntity<JourneyDto> activateMonopatinByQr(@PathVariable UUID userId, @PathVariable UUID accountId, @PathVariable UUID monopatinId) {
         return userEntityService.activateMonopatinByQr(userId, monopatinId, accountId);
     }
 }

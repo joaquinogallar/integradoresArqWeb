@@ -10,6 +10,6 @@ import java.util.UUID;
 
 @FeignClient("MICROSERVICE-MONOPATIN")
 public interface MonopatinFeignClient {
-    @GetMapping("api/{monopatinId}")
+    @GetMapping("/api/monopatines/{monopatinId}")
     public ResponseEntity<Monopatin> getMonopatinById(@PathVariable UUID monopatinId);
 }
