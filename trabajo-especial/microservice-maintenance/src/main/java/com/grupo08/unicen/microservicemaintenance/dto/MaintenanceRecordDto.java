@@ -21,8 +21,6 @@ public class MaintenanceRecordDto {
 
     private String description;
 
-    private String status;
-
     private BigDecimal kmsTraveled;
     private BigDecimal usageTime;
 
@@ -31,7 +29,6 @@ public class MaintenanceRecordDto {
         this.description = maintenanceRecord.getDescription();
         this.startDate = maintenanceRecord.getStartDate();
         this.endDate = maintenanceRecord.getEndDate();
-        this.status = maintenanceRecord.getStatus().toString();
         this.kmsTraveled = maintenanceRecord.getKmsTraveled();
         this.usageTime = maintenanceRecord.getUsageTime();
         this.monopatinId = maintenanceRecord.getMonopatinId();

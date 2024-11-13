@@ -2,18 +2,21 @@ package com.grupo08.unicen.microservicemaintenance.controller;
 
 
 import com.grupo08.unicen.microservicemaintenance.dto.MaintenanceRecordDto;
-import com.grupo08.unicen.microservicemaintenance.dto.ReporteMonopatinesMantenimientoDTO;
-import com.grupo08.unicen.microservicemaintenance.entity.MaintenanceRecord;
+import com.grupo08.unicen.microservicemaintenance.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemaintenance.service.MaintenanceRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/api/mantenimientos")
+@RequestMapping(value = "/api/mantenimiento")
 public class MaintenanceRecordController {
     @Autowired
     private MaintenanceRecordService maintenanceRecordService;
@@ -42,8 +45,26 @@ public class MaintenanceRecordController {
         return maintenanceRecordService.deleteMaintenanceRecordById(maintenanceId);
     }
 
-    //@GetMapping("/monopatines/maintence")
-   // public ResponseEntity<ReporteMonopatinesMantenimientoDTO>GetReporteMonopatinesActivos(){
-        
-    //}
+    @GetMapping("/reporte-en-mantenimiento/")
+    public ResponseEntity<List<MonopatinDto>>GetReporteMonopatinesEnMantenimiento(){
+        try {
+            List<MonopatinDto> reporte = maintenanceRecordService.getMonopatinesInMaintenance();
+            return ResponseEntity.ok(reporte);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
+    @GetMapping("/reporte-activos/")
+    public ResponseEntity<List<MonopatinDto>>GetReporteMonopatinesActivos(){
+        try {
+            List<MonopatinDto> reporte = maintenanceRecordService.getActivesMonopatines();
+            return ResponseEntity.ok(reporte);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
 }

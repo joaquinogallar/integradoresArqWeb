@@ -1,8 +1,10 @@
 package com.grupo08.unicen.microservicemaintenance.service;
 
 import com.grupo08.unicen.microservicemaintenance.dto.MaintenanceRecordDto;
+import com.grupo08.unicen.microservicemaintenance.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemaintenance.entity.MaintenanceRecord;
 import com.grupo08.unicen.microservicemaintenance.repository.MaintenanceRecordRepository;
+import com.grupo08.unicen.microservicemaintenance.repository.MonopatinClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,12 @@ public class MaintenanceRecordService {
 
     private final MaintenanceRecordRepository maintenanceRecordRepository;
 
-    public MaintenanceRecordService(MaintenanceRecordRepository maintenanceRecordRepository) {
+    private final MonopatinClient monopatinClient;
+
+    public MaintenanceRecordService(MaintenanceRecordRepository maintenanceRecordRepository,
+                                    MonopatinClient monopatinClient) {
         this.maintenanceRecordRepository = maintenanceRecordRepository;
+        this.monopatinClient = monopatinClient;
     }
 
     public ResponseEntity<List<MaintenanceRecordDto>> getAllMaintenanceRecords() {
@@ -57,5 +63,13 @@ public class MaintenanceRecordService {
         maintenanceRecordRepository.delete(record);
 
         return ResponseEntity.ok(maintenanceRecordDto);
+    }
+
+    public List<MonopatinDto> getActivesMonopatines() {
+        return monopatinClient.getActivesMonopatines();
+    }
+
+    public List<MonopatinDto> getMonopatinesInMaintenance() {
+        return monopatinClient.getMonopatinesInMaintenance();
     }
 }

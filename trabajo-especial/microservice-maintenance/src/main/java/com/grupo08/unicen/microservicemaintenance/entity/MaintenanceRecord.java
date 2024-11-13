@@ -28,9 +28,6 @@ public class MaintenanceRecord {
 
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private MaintenanceStatus status;
-
     private BigDecimal kmsTraveled;
     private BigDecimal usageTime;
 
@@ -40,53 +37,19 @@ public class MaintenanceRecord {
         COMPLETED
     }
 
-    public MaintenanceRecord(UUID monopatinId, LocalDateTime startDate, LocalDateTime endDate, String description, String status) {
+    public MaintenanceRecord(UUID monopatinId, LocalDateTime startDate, LocalDateTime endDate, String description) {
         this.monopatinId = monopatinId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
 
-        switch (status.toUpperCase()) {
-            case "PENDING":
-            case "PENDIENTE":
-                this.status = MaintenanceStatus.PENDING;
-                break;
-            case "IN_PROGRESS":
-            case "EN_PROGRESO":
-                this.status = MaintenanceStatus.IN_PROGRESS;
-                break;
-            case "COMPLETED":
-            case "COMPLETADO":
-                this.status = MaintenanceStatus.COMPLETED;
-                break;
-            default:
-                throw new IllegalArgumentException("Estado invalido: " + status);
-        }
     }
 
-    public MaintenanceRecord(UUID monopatinId, LocalDateTime startDate, LocalDateTime endDate, String description, String status, BigDecimal kmsTraveled, BigDecimal usageTime) {
+    public MaintenanceRecord(UUID monopatinId, LocalDateTime startDate, LocalDateTime endDate, String description, BigDecimal kmsTraveled, BigDecimal usageTime) {
         this.monopatinId = monopatinId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-
-        switch (status.toUpperCase()) {
-            case "PENDING":
-            case "PENDIENTE":
-                this.status = MaintenanceStatus.PENDING;
-                break;
-            case "IN_PROGRESS":
-            case "EN_PROGRESO":
-                this.status = MaintenanceStatus.IN_PROGRESS;
-                break;
-            case "COMPLETED":
-            case "COMPLETADO":
-                this.status = MaintenanceStatus.COMPLETED;
-                break;
-            default:
-                throw new IllegalArgumentException("Estado invalido: " + status);
-        }
-
         this.kmsTraveled = kmsTraveled;
         this.usageTime = usageTime;
     }
@@ -98,7 +61,6 @@ public class MaintenanceRecord {
         this.startDate = maintenanceRecordDto.getStartDate();
         this.endDate = maintenanceRecordDto.getEndDate();
         this.description = maintenanceRecordDto.getDescription();
-        this.status = MaintenanceStatus.valueOf(maintenanceRecordDto.getStatus());
         this.kmsTraveled = maintenanceRecordDto.getKmsTraveled();
         this.usageTime = maintenanceRecordDto.getUsageTime();
     }
