@@ -46,7 +46,7 @@ public class JourneyService {
         try{
             List<Journey> journeys = this.journeyRepository.findAll() ;
             List<JourneyDto> journeyDtos = new ArrayList<>();
-            journeys.forEach(j -> journeyDtos.add(new JourneyDto(j)));
+            journeys.forEach(j -> journeyDtos.add(new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId())));
 
             return ResponseEntity.ok(journeyDtos);
         }catch (Exception e){
@@ -62,8 +62,8 @@ public class JourneyService {
 
             if(monopatin == null || user == null) throw new RuntimeException();
 
-            Journey journey = new Journey(monopatinId, userId, monopatin.getX(), monopatin.getY());
-            return ResponseEntity.ok(new JourneyDto(journey));
+            Journey j = new Journey(monopatinId, userId, monopatin.getX(), monopatin.getY());
+            return ResponseEntity.ok(new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(null);
@@ -75,8 +75,8 @@ public class JourneyService {
         try {
             List<Journey> viajes= journeyRepository.FindViajesPorId_monopatin(idMonopatin);
             List<JourneyDto> aux = new ArrayList<>();
-            for (Journey v : viajes) {
-                aux.add(new JourneyDto(v)) ;
+            for (Journey j : viajes) {
+                aux.add(new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId())) ;
             }
             return ResponseEntity.ok(aux);
         } catch (Exception e) {
@@ -93,26 +93,26 @@ public class JourneyService {
     public JourneyDto endViaje(UUID journeyId) {
         double xfinal = 0;
         double yfinal = 0;
-        Journey journey  = journeyRepository.findById(journeyId).orElseThrow();
+        Journey j  = journeyRepository.findById(journeyId).orElseThrow();
 
-        Monopatin monopatin = monopatinFeignClient.getMonopatinById(journey.getMonopatinId()).getBody();
+        Monopatin monopatin = monopatinFeignClient.getMonopatinById(j.getMonopatinId()).getBody();
         if(monopatin == null) throw new RuntimeException();
 
         MonopatinDto m = new MonopatinDto(monopatin);
         if(stopFeignClient.getParadaByX(m.getX(),m.getY()) != null) {
-            journey.setFinishDate(LocalDateTime.now());
+            j.setFinishDate(LocalDateTime.now());
             m.setState(State.AVAILABLE);
 
             xfinal = m.getX();
             yfinal = m.getY();
-            journey.setKmTraveled(
+            j.setKmTraveled(
                     Math.sqrt(
-                            Math.pow(xfinal - journey.getXOrigin(), 2) + Math.pow(yfinal - journey.getYOrigin(), 2)
+                            Math.pow(xfinal - j.getXOrigin(), 2) + Math.pow(yfinal - j.getYOrigin(), 2)
                     )
             );
         }
 
-        journeyRepository.save(journey);
+        journeyRepository.save(j);
 
         List<Pause>pausas = journeyRepository.findPausasByIdViaje(journeyId);
         double tarifaXpausas = 0 ;
@@ -120,7 +120,7 @@ public class JourneyService {
 
 
         Fee ta = feeRepository.getTarifaNormalEnPlazoValido();
-        Long t =  ChronoUnit.MINUTES.between(journey.getStartDate(), journey.getFinishDate());
+        Long t =  ChronoUnit.MINUTES.between(j.getStartDate(), j.getFinishDate());
 
         m.setUseTime(t);
 
@@ -136,7 +136,7 @@ public class JourneyService {
             // TODO: el balance se setea a la cuenta, no al usuario
 /*            UserEntityDto u  =  userFeignClient.getUserById(journey.getUserId()).getBody();
             u.setBalance(tarifaNormal+tarifaXpausas);*/
-            return new JourneyDto(journey);
+            return new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId());
         }
         throw new RuntimeException();
     }

@@ -26,7 +26,7 @@ public class PauseService {
         List<Pause> p = pauseRepository.findPausasByidviaje(journeyId);
         List<PauseDto> aux = new ArrayList<>();
         for (Pause pause : p) {
-            aux.add(new PauseDto(pause));
+            aux.add(new PauseDto(pause.getStartDate(),pause.getFinishDate(),pause.getJourney()));
         }
         return aux ;
     }
@@ -44,7 +44,7 @@ public class PauseService {
             p.setStartDate(LocalDateTime.now());
             this.pauseRepository.save(p);
 
-            return new PauseDto(p);
+            return new PauseDto(p.getStartDate(),p.getFinishDate(),p.getJourney());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -28,20 +28,20 @@ public class JourneyDto {
     private UUID monopatinId;
 
 
-    private Fee fee;
+    private UUID fee;
 
-    private List<Pause> pauses;
+    
 
-    public JourneyDto(Journey v) {
-        this.id = v.getId();
-        this.startDate = v.getStartDate();
-        this.finishDate = v.getFinishDate();
-        this.kmTraveled = v.getKmTraveled();
-        this.xOrigin = v.getXOrigin();
-        this.yOrigin = v.getYOrigin();
-        this.userId = v.getUserId();
-        this.monopatinId = v.getMonopatinId();
-        this.fee = v.getFee();
-        this.pauses = v.getPauses();
+    public JourneyDto(UUID id,LocalDateTime startDate, LocalDateTime finishDate, double kmTraveled,int x,int y, UUID userid,UUID monopatinId,UUID fee) {
+        this.id = id ;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.kmTraveled = kmTraveled;
+        this.xOrigin = x;
+        this.yOrigin = y;
+        this.userId = userid;
+        this.monopatinId = monopatinId;
+        this.fee = fee;
+        
     }
 }
