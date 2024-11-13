@@ -1,5 +1,7 @@
 package com.grupo08.unicen.microservicemonopatin.controller;
 
+import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
+import com.grupo08.unicen.microservicemonopatin.dto.StopDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.entity.Stop;
 import com.grupo08.unicen.microservicemonopatin.service.StopService;
@@ -20,12 +22,12 @@ public class StopController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Stop>> getAllStops() {
+    public ResponseEntity<List<StopDto>> getAllStops() {
         return stopService.getAllStops();
     }
 
     @GetMapping("/{stopId}")
-    public ResponseEntity<Stop> getStopById(@PathVariable UUID stopId) {
+    public ResponseEntity<StopDto> getStopById(@PathVariable UUID stopId) {
         return stopService.getStopById(stopId);
     }
 
@@ -35,7 +37,7 @@ public class StopController {
     }
 
     @GetMapping("/{stopId}/monopatines")
-    public ResponseEntity<List<Monopatin>> getMonopatinesByStopId(@PathVariable UUID stopId) {
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesByStopId(@PathVariable UUID stopId) {
         return stopService.getMonopatinesByStopId(stopId);
     }
 
@@ -43,4 +45,5 @@ public class StopController {
     public ResponseEntity<String> addMonopatinToStop(@PathVariable UUID stopId, @PathVariable UUID monopatinId) {
         return stopService.addMonopatinToStop(stopId, monopatinId);
     }
+    
 }

@@ -1,6 +1,7 @@
 package com.grupo08.unicen.microservicemonopatin.controller;
 
 import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
+import com.grupo08.unicen.microservicemonopatin.dto.StopDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.service.MonopatinService;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +58,9 @@ public class MonopatinController {
     @GetMapping("/actives")
     public ResponseEntity<List<MonopatinDto>>getActivesMonopatines(){
         return monopatinService.getActivesMonopatines();
+    }
+    @GetMapping("/nearMonopatines/{x}/{y}/{rangoMetros}")
+    public ResponseEntity<List<MonopatinDto>>GetNearStops(@PathVariable int x, @PathVariable int y, @PathVariable int rangoMetros){
+        return monopatinService.getNearMonopatines(x,y,rangoMetros);
     }
 }

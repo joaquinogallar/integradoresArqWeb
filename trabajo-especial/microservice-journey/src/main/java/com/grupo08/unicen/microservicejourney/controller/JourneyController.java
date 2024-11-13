@@ -2,6 +2,7 @@ package com.grupo08.unicen.microservicejourney.controller;
 
 
 import com.grupo08.unicen.microservicejourney.dto.JourneyDto;
+import com.grupo08.unicen.microservicejourney.model.MonopatinDto;
 import com.grupo08.unicen.microservicejourney.service.JourneyService;
 
 import java.util.UUID;
@@ -32,7 +33,7 @@ public class JourneyController {
     @GetMapping("/monopatines/viajes/{cant}/{anio}")
     public ResponseEntity<?> getMonopatinesByViaje(@PathVariable int cant, @PathVariable int anio){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(viajeService.getMonopatinesByViajes(cant, anio));
+            return ResponseEntity.status(HttpStatus.OK).body(viajeService.getMonopatinesByXViajes(cant, anio));
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -54,12 +55,10 @@ public class JourneyController {
    }
 
     @GetMapping("/monopatin/{monopatinId}")
-    public ResponseEntity<?>getViajeByMonopatin(@PathVariable UUID monopatinId) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(viajeService.getViajeByMonopatin(monopatinId));
-        } catch (Exception e) {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<List<JourneyDto>>getViajeByMonopatin(@PathVariable UUID monopatinId) {
+        return viajeService.getViajeByMonopatin(monopatinId);
     }
+    
 
+   
 }

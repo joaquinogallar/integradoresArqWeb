@@ -28,4 +28,7 @@ public interface MonopatinRepository extends JpaRepository<Monopatin, UUID> {
 
     @Query("SELECT m from Monopatin m where m.state = : AVAILABLE OR m.state = : IN_USE")
     List<Monopatin>getActivesMonopatines();
+
+    @Query("SELECT m from Monopatin m where m.state = : AVAILABLE")
+    List<Monopatin>findAvailables();
 }

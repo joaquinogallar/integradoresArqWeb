@@ -4,6 +4,8 @@ import com.grupo08.unicen.microserviceuser.dto.AccountDto;
 import com.grupo08.unicen.microserviceuser.entity.Account;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
 import com.grupo08.unicen.microserviceuser.service.AccountService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +16,8 @@ import java.util.UUID;
 @RequestMapping(value = "/api/accounts")
 public class AccountController {
 
-    private AccountService accountService;
-
-    // dependency injection
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
+    @Autowired
+    AccountService accountService;
 
     // basic methods
     @GetMapping

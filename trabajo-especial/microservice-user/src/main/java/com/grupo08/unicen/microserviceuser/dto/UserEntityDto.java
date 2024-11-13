@@ -23,6 +23,9 @@ public class UserEntityDto {
     @NotEmpty(message = "Phone Number cant be empty")
     private String phoneNumber;
 
+    private int x ; 
+    private int y ;
+
     public UserEntityDto(UserEntity userEntity) {
         this.name = userEntity.getName();
         this.lastname = userEntity.getLastname();

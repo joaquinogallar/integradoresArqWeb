@@ -1,7 +1,9 @@
 package com.grupo08.unicen.microservicemonopatin.service;
 
 import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
+import com.grupo08.unicen.microservicemonopatin.dto.StopDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
+import com.grupo08.unicen.microservicemonopatin.entity.Stop;
 import com.grupo08.unicen.microservicemonopatin.exception.MonopatinNotFoundException;
 import com.grupo08.unicen.microservicemonopatin.repository.MonopatinRepository;
 import org.springframework.http.HttpStatus;
@@ -112,6 +114,27 @@ public class MonopatinService {
             .body(null);
     }
 }
+
+     public ResponseEntity<List<MonopatinDto>> getNearMonopatines(int x, int y,int rangoMetros) {
+       try {
+        List<MonopatinDto> aux = new ArrayList<>();
+        List<Monopatin> mono = monopatinRepository.findAvailables(); 
+        for (Monopatin m: mono) {
+            double distancia = Math.sqrt(
+            Math.pow(m.getX() - x, 2) +
+            Math.pow(m.getY() - y, 2)
+        );
+        if (distancia <= rangoMetros) {
+            aux.add(new MonopatinDto(m));
+        }
+        }
+        return ResponseEntity.ok(aux);
+        
+       } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+       }
+    }
 }
 
 

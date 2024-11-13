@@ -1,18 +1,12 @@
-package com.grupo08.unicen.microservicemonopatin.dto;
-
-import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
-import com.grupo08.unicen.microservicemonopatin.entity.State;
-import com.grupo08.unicen.microservicemonopatin.entity.Stop;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package com.grupo08.unicen.microserviceuser.model;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
+import com.grupo08.unicen.microservicemonopatin.entity.State;
+import com.grupo08.unicen.microservicemonopatin.entity.Stop;
+
 public class MonopatinDto {
     private UUID id;
     private State state;
@@ -37,3 +31,5 @@ public class MonopatinDto {
         this.kmTraveled = BigDecimal.ZERO;
         this.useTime = 0L;
     }}
+
+

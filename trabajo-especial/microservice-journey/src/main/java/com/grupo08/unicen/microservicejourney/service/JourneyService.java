@@ -13,6 +13,8 @@ import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.entity.State;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.grupo08.unicen.microservicejourney.repository.JourneyRepository;
@@ -48,7 +50,8 @@ public class JourneyService {
 
             return ResponseEntity.ok(journeyDtos);
         }catch (Exception e){
-            throw new RuntimeException(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
 
@@ -62,20 +65,28 @@ public class JourneyService {
             Journey journey = new Journey(monopatinId, userId, monopatin.getX(), monopatin.getY());
             return ResponseEntity.ok(new JourneyDto(journey));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
         }
     }
 
-    public List<JourneyDto> getViajeByMonopatin(UUID idMonopatin) {
-        List<Journey> viajes= journeyRepository.FindViajesPorId_monopatin(idMonopatin);
-        List<JourneyDto> aux = new ArrayList<>();
-        for (Journey v : viajes) {
-            aux.add(new JourneyDto(v)) ;
+    public ResponseEntity<List<JourneyDto>> getViajeByMonopatin(UUID idMonopatin) {
+
+        try {
+            List<Journey> viajes= journeyRepository.FindViajesPorId_monopatin(idMonopatin);
+            List<JourneyDto> aux = new ArrayList<>();
+            for (Journey v : viajes) {
+                aux.add(new JourneyDto(v)) ;
+            }
+            return ResponseEntity.ok(aux);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
         }
-        return aux;
+      
     }
 
-    public List<Long>getMonopatinesByViajes(int cantidad, int anio){
+    public List<Long>getMonopatinesByXViajes(int cantidad, int anio){
         return journeyRepository.findMonopatinesByViaje(anio,cantidad);
     }
 
@@ -129,4 +140,7 @@ public class JourneyService {
         }
         throw new RuntimeException();
     }
+
+    
+    
 }

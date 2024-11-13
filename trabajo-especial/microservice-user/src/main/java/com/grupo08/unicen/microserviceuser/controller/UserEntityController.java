@@ -2,7 +2,10 @@ package com.grupo08.unicen.microserviceuser.controller;
 
 import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import com.grupo08.unicen.microserviceuser.model.JourneyDto;
+import com.grupo08.unicen.microserviceuser.model.MonopatinDto;
 import com.grupo08.unicen.microserviceuser.service.UserEntityService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +16,8 @@ import java.util.UUID;
 @RequestMapping(value = "/api/users")
 public class UserEntityController {
 
-    private UserEntityService userEntityService;
-
-    // dependency injection
-    public UserEntityController(UserEntityService userEntityService) {
-        this.userEntityService = userEntityService;
-    }
-
+    @Autowired
+    UserEntityService userEntityService;
     @GetMapping
     public ResponseEntity<List<UserEntityDto>> getAllUsers() {
         return userEntityService.getAllUsers();
@@ -43,5 +41,10 @@ public class UserEntityController {
     @PostMapping("/{userId}/accounts/{accountId}/qr/{monopatinId}")
     public ResponseEntity<JourneyDto> activateMonopatinByQr(@PathVariable UUID userId, @PathVariable UUID accountId, @PathVariable UUID monopatinId) {
         return userEntityService.activateMonopatinByQr(userId, monopatinId, accountId);
+    }
+
+    @GetMapping("/nearMonopatines/{id}/{rangoMetros}")
+    public ResponseEntity<List<MonopatinDto>> getNearMonopatines(@PathVariable UUID id, @PathVariable int rangoMetros){
+        return userEntityService.getNearMonopatines(id, rangoMetros);
     }
 }

@@ -1,8 +1,10 @@
 package com.grupo08.unicen.microserviceuser.service;
 
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
+import com.grupo08.unicen.microserviceuser.model.MonopatinDto;
 import com.grupo08.unicen.microserviceuser.client.JourneyFeignClient;
 import com.grupo08.unicen.microserviceuser.client.MonopatinFeignClient;
+
 import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import com.grupo08.unicen.microserviceuser.entity.Account;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
@@ -81,12 +83,17 @@ public class UserEntityService {
             if(!user.getAccounts().contains(account))
                 throw new RuntimeException(accountId.toString());
 
-            Monopatin monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
+            MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
             return journeyFeignClient.createViaje(monopatinId, userId);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
+    }
+
+    public ResponseEntity<List<MonopatinDto>> getNearMonopatines(UUID id,int rangoMetros) {
+       UserEntity u = userEntityRepository.findById(id).orElse(null);
+       return monopatinFeignClient.getNearMonopatines(u.getX(),u.getY(), rangoMetros) ;
     }
 
 }
