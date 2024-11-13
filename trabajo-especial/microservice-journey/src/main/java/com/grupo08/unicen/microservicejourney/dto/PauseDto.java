@@ -12,9 +12,9 @@ public class PauseDto {
     private LocalDateTime startDate;
     private LocalDateTime finishDate;
      private Journey journey;
-    public PauseDto(Pause p) {
-        this.startDate = p.getStartDate();
-        this.finishDate = p.getFinishDate();
-        this.journey = p.getJourney(); 
+    public PauseDto(LocalDateTime s, LocalDateTime f,Journey j) {
+        this.startDate = s;
+        this.finishDate =f;
+        this.journey = j; 
     }
 }

@@ -3,6 +3,7 @@ package com.grupo08.unicen.microservicemonopatin.service;
 import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemonopatin.dto.StopDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
+import com.grupo08.unicen.microservicemonopatin.entity.State;
 import com.grupo08.unicen.microservicemonopatin.entity.Stop;
 import com.grupo08.unicen.microservicemonopatin.exception.MonopatinNotFoundException;
 import com.grupo08.unicen.microservicemonopatin.repository.MonopatinRepository;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -65,6 +67,21 @@ public class MonopatinService {
                     .body(null);
         }
     }
+
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesConTiempoPausaPorKms(BigDecimal minKms) {
+        try{
+            List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesConTiempoPausa();
+            List<MonopatinDto> respuesta = new ArrayList<>();
+            for (Monopatin monopatin : monopatines) {
+                if(monopatin.getKmTraveled().compareTo(minKms) > 0)
+                    respuesta.add(new MonopatinDto(monopatin)) ;
+            }
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
     
 
     public ResponseEntity<List<MonopatinDto>> getMonopatinesSinTiempoPausa() {
@@ -78,6 +95,21 @@ public class MonopatinService {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(null);
+        }
+    }
+
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesSinTiempoPausaPorKms(BigDecimal minKms) {
+        try{
+            List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesSinTiempoPausa();
+            List<MonopatinDto> respuesta = new ArrayList<>();
+            for (Monopatin monopatin : monopatines) {
+                if(monopatin.getKmTraveled().compareTo(minKms) > 0)
+                    respuesta.add(new MonopatinDto(monopatin));
+            }
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
 
@@ -134,6 +166,32 @@ public class MonopatinService {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
        }
+    }
+
+    public ResponseEntity<MonopatinDto> putMonopatinInMaintenance(UUID monopatinId) {
+        Monopatin m = monopatinRepository.findById(monopatinId).orElse(null);
+        try {
+                m.setState(State.IN_MAINTENANCE);
+                monopatinRepository.save(m);
+                return ResponseEntity.ok(new MonopatinDto(m));
+            
+        }     catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
+        } 
+    }
+
+    public ResponseEntity<MonopatinDto> putMonopatinOutMaintenance(UUID monopatinId) {
+        Monopatin m = monopatinRepository.findById(monopatinId).orElse(null);
+        try {
+                m.setState(State.AVAILABLE);
+                monopatinRepository.save(m);
+                return ResponseEntity.ok(new MonopatinDto(m));
+            
+        }     catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
+        } 
     }
 }
 

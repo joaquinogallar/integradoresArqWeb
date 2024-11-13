@@ -21,7 +21,7 @@ public class FeeService {
             List<FeeDto> aux = new ArrayList<>();
             List<Fee> response = new ArrayList<>(tarifaRepository.findAll());
             for(Fee t : response){
-                aux.add(new FeeDto(t)) ;
+                aux.add(new FeeDto(t.getFee(),t.getSpecialFee(),t.getStartDate())) ;
             }
             return aux ;
         }catch (Exception e){
@@ -31,7 +31,8 @@ public class FeeService {
 
     public FeeDto getById(UUID idTarifa) throws Exception {
         try {
-            return  new FeeDto(this.tarifaRepository.findById(idTarifa).orElse(null));
+            Fee f = this.tarifaRepository.findById(idTarifa).orElse(null);
+            return  new FeeDto(f.getFee(),f.getSpecialFee(),f.getStartDate());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -41,7 +42,7 @@ public class FeeService {
     public FeeDto crearTarifa(Fee t) {
         try{
             this.tarifaRepository.save(t);
-            return new FeeDto(t);
+            return new FeeDto(t.getFee(),t.getSpecialFee(),t.getStartDate());
         }catch(Exception e){
             throw new RuntimeException(e);
         }

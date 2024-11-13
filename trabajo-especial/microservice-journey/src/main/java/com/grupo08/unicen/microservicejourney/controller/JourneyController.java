@@ -59,6 +59,11 @@ public class JourneyController {
         return viajeService.getViajeByMonopatin(monopatinId);
     }
     
+    @GetMapping("/facturado/{year}/{mes}/{mes2}")
+    public int getFacturadoEntreMeses(@PathVariable int year, int mesInicio, int mesFinal){
+        return viajeService.getFacturadoEntreMeses(year,mesInicio,mesFinal);
+    }
+    
 
    
 }
