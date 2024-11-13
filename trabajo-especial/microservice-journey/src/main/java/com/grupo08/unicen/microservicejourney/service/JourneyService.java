@@ -7,12 +7,11 @@ import com.grupo08.unicen.microservicejourney.entity.Journey;
 import com.grupo08.unicen.microservicejourney.client.MonopatinFeignClient;
 import com.grupo08.unicen.microservicejourney.client.StopFeignClient;
 import com.grupo08.unicen.microservicejourney.client.UserFeignClient;
+import com.grupo08.unicen.microservicejourney.model.MonopatinDto;
+import com.grupo08.unicen.microservicejourney.model.State;
 import com.grupo08.unicen.microservicejourney.model.UserEntityDto;
 import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 
-import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
-import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
-import com.grupo08.unicen.microservicemonopatin.entity.State;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +56,7 @@ public class JourneyService {
 
     public ResponseEntity<JourneyDto> createViaje(UUID monopatinId, UUID userId) {
         try {
-            Monopatin monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
+            MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
             UserEntityDto user = userFeignClient.getUserById(userId).getBody();
 
             if(monopatin == null || user == null) throw new RuntimeException();
@@ -95,16 +94,15 @@ public class JourneyService {
         double yfinal = 0;
         Journey j  = journeyRepository.findById(journeyId).orElseThrow();
 
-        Monopatin monopatin = monopatinFeignClient.getMonopatinById(j.getMonopatinId()).getBody();
+        MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(j.getMonopatinId()).getBody();
         if(monopatin == null) throw new RuntimeException();
 
-        MonopatinDto m = new MonopatinDto(monopatin);
-        if(stopFeignClient.getParadaByX(m.getX(),m.getY()) != null) {
+        if(stopFeignClient.getParadaByX(monopatin.getX(),monopatin.getY()) != null) {
             j.setFinishDate(LocalDateTime.now());
-            m.setState(State.AVAILABLE);
+            monopatin.setState(State.AVAILABLE);
 
-            xfinal = m.getX();
-            yfinal = m.getY();
+            xfinal = monopatin.getX();
+            yfinal = monopatin.getY();
             j.setKmTraveled(
                     Math.sqrt(
                             Math.pow(xfinal - j.getXOrigin(), 2) + Math.pow(yfinal - j.getYOrigin(), 2)
@@ -122,7 +120,7 @@ public class JourneyService {
         Fee ta = feeRepository.getTarifaNormalEnPlazoValido();
         Long t =  ChronoUnit.MINUTES.between(j.getStartDate(), j.getFinishDate());
 
-        m.setUseTime(t);
+        monopatin.setUseTime(t);
 
         tarifaNormal = (xfinal+yfinal)*ta.getFee();
         for (Pause pausa : pausas) {
