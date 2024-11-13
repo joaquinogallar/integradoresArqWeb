@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -58,6 +59,21 @@ public class MonopatinService {
             List<MonopatinDto> respuesta = new ArrayList<>();
             for (Monopatin monopatin : monopatines) {
                 respuesta.add(new MonopatinDto(monopatin)) ;
+            }
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesConTiempoPausaPorKms(BigDecimal minKms) {
+        try{
+            List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesConTiempoPausa();
+            List<MonopatinDto> respuesta = new ArrayList<>();
+            for (Monopatin monopatin : monopatines) {
+                if(monopatin.getKmTraveled().compareTo(minKms) > 0)
+                    respuesta.add(new MonopatinDto(monopatin)) ;
             }
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {

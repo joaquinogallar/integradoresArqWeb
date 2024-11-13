@@ -7,6 +7,7 @@ import com.grupo08.unicen.microservicemonopatin.service.MonopatinService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +39,11 @@ public class MonopatinController {
     @GetMapping("/order/use-time/with-pause")
     public ResponseEntity<List<MonopatinDto>> getMonopatinesWithTimePause()  {
         return monopatinService.getMonopatinesConTiempoPausa();
+    }
+
+    @GetMapping("/order/use-time/with-pause/byKms/{kms}")
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesWithTimePauseByKms(@PathVariable BigDecimal kms)  {
+        return monopatinService.getMonopatinesConTiempoPausaPorKms(kms);
     }
 
 
