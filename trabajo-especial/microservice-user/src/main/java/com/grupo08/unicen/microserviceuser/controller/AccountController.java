@@ -45,4 +45,9 @@ public class AccountController {
     public ResponseEntity<String> addMoney(@PathVariable UUID accountId, @RequestParam Double quantity) {
         return accountService.addMoney(accountId, quantity);
     }
+
+    @PutMapping("/disbable/{accountId}")
+    public ResponseEntity<AccountDto>disbableAccount(@PathVariable UUID accountId){
+        return accountService.disableAccount(accountId);
+    }
 }

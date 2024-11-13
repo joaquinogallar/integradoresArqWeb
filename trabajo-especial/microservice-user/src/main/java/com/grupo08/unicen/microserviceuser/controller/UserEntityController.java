@@ -47,4 +47,8 @@ public class UserEntityController {
     public ResponseEntity<List<MonopatinDto>> getNearMonopatines(@PathVariable UUID id, @PathVariable int rangoMetros){
         return userEntityService.getNearMonopatines(id, rangoMetros);
     }
+    @PutMapping ("/{userId}")
+    public ResponseEntity<UserEntityDto> editUser(@PathVariable UUID userId, @RequestBody UserEntityDto u){
+        return userEntityService.editUser(userId, u);
+    }
 }

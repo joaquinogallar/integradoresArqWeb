@@ -28,6 +28,7 @@ public class UserEntity {
 
     private String email;
     private String phoneNumber;
+    private double balance ;
 
     @ManyToMany
     private List<Account> accounts;
@@ -35,7 +36,7 @@ public class UserEntity {
     @ElementCollection
     private List<UUID> journeys;
 
-    public UserEntity(String name, String lastname, String email, String phoneNumber) {
+    public UserEntity(String name, String lastname, String email, String phoneNumber, double balance) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
@@ -50,4 +51,6 @@ public class UserEntity {
         this.phoneNumber = userEntityDto.getPhoneNumber();
         accounts = new ArrayList<>();
     }
+
+  
 }

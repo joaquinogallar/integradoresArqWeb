@@ -79,4 +79,19 @@ public class AccountService {
         return ResponseEntity.ok("Successful transaction. $" + quantity + " were added to account " + accountId);
     }
 
+    public ResponseEntity<AccountDto> disableAccount(UUID accountId) {
+        try {
+           Account a = accountRepository.findById(accountId).orElse(null);
+            if(a!=null){
+                a.setEnabled(false);
+                accountRepository.save(a);
+                return ResponseEntity.ok(new AccountDto(a.getName()));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
+        } return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(null);
+    }
+
 }

@@ -95,4 +95,23 @@ public class UserEntityService {
        return monopatinFeignClient.getNearMonopatines(u.getX(),u.getY(), rangoMetros) ;
     }
 
+    public ResponseEntity<UserEntityDto> editUser(UUID userId, UserEntityDto user) {
+       UserEntity u = userEntityRepository.findById(userId).orElse(null);
+       try {
+        if(u!=null){
+            u.setBalance(user.getBalance());
+            u.setEmail(user.getEmail());
+            u.setName(user.getName());
+            u.setX(user.getX());
+            u.setY(user.getY());
+            userEntityRepository.save(u);
+            ResponseEntity.ok(user);
+        }
+       } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+       }return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+       .body(null);
+    }
+
 }

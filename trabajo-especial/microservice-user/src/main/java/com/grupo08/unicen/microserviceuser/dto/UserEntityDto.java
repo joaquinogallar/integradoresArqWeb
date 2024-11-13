@@ -31,5 +31,6 @@ public class UserEntityDto {
     private String phoneNumber;
     private int x ; 
     private int y ;
+    private double balance ;
 
 }

@@ -24,7 +24,7 @@ public class Account {
     private String name;
 
     private LocalDateTime createdAt;
-
+    private boolean enabled;
     private Double balance;
 
     @ManyToMany(mappedBy = "accounts")
