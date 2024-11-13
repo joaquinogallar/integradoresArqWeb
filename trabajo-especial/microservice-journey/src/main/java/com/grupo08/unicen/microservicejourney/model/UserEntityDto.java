@@ -10,11 +10,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntityDto {
-    private UUID id;
     private String name;
     private String lastname;
     private String email;
     private String phoneNumber;
-    private int x ;
+    private int x ; 
     private int y ;
+    private double balance;
+
 }

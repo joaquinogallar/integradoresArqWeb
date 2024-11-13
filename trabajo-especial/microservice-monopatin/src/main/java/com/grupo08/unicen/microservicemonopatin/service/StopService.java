@@ -79,7 +79,7 @@ public class StopService {
             List<MonopatinDto> aux = new ArrayList<>();
             List<Monopatin> monopatines = monopatinRepository.getMonopatinsById(stopId);
             for (Monopatin monopatin : monopatines) {
-                aux.add(new MonopatinDto(monopatin));
+                aux.add(new MonopatinDto(monopatin.getId(),monopatin.getState(),monopatin.getKmTraveled(),monopatin.getUseTime(),monopatin.getX(),monopatin.getY()));
             }
             return ResponseEntity.ok(aux);
         } catch (Exception e) {

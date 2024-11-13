@@ -12,6 +12,8 @@ import com.grupo08.unicen.microservicejourney.model.State;
 import com.grupo08.unicen.microservicejourney.model.UserEntityDto;
 import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 
+import com.grupo08.unicen.microservicejourney.model.MonopatinDto;
+import com.grupo08.unicen.microservicejourney.model.State;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,10 +58,12 @@ public class JourneyService {
 
     public ResponseEntity<JourneyDto> createViaje(UUID monopatinId, UUID userId) {
         try {
+            
             MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
             UserEntityDto user = userFeignClient.getUserById(userId).getBody();
 
-            if(monopatin == null || user == null) throw new RuntimeException();
+            if(monopatin == null || user == null || user.getBalance()<0 )  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);;
 
             Journey j = new Journey(monopatinId, userId, monopatin.getX(), monopatin.getY());
             return ResponseEntity.ok(new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId()));
@@ -97,6 +101,7 @@ public class JourneyService {
         MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(j.getMonopatinId()).getBody();
         if(monopatin == null) throw new RuntimeException();
 
+        
         if(stopFeignClient.getParadaByX(monopatin.getX(),monopatin.getY()) != null) {
             j.setFinishDate(LocalDateTime.now());
             monopatin.setState(State.AVAILABLE);
@@ -122,6 +127,7 @@ public class JourneyService {
         Long t =  ChronoUnit.MINUTES.between(j.getStartDate(), j.getFinishDate());
 
         monopatin.setUseTime(t);
+        monopatinFeignClient.editMonopatin(monopatin.getId());
 
         tarifaNormal = (xfinal+yfinal)*ta.getFee();
         for (Pause pausa : pausas) {
