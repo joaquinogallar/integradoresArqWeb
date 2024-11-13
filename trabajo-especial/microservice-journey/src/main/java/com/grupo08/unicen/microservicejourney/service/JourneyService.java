@@ -12,9 +12,6 @@ import com.grupo08.unicen.microservicejourney.model.State;
 import com.grupo08.unicen.microservicejourney.model.UserEntityDto;
 import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 
-import com.grupo08.unicen.microservicejourney.model.MonopatinDto;
-import com.grupo08.unicen.microservicejourney.model.State;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
