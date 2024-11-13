@@ -141,6 +141,10 @@ public class JourneyService {
         throw new RuntimeException();
     }
 
+    public int getFacturadoEntreMeses(int year, int mes, int mes2) {
+       return journeyRepository.getFacturado(year,mes,mes2);
+    }
+
     
     
 }

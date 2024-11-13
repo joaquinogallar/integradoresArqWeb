@@ -20,6 +20,8 @@ public interface JourneyRepository extends JpaRepository<Journey, UUID> {
 
     @Query("SELECT j.pauses FROM Journey j WHERE j.id = :journeyId")
     List<Pause> findPausasByIdViaje(UUID journeyId);
+    @Query("SELECT SUM(f.fee) FROM Journey j JOIN j.fee f WHERE FUNCTION('YEAR', j.startdate) = :year AND FUNCTION('MONTH', j.startDate) BETWEEN :mesInicio AND :mesFin")
+    int getFacturado(int year,int mesInicio,int mesFin);
 }
    
 

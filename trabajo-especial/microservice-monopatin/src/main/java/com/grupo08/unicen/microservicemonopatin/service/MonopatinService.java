@@ -3,6 +3,7 @@ package com.grupo08.unicen.microservicemonopatin.service;
 import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemonopatin.dto.StopDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
+import com.grupo08.unicen.microservicemonopatin.entity.State;
 import com.grupo08.unicen.microservicemonopatin.entity.Stop;
 import com.grupo08.unicen.microservicemonopatin.exception.MonopatinNotFoundException;
 import com.grupo08.unicen.microservicemonopatin.repository.MonopatinRepository;
@@ -134,6 +135,32 @@ public class MonopatinService {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
        }
+    }
+
+    public ResponseEntity<MonopatinDto> putMonopatinInMaintenance(UUID monopatinId) {
+        Monopatin m = monopatinRepository.findById(monopatinId).orElse(null);
+        try {
+                m.setState(State.IN_MAINTENANCE);
+                monopatinRepository.save(m);
+                return ResponseEntity.ok(new MonopatinDto(m));
+            
+        }     catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
+        } 
+    }
+
+    public ResponseEntity<MonopatinDto> putMonopatinOutMaintenance(UUID monopatinId) {
+        Monopatin m = monopatinRepository.findById(monopatinId).orElse(null);
+        try {
+                m.setState(State.AVAILABLE);
+                monopatinRepository.save(m);
+                return ResponseEntity.ok(new MonopatinDto(m));
+            
+        }     catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null);
+        } 
     }
 }
 

@@ -63,4 +63,12 @@ public class MonopatinController {
     public ResponseEntity<List<MonopatinDto>>GetNearStops(@PathVariable int x, @PathVariable int y, @PathVariable int rangoMetros){
         return monopatinService.getNearMonopatines(x,y,rangoMetros);
     }
+    @PutMapping("/InMaintenance/{monopatinId}")
+    public ResponseEntity<MonopatinDto>putMonopatinInMaintenance(@PathVariable UUID monopatinId){
+        return monopatinService.putMonopatinInMaintenance(monopatinId);
+    }
+    @PutMapping("/OutMaintenance/{monopatinId}")
+    public ResponseEntity<MonopatinDto>putMonopatinOutMaintenance(@PathVariable UUID monopatinId){
+        return monopatinService.putMonopatinOutMaintenance(monopatinId);
+    }
 }
