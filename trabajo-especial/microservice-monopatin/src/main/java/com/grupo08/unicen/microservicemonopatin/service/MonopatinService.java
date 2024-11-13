@@ -72,9 +72,9 @@ public class MonopatinService {
         try{
             List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesConTiempoPausa();
             List<MonopatinDto> respuesta = new ArrayList<>();
-            for (Monopatin monopatin : monopatines) {
-                if(monopatin.getKmTraveled().compareTo(minKms) > 0)
-                    respuesta.add(new MonopatinDto(monopatin)) ;
+            for (Monopatin m : monopatines) {
+                if(m.getKmTraveled().compareTo(minKms) > 0)
+                    respuesta.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime())) ;
             }
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
@@ -102,9 +102,9 @@ public class MonopatinService {
         try{
             List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesSinTiempoPausa();
             List<MonopatinDto> respuesta = new ArrayList<>();
-            for (Monopatin monopatin : monopatines) {
-                if(monopatin.getKmTraveled().compareTo(minKms) > 0)
-                    respuesta.add(new MonopatinDto(monopatin));
+            for (Monopatin m : monopatines) {
+                if(m.getKmTraveled().compareTo(minKms) > 0)
+                    respuesta.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
             }
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
@@ -173,7 +173,7 @@ public class MonopatinService {
         try {
                 m.setState(State.IN_MAINTENANCE);
                 monopatinRepository.save(m);
-                return ResponseEntity.ok(new MonopatinDto(m));
+                return ResponseEntity.ok(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
             
         }     catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -186,7 +186,7 @@ public class MonopatinService {
         try {
                 m.setState(State.AVAILABLE);
                 monopatinRepository.save(m);
-                return ResponseEntity.ok(new MonopatinDto(m));
+                return ResponseEntity.ok(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
             
         }     catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
