@@ -45,8 +45,8 @@ public class MaintenanceRecordController {
         return maintenanceRecordService.deleteMaintenanceRecordById(maintenanceId);
     }
 
-    @GetMapping("/reporte-en-mantenimiento/")
-    public ResponseEntity<List<MonopatinDto>>GetReporteMonopatinesEnMantenimiento(){
+    @GetMapping("/report-in-maintenance/")
+    public ResponseEntity<List<MonopatinDto>>GetReportMonopatinesInMaintenance(){
         try {
             List<MonopatinDto> reporte = maintenanceRecordService.getMonopatinesInMaintenance();
             return ResponseEntity.ok(reporte);
@@ -56,8 +56,8 @@ public class MaintenanceRecordController {
         }
     }
 
-    @GetMapping("/reporte-activos/")
-    public ResponseEntity<List<MonopatinDto>>GetReporteMonopatinesActivos(){
+    @GetMapping("/report-actives/")
+    public ResponseEntity<List<MonopatinDto>>GetReportMonopatinesActives(){
         try {
             List<MonopatinDto> reporte = maintenanceRecordService.getActivesMonopatines();
             return ResponseEntity.ok(reporte);
