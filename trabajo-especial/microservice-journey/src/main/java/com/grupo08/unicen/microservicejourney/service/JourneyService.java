@@ -12,6 +12,7 @@ import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.entity.State;
+import com.grupo08.unicen.microservicemonopatin.entity.Stop;
 import com.grupo08.unicen.microserviceuser.dto.AccountDto;
 import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,26 +82,25 @@ public class JourneyService {
         Journey journey  = journeyRepository.findById(journeyId).orElse(null);
 
         MonopatinDto m = new MonopatinDto(monopatinFeignClient.getMonopatinById(journey.getMonopatinId()).getBody());
-        if(stopFeignClient.getParadaByX(m.getX(),m.getY())!=null) {
-
+        if(stopFeignClient.getParadaByX(m.getX(),m.getY()) != null) {
             journey.setFinishDate(LocalDateTime.now());
-
             m.setState(State.AVAILABLE);
 
-            if(journey.getXOrigin()- m.getX() <0) xfinal = (journey.getXOrigin()- m.getX())*-1;
-            else xfinal = journey.getXOrigin()- m.getX();
+            xfinal = m.getX();
+            yfinal = m.getY();
+            journey.setKmTraveled(
+                    Math.sqrt(
+                            Math.pow(xfinal - journey.getXOrigin(), 2) + Math.pow(yfinal - journey.getYOrigin(), 2)
+                    )
+            );
         }
-        if(journey.getYOrigin()- m.getY() <0)
-            yfinal = (journey.getYOrigin()- m.getY())*-1  ;
-        else
-            yfinal = journey.getYOrigin()- m.getY();
 
-        journey.setKmTraveled(xfinal+yfinal);
         journeyRepository.save(journey);
 
         List<Pause>pausas = journeyRepository.findPausasByIdViaje(journeyId);
         double tarifaXpausas = 0 ;
         double tarifaNormal = 0;
+
 
         Fee ta = feeRepository.getTarifaNormalEnPlazoValido();
         Long t =  ChronoUnit.MINUTES.between(journey.getStartDate(), journey.getFinishDate());

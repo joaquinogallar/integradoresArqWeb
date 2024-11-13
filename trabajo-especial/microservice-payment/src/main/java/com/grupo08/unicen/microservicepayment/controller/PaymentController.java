@@ -33,14 +33,14 @@ public class PaymentController {
         return paymentService.getAllTransactions();
     }
 
-    @GetMapping("/tarifa/{id}")
+/*    @GetMapping("/tarifa/{id}")
     public Transaction getTariffById(@PathVariable UUID id) {
         return paymentService.getTariffById(id);
-    }
+    }*/
 
-    @PostMapping("/tarifa")
+/*    @PostMapping("/tarifa")
     public Transaction createTariff(@RequestBody Transaction transaction) {
         return paymentService.createTariff(transaction);
-    }
+    }*/
     
 }

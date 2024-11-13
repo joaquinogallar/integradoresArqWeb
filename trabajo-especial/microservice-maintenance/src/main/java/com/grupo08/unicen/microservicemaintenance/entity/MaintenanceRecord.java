@@ -1,6 +1,7 @@
 package com.grupo08.unicen.microservicemaintenance.entity;
 
 import com.grupo08.unicen.microservicemaintenance.dto.MaintenanceRecordDto;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
