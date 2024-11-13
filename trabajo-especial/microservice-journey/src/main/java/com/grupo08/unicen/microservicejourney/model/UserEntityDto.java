@@ -4,21 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntityDto {
+    private UUID id;
     private String name;
     private String lastname;
     private String email;
     private String phoneNumber;
-    private int x ; 
+    private int x ;
     private int y ;
-
-    
-
-    public UserEntityDto(String name, String lastname, String email, String phoneNumber) {
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
 }

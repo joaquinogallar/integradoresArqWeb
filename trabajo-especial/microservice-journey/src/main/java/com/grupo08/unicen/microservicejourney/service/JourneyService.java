@@ -104,6 +104,7 @@ public class JourneyService {
             xfinal = monopatin.getX();
             yfinal = monopatin.getY();
             j.setKmTraveled(
+                    // formula para sacar la distancia entre 2 vectores (origen y destino)
                     Math.sqrt(
                             Math.pow(xfinal - j.getXOrigin(), 2) + Math.pow(yfinal - j.getYOrigin(), 2)
                     )

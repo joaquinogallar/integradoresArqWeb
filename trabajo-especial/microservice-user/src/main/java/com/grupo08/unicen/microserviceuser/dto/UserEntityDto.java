@@ -3,13 +3,20 @@ package com.grupo08.unicen.microserviceuser.dto;
 import com.grupo08.unicen.microserviceuser.entity.UserEntity;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntityDto {
 
 
+    private UUID id;
     @NotNull(message = "Name cant be null")
     @NotEmpty(message = "Name cant be empty")
     private String name;
@@ -22,21 +29,7 @@ public class UserEntityDto {
     @NotNull(message = "Phone Number cant be null")
     @NotEmpty(message = "Phone Number cant be empty")
     private String phoneNumber;
-
     private int x ; 
     private int y ;
 
-    public UserEntityDto(UserEntity userEntity) {
-        this.name = userEntity.getName();
-        this.lastname = userEntity.getLastname();
-        this.email = userEntity.getEmail();
-        this.phoneNumber = userEntity.getPhoneNumber();
-    }
-
-    public UserEntityDto(String name, String lastname, String email, String phoneNumber) {
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
 }
