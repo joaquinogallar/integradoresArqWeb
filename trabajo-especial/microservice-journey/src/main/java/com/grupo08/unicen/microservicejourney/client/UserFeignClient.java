@@ -8,7 +8,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
@@ -18,6 +19,8 @@ public interface UserFeignClient {
     @GetMapping("/api/users/{userId}")
     public ResponseEntity<UserEntityDto> getUserById(@PathVariable UUID userId);
 
+    @PutMapping("/api/users/{userId}")
+    public ResponseEntity<UserEntityDto> editUser(@PathVariable UUID userId, @RequestBody UserEntityDto u);
 
 
 

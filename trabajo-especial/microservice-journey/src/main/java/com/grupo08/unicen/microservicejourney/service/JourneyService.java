@@ -135,9 +135,10 @@ public class JourneyService {
                  tarifaXpausas = minutosFinal*tarifaEspecial.getSpecialFee();
             }
 
-            // TODO: el balance se setea a la cuenta, no al usuario
-/*            UserEntityDto u  =  userFeignClient.getUserById(journey.getUserId()).getBody();
-            u.setBalance(tarifaNormal+tarifaXpausas);*/
+            
+        UserEntityDto u  =  userFeignClient.getUserById(j.getUserId()).getBody();
+            u.setBalance(tarifaNormal+tarifaXpausas);
+            userFeignClient.editUser(j.getUserId(),u);
             return new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId());
         }
         throw new RuntimeException();

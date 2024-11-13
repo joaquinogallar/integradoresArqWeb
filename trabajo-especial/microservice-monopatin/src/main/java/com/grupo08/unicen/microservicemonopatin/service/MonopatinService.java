@@ -113,9 +113,23 @@ public class MonopatinService {
         }
     }
 
-    public ResponseEntity<MonopatinDto> putMonopatin(Long monopatinID) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'putMonopatin'");
+    public ResponseEntity<MonopatinDto> editMonopatin(Long monopatinID,MonopatinDto monopatinDto) {
+        try {
+            Monopatin m = monopatinRepository.findById(null).orElse(null);
+            if(m!=null){
+                m.setKmTraveled(monopatinDto.getKmTraveled());
+                m.setState(monopatinDto.getState());
+                m.setUseTime(monopatinDto.getUseTime());
+                m.setX(monopatinDto.getX());
+                m.setY(monopatinDto.getY());
+                monopatinRepository.save(m);
+                ResponseEntity.ok(monopatinDto) ;
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        } return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(null);
     }
 
     public ResponseEntity <List<MonopatinDto>> getMonopatinesInMaintenance() {
