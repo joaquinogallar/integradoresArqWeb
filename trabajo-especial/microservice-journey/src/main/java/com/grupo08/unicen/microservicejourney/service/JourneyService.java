@@ -99,7 +99,7 @@ public class JourneyService {
         if(monopatin == null) throw new RuntimeException();
 
         
-        if(stopFeignClient.getParadaByX(monopatin.getX(),monopatin.getY()) != null) {
+        if(stopFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()) != null) {
             j.setFinishDate(LocalDateTime.now());
             monopatin.setState(State.AVAILABLE);
 
