@@ -28,7 +28,7 @@ public class MonopatinService {
         try {
             List<Monopatin> monopatines = monopatinRepository.findAll();
             List<MonopatinDto> monopatinDtos = new ArrayList<>();
-            monopatines.forEach(m -> monopatinDtos.add(new MonopatinDto(m)));
+            monopatines.forEach(m -> monopatinDtos.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime())));
             return ResponseEntity.ok(monopatinDtos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -37,9 +37,9 @@ public class MonopatinService {
     }
 
     public ResponseEntity<MonopatinDto> getMonopatinById(UUID monopatinId) {
-        Monopatin monopatin = monopatinRepository.findById(monopatinId)
+        Monopatin m = monopatinRepository.findById(monopatinId)
                 .orElseThrow(() -> new MonopatinNotFoundException(monopatinId.toString()));
-        return ResponseEntity.ok(new MonopatinDto(monopatin));
+        return ResponseEntity.ok(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
     }
 
     public ResponseEntity<String> createMonopatin(MonopatinDto monopatin) {
@@ -56,8 +56,8 @@ public class MonopatinService {
            try{
             List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesConTiempoPausa();
             List<MonopatinDto> respuesta = new ArrayList<>();
-            for (Monopatin monopatin : monopatines) {
-                respuesta.add(new MonopatinDto(monopatin)) ;
+            for (Monopatin m : monopatines) {
+                respuesta.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime())) ;
             }
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
@@ -71,8 +71,8 @@ public class MonopatinService {
         try{
             List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesSinTiempoPausa();
             List<MonopatinDto> respuesta = new ArrayList<>();
-            for (Monopatin monopatin : monopatines) {
-                respuesta.add(new MonopatinDto(monopatin));
+            for (Monopatin m : monopatines) {
+                respuesta.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
             }
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
@@ -88,10 +88,10 @@ public class MonopatinService {
 
     public ResponseEntity <List<MonopatinDto>> getMonopatinesInMaintenance() {
         try {
-            List<Monopatin>m = monopatinRepository.getMonopatinesInMaintenance();
+            List<Monopatin> monopatines = monopatinRepository.getMonopatinesInMaintenance();
         List<MonopatinDto> aux = new ArrayList<>();
-        for (Monopatin monopatin : m) {
-            aux.add(new MonopatinDto(monopatin));
+        for (Monopatin m : monopatines) {
+            aux.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
         }
         return ResponseEntity.ok(aux);
         } catch (Exception e) {
@@ -103,10 +103,10 @@ public class MonopatinService {
 
     public ResponseEntity<List<MonopatinDto>> getActivesMonopatines() {
         try {
-            List<Monopatin>m = monopatinRepository.getActivesMonopatines();
+            List<Monopatin> monopatines = monopatinRepository.getActivesMonopatines();
         List<MonopatinDto> aux = new ArrayList<>();
-        for (Monopatin monopatin : m) {
-            aux.add(new MonopatinDto(monopatin));
+        for (Monopatin m : monopatines) {
+            aux.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
         }
         return ResponseEntity.ok(aux);
         } catch (Exception e) {
@@ -123,10 +123,10 @@ public class MonopatinService {
             double distancia = Math.sqrt(
             Math.pow(m.getX() - x, 2) +
             Math.pow(m.getY() - y, 2)
-        );
-        if (distancia <= rangoMetros) {
-            aux.add(new MonopatinDto(m));
-        }
+            );
+            if (distancia <= rangoMetros) {
+                aux.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
+            }
         }
         return ResponseEntity.ok(aux);
         
