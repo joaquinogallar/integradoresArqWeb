@@ -1,5 +1,5 @@
 package com.grupo08.unicen.microservicejourney.entity;
-import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

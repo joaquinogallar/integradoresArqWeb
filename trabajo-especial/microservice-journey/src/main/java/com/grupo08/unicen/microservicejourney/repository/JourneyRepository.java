@@ -1,7 +1,7 @@
 package com.grupo08.unicen.microservicejourney.repository;
 
 import com.grupo08.unicen.microservicejourney.entity.Pause;
-import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
+
 import com.grupo08.unicen.microservicejourney.entity.Journey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
