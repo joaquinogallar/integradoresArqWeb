@@ -1,6 +1,5 @@
-package com.grupo08.unicen.microservicemonopatin.dto;
+package com.grupo08.unicen.microservicejourney.model;
 
-import com.grupo08.unicen.microservicemonopatin.entity.Stop;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

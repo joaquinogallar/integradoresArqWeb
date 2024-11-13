@@ -45,5 +45,10 @@ public class StopController {
     public ResponseEntity<String> addMonopatinToStop(@PathVariable UUID stopId, @PathVariable UUID monopatinId) {
         return stopService.addMonopatinToStop(stopId, monopatinId);
     }
+
+    @GetMapping("/api/stops/{x}/{y}")
+    public ResponseEntity<StopDto> getStopByXY(@PathVariable int x, @PathVariable int y) {
+        return stopService.getStopByXY(x, y);
+    }
     
 }
