@@ -1,10 +1,11 @@
 package com.grupo08.unicen.microservicemaintenance.service;
 
+import com.grupo08.unicen.microservicemaintenance.FeignClient.MonopatinClient;
 import com.grupo08.unicen.microservicemaintenance.dto.MaintenanceRecordDto;
 import com.grupo08.unicen.microservicemaintenance.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemaintenance.entity.MaintenanceRecord;
 import com.grupo08.unicen.microservicemaintenance.repository.MaintenanceRecordRepository;
-import com.grupo08.unicen.microservicemaintenance.repository.MonopatinClient;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -75,7 +76,7 @@ public class MaintenanceRecordService {
     }
 
     public List<MonopatinDto> getMonopatinesWithTimePauseByKms(BigDecimal kms) {
-        return monopatinClient.getMonopatinesWithTimePauseByKms(kms);
+        return monopatinClient.getMonopatinesByKms(kms);
     }
 
     public List<MonopatinDto> getMonopatinesWithoutTimePauseByKms(BigDecimal kms) {

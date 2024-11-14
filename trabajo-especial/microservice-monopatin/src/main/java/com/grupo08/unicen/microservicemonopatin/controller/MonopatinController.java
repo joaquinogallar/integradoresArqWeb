@@ -41,8 +41,8 @@ public class MonopatinController {
         return monopatinService.getMonopatinesConTiempoPausa();
     }
 
-    @GetMapping("/order/use-time/with-pause/byKms/{kms}")
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesWithTimePauseByKms(@PathVariable BigDecimal kms)  {
+    @GetMapping("/order/byKms/{kms}")
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesByKms(@PathVariable BigDecimal kms)  {
         return monopatinService.getMonopatinesConTiempoPausaPorKms(kms);
     }
 
