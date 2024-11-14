@@ -11,6 +11,8 @@ import com.grupo08.unicen.microserviceuser.exception.UserNotFoundException;
 import com.grupo08.unicen.microserviceuser.model.JourneyDto;
 import com.grupo08.unicen.microserviceuser.repository.AccountRepository;
 import com.grupo08.unicen.microserviceuser.repository.UserEntityRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,19 +24,17 @@ import java.util.UUID;
 @Service
 public class UserEntityService {
 
-    private final UserEntityRepository userEntityRepository;
-    private final AccountRepository accountRepository;
-    private final MonopatinFeignClient monopatinFeignClient;
-    private final JourneyFeignClient journeyFeignClient;
+    @Autowired
+   private UserEntityRepository userEntityRepository;
 
-    // dependency injection
-    public UserEntityService(UserEntityRepository userEntityRepository, AccountRepository accountRepository, MonopatinFeignClient monopatinFeignClient, JourneyFeignClient journeyFeignClient) {
-        this.userEntityRepository = userEntityRepository;
-        this.accountRepository = accountRepository;
-        this.monopatinFeignClient = monopatinFeignClient;
-        this.journeyFeignClient = journeyFeignClient;
-    }
+   @Autowired
+   private JourneyFeignClient journeyFeignClient;
 
+   @Autowired 
+  private MonopatinFeignClient monopatinFeignClient;
+
+   @Autowired
+   private AccountRepository accountRepository ;
     // basic methods
     public ResponseEntity<List<UserEntityDto>> getAllUsers() {
         try {
