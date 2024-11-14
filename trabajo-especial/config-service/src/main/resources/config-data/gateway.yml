@@ -10,31 +10,31 @@ eureka:
   instance:
     hostname: localhost
 
-spring:
-  cloud:
-    gateway:
-      mvc:
-        routes:
-          - id: microservice-journey
-            uri: lb://microservice-journey
-            predicates:
-              - Path=/api/journeys/**
-              - Path=/api/fees/**
-              - Path=/api/pauses/**
-          - id: microservice-maintenance
-            uri: lb://microservice-maintenance
-            predicates:
-              - Path=/api/maintenances/**
-          - id: microservice-monopatin
-            uri: lb://microservice-monopatin
-            predicates:
-              - Path=/api/monopatines/**
-              - Path=/api/stops/**
-          - id: microservice-user
-            uri: lb://microservice-user
-            predicates:
-              - Path=/api/users/**
-              - Path=/api/accounts/**
+# spring:
+#  cloud:
+#    gateway:
+#      mvc:
+#        routes:
+#          - id: microservice-journey
+#            uri: lb://microservice-journey
+#            predicates:
+#              - Path=/api/journeys/**
+#              - Path=/api/fees/**
+#              - Path=/api/pauses/**
+#          - id: microservice-maintenance
+#            uri: lb://microservice-maintenance
+#            predicates:
+#              - Path=/api/maintenances/**
+#          - id: microservice-monopatin
+#            uri: lb://microservice-monopatin
+#            predicates:
+#              - Path=/api/monopatines/**
+#              - Path=/api/stops/**
+#          - id: microservice-user
+#            uri: lb://microservice-user
+#            predicates:
+#              - Path=/api/users/**
+#              - Path=/api/accounts/**
 
 logging:
   level:
