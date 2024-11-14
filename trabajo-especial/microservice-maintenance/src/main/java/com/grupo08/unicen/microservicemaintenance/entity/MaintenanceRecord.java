@@ -1,10 +1,11 @@
 package com.grupo08.unicen.microservicemaintenance.entity;
 
 import com.grupo08.unicen.microservicemaintenance.dto.MaintenanceRecordDto;
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,10 +16,9 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @ToString
-@Entity
+@Document(collation = "maintenanceRecord")
 public class MaintenanceRecord {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private UUID monopatinId;
