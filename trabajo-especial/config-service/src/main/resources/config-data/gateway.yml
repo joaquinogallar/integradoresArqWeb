@@ -24,7 +24,7 @@ spring:
           - id: microserivice-maintenance
             uri: lb://microservice-maintenance
             predicates:
-              - Path=/api/maintenances/**
+              - Path=/api/maintenance/**
           - id: microservice-monopatin
             uri: lb://microservice-monopatin
             predicates:
