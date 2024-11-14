@@ -40,7 +40,7 @@ public class UserEntityService {
         try {
             List<UserEntity> users = userEntityRepository.findAll();
             List<UserEntityDto> userDtos = new ArrayList<>();
-            users.forEach(u -> userDtos.add(new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY())));
+            users.forEach(u -> userDtos.add(new UserEntityDto(u.getId(),u.getX(),u.getY(),u.getBalance())));
             return ResponseEntity.ok(userDtos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -51,7 +51,7 @@ public class UserEntityService {
     public ResponseEntity<UserEntityDto> getUserById(UUID userId) {
         UserEntity u = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.toString()));
-        UserEntityDto userDto = new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY());
+        UserEntityDto userDto = new UserEntityDto(u.getId(), u.getX(), u.getY(), u.getBalance());
         return ResponseEntity.ok(userDto);
     }
 
@@ -68,7 +68,7 @@ public class UserEntityService {
     public ResponseEntity<UserEntityDto> deleteUserById(UUID userId) {
         UserEntity u = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.toString()));
-        UserEntityDto userDto = new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY());
+        UserEntityDto userDto = new UserEntityDto(u.getId(),  u.getX(), u.getY(),u.getBalance());
         userEntityRepository.delete(u);
 
         return ResponseEntity.ok(userDto);

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/tarifas")
+@RequestMapping("/api/tarifas")
 public class FeeController {
 
     @Autowired

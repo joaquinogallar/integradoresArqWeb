@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/api/mantenimiento")
+@RequestMapping("/api/mantenimiento")
 public class MaintenanceRecordController {
     @Autowired
     private MaintenanceRecordService maintenanceRecordService;
