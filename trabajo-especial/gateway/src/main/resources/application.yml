@@ -3,4 +3,46 @@ spring:
     name: gateway
   config:
     import: optional:configserver:http://localhost:8081
+  server:
+  port: 8080
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: microservice-journey
+            uri: lb://microservice-journey
+            predicates:
+              - Path=/api/journeys/**
+              - Path=/api/fees/**
+              - Path=/api/pauses/**
+          - id: microservice-maintenance
+            uri: lb://microservice-maintenance
+            predicates:
+              - Path=/api/maintenances/**
+          - id: microservice-monopatin
+            uri: lb://microservice-monopatin
+            predicates:
+              - Path=/api/monopatines/**
+              - Path=/api/stops/**
+          - id: microservice-user
+            uri: lb://microservice-user
+            predicates:
+              - Path=/api/users/**
+              - Path=/api/accounts/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
 
