@@ -68,7 +68,7 @@ public class MonopatinService {
         }
     }
 
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesConTiempoPausaPorKms(BigDecimal minKms) {
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesPorKms() {
         try{
             List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesPorKilometros();
             List<MonopatinDto> respuesta = new ArrayList<>();
