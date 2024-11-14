@@ -27,10 +27,6 @@ spring:
             uri: lb://microservice-monopatin
             predicates:
               - Path=/api/monopatines/**
-          - id: microservice-payment
-            uri: lb://microservice-payment
-            predicates:
-                - Path=/api/payments/**
           - id: microservice-report
             uri: lb://microservice-report
             predicates:

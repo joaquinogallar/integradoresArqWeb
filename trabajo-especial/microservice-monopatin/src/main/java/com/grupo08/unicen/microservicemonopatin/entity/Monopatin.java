@@ -34,10 +34,11 @@ public class Monopatin {
     }
 
     public Monopatin(MonopatinDto monopatinDto) {
+        this.state = monopatinDto.getState();
         this.x = monopatinDto.getX();
         this.y = monopatinDto.getY();
-        this.kmTraveled = monopatinDto.getKmTraveled();
-        this.useTime = monopatinDto.getUseTime();
+        this.kmTraveled = BigDecimal.ZERO;
+        this.useTime = 0L;
 
     }
 }

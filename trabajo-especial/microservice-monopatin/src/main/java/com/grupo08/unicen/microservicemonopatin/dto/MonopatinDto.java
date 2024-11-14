@@ -21,7 +21,7 @@ public class MonopatinDto {
 
 
     public MonopatinDto(UUID id, State s, BigDecimal km, Long useTime, int x,int y){
-        this.id= id;
+        this.id = id;
         this.state = s;
         this.kmTraveled=km;
         this.useTime = useTime ;
