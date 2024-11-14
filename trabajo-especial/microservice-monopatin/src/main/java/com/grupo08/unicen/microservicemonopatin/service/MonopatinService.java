@@ -68,12 +68,11 @@ public class MonopatinService {
         }
     }
 
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesConTiempoPausaPorKms(BigDecimal minKms) {
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesPorKms() {
         try{
-            List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesConTiempoPausa();
+            List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesPorKilometros();
             List<MonopatinDto> respuesta = new ArrayList<>();
             for (Monopatin m : monopatines) {
-                if(m.getKmTraveled().compareTo(minKms) > 0)
                     respuesta.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime())) ;
             }
             return ResponseEntity.ok(respuesta);

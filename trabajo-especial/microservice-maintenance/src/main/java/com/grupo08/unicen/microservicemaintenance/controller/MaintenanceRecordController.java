@@ -69,9 +69,9 @@ public class MaintenanceRecordController {
 
     // Los kms minimos que tiene que tener un monopatin para necesitar mantenimiento
     @GetMapping("/report-need-maintenance/{kms}")
-    public ResponseEntity<List<MonopatinDto>>GetReportNeedMaintenance(@PathVariable BigDecimal kms){
+    public ResponseEntity<List<MonopatinDto>>GetReportNeedMaintenance(){
         try {
-            List<MonopatinDto> reporte = maintenanceRecordService.getMonopatinesWithTimePauseByKms(kms);
+            List<MonopatinDto> reporte = maintenanceRecordService.getMonopatinesWithTimePause();
             return ResponseEntity.ok(reporte);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -80,9 +80,9 @@ public class MaintenanceRecordController {
     }
 
     @GetMapping("/report-need-maintenance/no-pause/{kms}")
-    public ResponseEntity<List<MonopatinDto>>GetReportNeedMaintenanceNoTimePause(@PathVariable BigDecimal kms){
+    public ResponseEntity<List<MonopatinDto>>GetReportNeedMaintenanceNoTimePause(){
         try {
-            List<MonopatinDto> reporte = maintenanceRecordService.getMonopatinesWithoutTimePauseByKms(kms);
+            List<MonopatinDto> reporte = maintenanceRecordService.getMonopatinesWithoutTimePause();
             return ResponseEntity.ok(reporte);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

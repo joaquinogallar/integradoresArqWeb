@@ -41,9 +41,9 @@ public class MonopatinController {
         return monopatinService.getMonopatinesConTiempoPausa();
     }
 
-    @GetMapping("/order/use-time/with-pause/byKms/{kms}")
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesWithTimePauseByKms(@PathVariable BigDecimal kms)  {
-        return monopatinService.getMonopatinesConTiempoPausaPorKms(kms);
+    @GetMapping("/order/byKms")
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesByKms()  {
+        return monopatinService.getMonopatinesPorKms();
     }
 
 
@@ -52,10 +52,6 @@ public class MonopatinController {
         return monopatinService.getMonopatinesSinTiempoPausa();
     }
 
-    @GetMapping("/order/use-time/without-pause/byKms/{kms}")
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesWithoutTimePause(@PathVariable BigDecimal kms)  {
-        return monopatinService.getMonopatinesSinTiempoPausaPorKms(kms);
-    }
 
     @PutMapping("/{monopatinID}")
     public ResponseEntity<MonopatinDto>editMonopatin(@PathVariable UUID monopatinID, @RequestBody MonopatinDto monopatinDto){
