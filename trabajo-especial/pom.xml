@@ -20,7 +20,6 @@
     <modules>
         <module>microservice-report</module>
         <module>microservice-maintenance</module>
-        <module>microservice-payment</module>
         <module>microservice-journey</module>
         <module>microservice-monopatin</module>
         <module>microservice-user</module>
