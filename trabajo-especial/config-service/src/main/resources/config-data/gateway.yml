@@ -19,6 +19,8 @@ spring:
             uri: lb://microservice-journey
             predicates:
               - Path=/api/journeys/**
+              - Path=/api/fees/**
+              - Path=/api/pauses/**
           - id: microserivice-maintenance
             uri: lb://microservice-maintenance
             predicates:
@@ -27,14 +29,12 @@ spring:
             uri: lb://microservice-monopatin
             predicates:
               - Path=/api/monopatines/**
-          - id: microservice-report
-            uri: lb://microservice-report
-            predicates:
-              - Path=/api/reports/**
+              - Path=/api/stops/**
           - id: microservice-user
             uri: lb://microservice-user
             predicates:
-              - Path=/api/user/**
+              - Path=/api/users/**
+              - Path=/api/accounts/**
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.UUID;
 
-@FeignClient(name = "parada-service", url = "http://localhost:8087")
+@FeignClient(name = "microservice-stop")
 public interface StopFeignClient {
     @GetMapping("/api/stops/{stopId}")
     public ResponseEntity<StopDto> getStopById(@PathVariable UUID stopId);

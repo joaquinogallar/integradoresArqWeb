@@ -58,7 +58,7 @@ public class MonopatinController {
     }
 
     @PutMapping("/{monopatinID}")
-    public ResponseEntity<MonopatinDto>editMonopatin(@PathVariable Long monopatinID, @RequestBody MonopatinDto monopatinDto){
+    public ResponseEntity<MonopatinDto>editMonopatin(@PathVariable UUID monopatinID, @RequestBody MonopatinDto monopatinDto){
         return monopatinService.editMonopatin(monopatinID, monopatinDto);
     }
     @GetMapping("/maintenance")

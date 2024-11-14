@@ -113,9 +113,9 @@ public class MonopatinService {
         }
     }
 
-    public ResponseEntity<MonopatinDto> editMonopatin(Long monopatinID,MonopatinDto monopatinDto) {
+    public ResponseEntity<MonopatinDto> editMonopatin(UUID monopatinID,MonopatinDto monopatinDto) {
         try {
-            Monopatin m = monopatinRepository.findById(null).orElse(null);
+            Monopatin m = monopatinRepository.findById(monopatinID).orElse(null);
             if(m!=null){
                 m.setKmTraveled(monopatinDto.getKmTraveled());
                 m.setState(monopatinDto.getState());

@@ -25,7 +25,7 @@ public class AccountController {
         return accountService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{accountId}")
     public ResponseEntity<AccountDto> getUserById(@PathVariable UUID accountId) {
         return accountService.getUserById(accountId);
     }
@@ -35,7 +35,7 @@ public class AccountController {
         return accountService.createUser(newAccount);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{accountId}")
     public ResponseEntity<AccountDto> deleteUserById(@PathVariable UUID accountId) {
         return accountService.deleteUserById(accountId);
     }
