@@ -21,32 +21,32 @@ public class AccountController {
 
     // basic methods
     @GetMapping
-    public ResponseEntity<List<AccountDto>> getAllUsers() {
-        return accountService.getAllUsers();
+    public ResponseEntity<List<AccountDto>> getAllAccounts() {
+        return accountService.getAllAccounts();
     }
 
     @GetMapping("/{accountId}")
-    public ResponseEntity<AccountDto> getUserById(@PathVariable UUID accountId) {
-        return accountService.getUserById(accountId);
+    public ResponseEntity<AccountDto> getAccountById(@PathVariable UUID accountId) {
+        return accountService.getAccountById(accountId);
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody AccountDto newAccount) {
-        return accountService.createUser(newAccount);
+    public ResponseEntity<String> createAccount(@RequestBody AccountDto newAccount) {
+        return accountService.createAccount(newAccount);
     }
 
     @DeleteMapping("/{accountId}")
     public ResponseEntity<AccountDto> deleteUserById(@PathVariable UUID accountId) {
-        return accountService.deleteUserById(accountId);
+        return accountService.deleteAccountById(accountId);
     }
 
     // custom methods
-    @PostMapping("/{accountId}/add-money")
+    @PutMapping("/{accountId}/add-money")
     public ResponseEntity<String> addMoney(@PathVariable UUID accountId, @RequestParam Double quantity) {
         return accountService.addMoney(accountId, quantity);
     }
 
-    @PutMapping("/disbable/{accountId}")
+    @PutMapping("/disable/{accountId}")
     public ResponseEntity<AccountDto>disbableAccount(@PathVariable UUID accountId){
         return accountService.disableAccount(accountId);
     }

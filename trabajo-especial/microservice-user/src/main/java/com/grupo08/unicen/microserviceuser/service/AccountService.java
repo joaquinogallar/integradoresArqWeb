@@ -24,7 +24,7 @@ public class AccountService {
     }
 
     // basic methods
-    public ResponseEntity<List<AccountDto>> getAllUsers() {
+    public ResponseEntity<List<AccountDto>> getAllAccounts() {
         try {
             List<Account> accounts = accountRepository.findAll();
             List<AccountDto> accountDtos = new ArrayList<>();
@@ -36,13 +36,13 @@ public class AccountService {
         }
     }
 
-    public ResponseEntity<AccountDto> getUserById(UUID accountId) {
+    public ResponseEntity<AccountDto> getAccountById(UUID accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new UserNotFoundException(accountId.toString()));
         return ResponseEntity.ok(new AccountDto(account));
     }
 
-    public ResponseEntity<String> createUser(AccountDto newAccount) {
+    public ResponseEntity<String> createAccount(AccountDto newAccount) {
         try {
             Account account = new Account(newAccount);
             accountRepository.save(account);
@@ -53,7 +53,7 @@ public class AccountService {
         }
     }
 
-    public ResponseEntity<AccountDto> deleteUserById(UUID accountId) {
+    public ResponseEntity<AccountDto> deleteAccountById(UUID accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new UserNotFoundException(accountId.toString()));
         accountRepository.delete(account);

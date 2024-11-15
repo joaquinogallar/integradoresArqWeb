@@ -18,6 +18,7 @@ public class UserEntityController {
 
     @Autowired
     UserEntityService userEntityService;
+
     @GetMapping
     public ResponseEntity<List<UserEntityDto>> getAllUsers() {
         return userEntityService.getAllUsers();

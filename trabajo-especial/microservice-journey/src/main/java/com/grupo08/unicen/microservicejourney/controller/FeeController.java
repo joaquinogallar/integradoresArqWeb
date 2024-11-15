@@ -20,7 +20,7 @@ public class FeeController {
     FeeService tarifaService;
 
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<?> getAllTarifas() {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(tarifaService.getAll());

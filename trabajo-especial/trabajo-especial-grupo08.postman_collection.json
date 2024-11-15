@@ -1,0 +1,1211 @@
+{
+	"info": {
+		"_postman_id": "f34ba00d-b8cf-45c2-908f-8d440ac972a2",
+		"name": "trabajo-especial-grupo08",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20766632"
+	},
+	"item": [
+		{
+			"name": "microservice-journey",
+			"item": [
+				{
+					"name": "fee",
+					"item": [
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "getAllTarifas",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/fees",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"fees"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getTarifaById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/fees/:feeId",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"fees",
+												":feeId"
+											],
+											"variable": [
+												{
+													"key": "feeId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "post",
+							"item": [
+								{
+									"name": "createTarifa",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/fees",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"fees"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "journey",
+					"item": [
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "getAllJourneys",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/journeys",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"journeys"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getMonopatinesByViaje",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/journeys/monopatines/viajes/:cant/:año",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"journeys",
+												"monopatines",
+												"viajes",
+												":cant",
+												":año"
+											],
+											"variable": [
+												{
+													"key": "cant",
+													"value": "1"
+												},
+												{
+													"key": "año",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getViajeByMonopatin",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/journeys/monopatin/:monopatinId",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"journeys",
+												"monopatin",
+												":monopatinId"
+											],
+											"variable": [
+												{
+													"key": "monopatinId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getFacturadoEntreMeses",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/facturado/:year/:month1/:month2",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"facturado",
+												":year",
+												":month1",
+												":month2"
+											],
+											"variable": [
+												{
+													"key": "year",
+													"value": ""
+												},
+												{
+													"key": "month1",
+													"value": ""
+												},
+												{
+													"key": "month2",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "post",
+							"item": [
+								{
+									"name": "createViaje",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/journeys",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"journeys"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "put",
+							"item": [
+								{
+									"name": "endViaje",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{urljourney\n}}/journey/endViaje/:idViaje",
+											"host": [
+												"{{urljourney\n}}"
+											],
+											"path": [
+												"journey",
+												"endViaje",
+												":idViaje"
+											],
+											"variable": [
+												{
+													"key": "idViaje",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "pause",
+					"item": [
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "New Request",
+									"request": {
+										"method": "GET",
+										"header": []
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "post",
+							"item": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "microservice-maintenance",
+			"item": []
+		},
+		{
+			"name": "microservice-monopatin",
+			"item": [
+				{
+					"name": "monopatin",
+					"item": [
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "getAllMonopatines",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getMonopatinById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/:monopatinId",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												":monopatinId"
+											],
+											"variable": [
+												{
+													"key": "monopatinId",
+													"value": "8d19d493-b119-4635-9adc-df3b51066a46"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getMonopatinesWithTimePause",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/order/use-time/with-pause",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												"order",
+												"use-time",
+												"with-pause"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getMonopatinesByKms",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/order/byKms",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												"order",
+												"byKms"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getMonopatinesWithoutTimePause",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/order/use-time/without-pause",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												"order",
+												"use-time",
+												"without-pause"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "500getMonopatinesInMaintenance",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/maintenance",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												"maintenance"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "500getActivesMonopatines",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/actives",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												"actives"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "500GetNearStops",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/nearMonopatines/:x/:y/:rangoMetros",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												"nearMonopatines",
+												":x",
+												":y",
+												":rangoMetros"
+											],
+											"variable": [
+												{
+													"key": "x",
+													"value": "1"
+												},
+												{
+													"key": "y",
+													"value": "2"
+												},
+												{
+													"key": "rangoMetros",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "post",
+							"item": [
+								{
+									"name": "postMonopatin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"state\": \"AVAILABLE\",\r\n    \"x\": 2,\r\n    \"y\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "put",
+							"item": [
+								{
+									"name": "editMonopatin",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"state\": \"AVAILABLE\",\r\n    \"x\": 2,\r\n    \"y\": 2\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/:monopatinId",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												":monopatinId"
+											],
+											"variable": [
+												{
+													"key": "monopatinId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "putMonopatinInMaintenance",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/InMaintenance/:monopatinId",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												"InMaintenance",
+												":monopatinId"
+											],
+											"variable": [
+												{
+													"key": "monopatinId",
+													"value": "8d19d493-b119-4635-9adc-df3b51066a46"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "putMonopatinOutMaintenance",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/monopatines/OutMaintenance/:monopatinId",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"monopatines",
+												"OutMaintenance",
+												":monopatinId"
+											],
+											"variable": [
+												{
+													"key": "monopatinId",
+													"value": "8d19d493-b119-4635-9adc-df3b51066a46"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "stop",
+					"item": [
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "getAllStops",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/stops",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"stops"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getStopById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/stops/:stopId",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"stops",
+												":stopId"
+											],
+											"variable": [
+												{
+													"key": "stopId",
+													"value": "6975ebac-f8fb-4bec-8c33-a84b4a1108a9"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getMonopatinesByStopId",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/stops/:stopId/monopatines",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"stops",
+												":stopId",
+												"monopatines"
+											],
+											"variable": [
+												{
+													"key": "stopId",
+													"value": "6975ebac-f8fb-4bec-8c33-a84b4a1108a9"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getStopByXY",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/stops/:x/:y",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"stops",
+												":x",
+												":y"
+											],
+											"variable": [
+												{
+													"key": "x",
+													"value": "1"
+												},
+												{
+													"key": "y",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "post",
+							"item": [
+								{
+									"name": "createStop",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"x\": 1,\r\n    \"y\": 1,\r\n    \"address\": \"add1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ulrmonopatin}}/stops",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"stops"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "put",
+							"item": [
+								{
+									"name": "addMonopatinToStop",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ulrmonopatin}}/stops/:stopId/monopatines/:monopatinId",
+											"host": [
+												"{{ulrmonopatin}}"
+											],
+											"path": [
+												"stops",
+												":stopId",
+												"monopatines",
+												":monopatinId"
+											],
+											"variable": [
+												{
+													"key": "stopId",
+													"value": ""
+												},
+												{
+													"key": "monopatinId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "microservice-report",
+			"item": []
+		},
+		{
+			"name": "microservice-user",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "getAllUsers",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/users",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getUserById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/users/:userId",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"users",
+												":userId"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getNearMonopatines",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/users/nearMonopatines/:id/:rangoMetros",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"users",
+												"nearMonopatines",
+												":id",
+												":rangoMetros"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												},
+												{
+													"key": "rangoMetros",
+													"value": "12"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "post",
+							"item": [
+								{
+									"name": "createUser",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Shara\",\r\n    \"lastname\": \"Bullet\",\r\n    \"email\": \"sharabullet@gmail.com\",\r\n    \"phoneNumber\": \"123456789\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{urluser}}/users",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"users"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "activateMonopatinByQr",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/users/:userId/accounts/:accountId/qr/:monopatinId",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"users",
+												":userId",
+												"accounts",
+												":accountId",
+												"qr",
+												":monopatinId"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": "1"
+												},
+												{
+													"key": "accountId",
+													"value": "2"
+												},
+												{
+													"key": "monopatinId",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "delete",
+							"item": [
+								{
+									"name": "deleteUser",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/users/:userId",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"users",
+												":userId"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "put",
+							"item": [
+								{
+									"name": "editUser",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Shara\",\r\n    \"lastname\": \"Bullet\",\r\n    \"email\": \"sharabullet@gmail.com\",\r\n    \"phoneNumber\": \"123456789\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{urluser}}/users/:userId",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"users",
+												":userId"
+											],
+											"variable": [
+												{
+													"key": "userId",
+													"value": "d5969b47-8fb5-45a8-99d5-a9d7c6decc5c"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "account",
+					"item": [
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "getAllAccounts",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/accounts",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"accounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getAccountById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/accounts/:accountId",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"accounts",
+												":accountId"
+											],
+											"variable": [
+												{
+													"key": "accountId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "post",
+							"item": [
+								{
+									"name": "createAccount",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"acc1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{urluser}}/accounts",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"accounts"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "put",
+							"item": [
+								{
+									"name": "addMoney",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/accounts/:accountId/:add-money?quantity=200",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"accounts",
+												":accountId",
+												":add-money"
+											],
+											"query": [
+												{
+													"key": "quantity",
+													"value": "200"
+												}
+											],
+											"variable": [
+												{
+													"key": "accountId",
+													"value": ""
+												},
+												{
+													"key": "add-money",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "disbableAccount",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/accounts/disable/:accountId",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"accounts",
+												"disable",
+												":accountId"
+											],
+											"variable": [
+												{
+													"key": "accountId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "delete",
+							"item": [
+								{
+									"name": "deleteAccount",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{urluser}}/accounts/:accountId",
+											"host": [
+												"{{urluser}}"
+											],
+											"path": [
+												"accounts",
+												":accountId"
+											],
+											"variable": [
+												{
+													"key": "accountId",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "urljourney\n",
+			"value": "http://localhost:54795/api",
+			"type": "string"
+		},
+		{
+			"key": "urlmaintenance",
+			"value": "http://localhost:54819/api",
+			"type": "string"
+		},
+		{
+			"key": "ulrmonopatin",
+			"value": "http://localhost:54804/api",
+			"type": "string"
+		},
+		{
+			"key": "urlreport",
+			"value": "http://localhost:56390/api",
+			"type": "string"
+		},
+		{
+			"key": "urluser",
+			"value": "http://localhost:56393/api",
+			"type": "string"
+		}
+	]
+}

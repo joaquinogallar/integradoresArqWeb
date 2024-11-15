@@ -38,8 +38,9 @@ public class Account {
     }
 
     public Account(AccountDto accountDto) {
-        this.createdAt = accountDto.getCreatedAt();
-        this.balance = accountDto.getBalance();
+        this.name = accountDto.getName();
+        this.createdAt = LocalDateTime.now();
+        this.balance = 0.0;
         this.users = new ArrayList<>();
     }
 }
