@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.UUID;
 
-@FeignClient("MICROSERVICE-MONOPATIN")
+@FeignClient("microservice-monopatin")
 public interface MonopatinFeignClient {
     @GetMapping("/api/monopatines/{monopatinId}")
     public ResponseEntity<MonopatinDto> getMonopatinById(@PathVariable UUID monopatinId);

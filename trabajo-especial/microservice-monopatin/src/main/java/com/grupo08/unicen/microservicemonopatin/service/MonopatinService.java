@@ -85,9 +85,10 @@ public class MonopatinService {
 
     public ResponseEntity<List<MonopatinDto>> getMonopatinesSinTiempoPausa() {
         try{
-            List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesSinTiempoPausa();
+            List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesConTiempoPausa();
             List<MonopatinDto> respuesta = new ArrayList<>();
             for (Monopatin m : monopatines) {
+                
                 respuesta.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
             }
             return ResponseEntity.ok(respuesta);
@@ -97,20 +98,7 @@ public class MonopatinService {
         }
     }
 
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesSinTiempoPausaPorKms(BigDecimal minKms) {
-        try{
-            List<Monopatin> monopatines= this.monopatinRepository.getMonopatinesSinTiempoPausa();
-            List<MonopatinDto> respuesta = new ArrayList<>();
-            for (Monopatin m : monopatines) {
-                if(m.getKmTraveled().compareTo(minKms) > 0)
-                    respuesta.add(new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime()));
-            }
-            return ResponseEntity.ok(respuesta);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
-    }
+    
 
     public ResponseEntity<MonopatinDto> editMonopatin(UUID monopatinID,MonopatinDto monopatinDto) {
         try {
