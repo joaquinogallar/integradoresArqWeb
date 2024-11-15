@@ -4,6 +4,8 @@ import com.grupo08.unicen.microservicejourney.dto.FeeDto;
 import com.grupo08.unicen.microservicejourney.entity.Fee;
 import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,35 +18,41 @@ public class FeeService {
    FeeRepository tarifaRepository;
 
 
-    public List<FeeDto> getAll() {
+    public ResponseEntity<List<FeeDto>> getAllFees() {
         try{
+            List<Fee> response = tarifaRepository.findAll();
             List<FeeDto> aux = new ArrayList<>();
-            List<Fee> response = new ArrayList<>(tarifaRepository.findAll());
-            for(Fee t : response){
-                aux.add(new FeeDto(t.getFee(),t.getSpecialFee(),t.getStartDate())) ;
-            }
-            return aux ;
+
+            response.forEach(f -> aux.add(new FeeDto(f.getId(), f.getFee(), f.getSpecialFee(), f.getStartDate())));
+
+            return ResponseEntity.ok(aux) ;
         }catch (Exception e){
-            throw new RuntimeException(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
 
-    public FeeDto getById(UUID idTarifa) throws Exception {
+    public ResponseEntity<FeeDto> getFeeById(UUID idTarifa) {
         try {
-            Fee f = this.tarifaRepository.findById(idTarifa).orElse(null);
-            return  new FeeDto(f.getFee(),f.getSpecialFee(),f.getStartDate());
+            Fee f = tarifaRepository.findById(idTarifa).orElse(null);
+            FeeDto fd = new FeeDto(f.getId(), f.getFee(), f.getSpecialFee(), f.getStartDate());
+
+            return ResponseEntity.ok(fd);
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
         }
     }
 
 
-    public FeeDto crearTarifa(Fee t) {
+    public ResponseEntity<FeeDto> crearTarifa(FeeDto t) {
         try{
-            this.tarifaRepository.save(t);
-            return new FeeDto(t.getFee(),t.getSpecialFee(),t.getStartDate());
+            Fee f = new Fee(t);
+            this.tarifaRepository.save(f);
+            return ResponseEntity.ok(t);
         }catch(Exception e){
-            throw new RuntimeException(e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
         }
     }
 }

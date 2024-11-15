@@ -1,21 +1,21 @@
 package com.grupo08.unicen.microservicejourney.dto;
 
 import com.grupo08.unicen.microservicejourney.entity.Fee;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FeeDto {
-    private double fee;
-    private Date fecha_inicio;
-    private double specialFee;
-
-    public FeeDto(double fee, double specialFee , Date fecha_inicio) {
-        this.fee = fee;
-        this.specialFee = specialFee;
-        this.fecha_inicio=fecha_inicio;
-
-    }
-
-    
+    private UUID id;
+    private Double fee;
+    private Double specialFee;
+    private LocalDate startDate;
 
 }
