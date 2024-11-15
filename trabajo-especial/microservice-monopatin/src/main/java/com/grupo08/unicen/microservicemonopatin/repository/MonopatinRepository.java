@@ -20,9 +20,6 @@ public interface MonopatinRepository extends JpaRepository<Monopatin, UUID> {
     @Query("SELECT m from Monopatin m order by m.useTime desc")
     List<Monopatin> getMonopatinesConTiempoPausa();
 
-    @Query("SELECT m FROM Monopatin m")
-    List<Monopatin> getMonopatinesSinTiempoPausa();
-
     @Query("SELECT m from Monopatin m where m.state = :IN_MAINTENANCE ")
     List<Monopatin>getMonopatinesInMaintenance();
 
