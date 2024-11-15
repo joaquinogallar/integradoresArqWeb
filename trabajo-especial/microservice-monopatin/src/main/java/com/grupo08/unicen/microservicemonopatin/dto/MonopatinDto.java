@@ -18,14 +18,5 @@ public class MonopatinDto {
     private int y;
     private BigDecimal kmTraveled;
     private Long useTime;
-
-
-    public MonopatinDto(UUID id, State s, BigDecimal km, Long useTime, int x,int y){
-        this.id = id;
-        this.state = s;
-        this.kmTraveled=km;
-        this.useTime = useTime ;
-        this.x = x;
-        this.y = y ;
-    }
+    
 }

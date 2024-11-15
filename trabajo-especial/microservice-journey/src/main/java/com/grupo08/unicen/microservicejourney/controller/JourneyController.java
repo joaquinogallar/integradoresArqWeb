@@ -31,16 +31,11 @@ public class JourneyController {
     }
 
     @GetMapping("/monopatines/viajes/{cant}/{anio}")
-    public ResponseEntity<?> getMonopatinesByViaje(@PathVariable int cant, @PathVariable int anio){
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(viajeService.getMonopatinesByXViajes(cant, anio));
-        }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesByViaje(@PathVariable int cant, @PathVariable int anio){
+        return viajeService.getMonopatinesByXViajes(cant, anio);
     }
 
     @PutMapping("/endViaje/{idViaje}")
-
     public ResponseEntity<JourneyDto> endViaje(@PathVariable UUID idViaje){
         try {
             return ResponseEntity.ok(viajeService.endViaje(idViaje));
@@ -49,21 +44,25 @@ public class JourneyController {
         }
     }
 
-   @PostMapping("/crear/{monopatinId}/usuario/{usuarioId}")
-   public ResponseEntity<JourneyDto> createViaje(@PathVariable("monopatinId") UUID monopatinId, @PathVariable("usuarioId") UUID usuarioId){
-       return viajeService.createViaje(monopatinId, usuarioId);
-   }
+    @PostMapping("/crear/{monopatinId}/usuario/{usuarioId}")
+    public ResponseEntity<JourneyDto> createViaje(@PathVariable("monopatinId") UUID monopatinId, @PathVariable("usuarioId") UUID usuarioId){
+       try {
+           return ResponseEntity.ok(viajeService.createViaje(monopatinId, usuarioId));
+       } catch (Exception e) {
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+       }
+    }
 
-    @GetMapping("/monopatin/{monopatinId}")
+
+    @GetMapping("/monopatines/{monopatinId}")
     public ResponseEntity<List<JourneyDto>>getViajeByMonopatin(@PathVariable UUID monopatinId) {
         return viajeService.getViajeByMonopatin(monopatinId);
     }
-    
+
     @GetMapping("/facturado/{year}/{mes}/{mes2}")
     public int getFacturadoEntreMeses(@PathVariable int year, int mesInicio, int mesFinal){
         return viajeService.getFacturadoEntreMeses(year,mesInicio,mesFinal);
     }
-    
 
-   
+
 }

@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.grupo08.unicen.microservicejourney.repository.JourneyRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.time.LocalDateTime;
@@ -53,22 +55,16 @@ public class JourneyService {
         }
     }
 
-    public ResponseEntity<JourneyDto> createViaje(UUID monopatinId, UUID userId) {
-        try {
-            
+    public JourneyDto createViaje(UUID monopatinId, UUID userId) {
             MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
             UserEntityDto user = userFeignClient.getUserById(userId).getBody();
 
-            if(monopatin == null || user == null || user.getBalance()<0 )  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(null);;
+            if(monopatin == null || user == null || user.getBalance()<=0 )  throw new RuntimeException();
 
             Journey j = new Journey(monopatinId, userId, monopatin.getX(), monopatin.getY());
-            return ResponseEntity.ok(new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(null);
-        }
+            return new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId());
     }
+
 
     public ResponseEntity<List<JourneyDto>> getViajeByMonopatin(UUID idMonopatin) {
 
@@ -86,8 +82,19 @@ public class JourneyService {
       
     }
 
-    public List<Long>getMonopatinesByXViajes(int cantidad, int anio){
-        return journeyRepository.findMonopatinesByViaje(anio,cantidad);
+    public ResponseEntity<List<MonopatinDto>> getMonopatinesByXViajes(int cantidad, int anio){
+        try {
+            List<UUID> idMonopatines = journeyRepository.findMonopatinesByViaje(anio,cantidad);
+            List<MonopatinDto> monopatines = new ArrayList<>();
+
+            idMonopatines.forEach(im -> monopatines.add(monopatinFeignClient.getMonopatinById(im).getBody()));
+
+            return ResponseEntity.ok(monopatines);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+
     }
 
     public JourneyDto endViaje(UUID journeyId) {
@@ -147,7 +154,5 @@ public class JourneyService {
     public int getFacturadoEntreMeses(int year, int mes, int mes2) {
        return journeyRepository.getFacturado(year,mes,mes2);
     }
-
-    
     
 }

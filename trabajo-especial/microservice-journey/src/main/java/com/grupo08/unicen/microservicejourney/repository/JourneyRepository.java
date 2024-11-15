@@ -16,7 +16,7 @@ public interface JourneyRepository extends JpaRepository<Journey, UUID> {
     List<Journey>FindViajesPorId_monopatin(UUID id_monopatin);
 
     @Query("SELECT j.monopatinId FROM Journey j WHERE FUNCTION('YEAR', j.startDate) = :year GROUP BY j.monopatinId HAVING COUNT(j) > :journeys")
-    List<Long> findMonopatinesByViaje(int year, int journeys);
+    List<UUID> findMonopatinesByViaje(int year, int journeys);
 
     @Query("SELECT j.pauses FROM Journey j WHERE j.id = :journeyId")
     List<Pause> findPausasByIdViaje(UUID journeyId);

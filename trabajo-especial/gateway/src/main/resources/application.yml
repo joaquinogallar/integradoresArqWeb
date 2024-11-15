@@ -3,32 +3,39 @@ spring:
     name: gateway
   config:
     import: optional:configserver:http://localhost:8081
-  server:
-  port: 8080
   cloud:
     gateway:
-      mvc:
-        routes:
-          - id: microservice-journey
-            uri: lb://microservice-journey
-            predicates:
-              - Path=/api/journeys/**
-              - Path=/api/fees/**
-              - Path=/api/pauses/**
-          - id: microservice-maintenance
-            uri: lb://microservice-maintenance
-            predicates:
-              - Path=/api/maintenances/**
-          - id: microservice-monopatin
-            uri: lb://microservice-monopatin
-            predicates:
-              - Path=/api/monopatines/**
-              - Path=/api/stops/**
-          - id: microservice-user
-            uri: lb://microservice-user
-            predicates:
-              - Path=/api/users/**
-              - Path=/api/accounts/**
+      routes:
+        - id: microservice-journey
+          uri: lb://microservice-journey
+          predicates:
+            - Path=/api/journeys/**
+            - Path=/api/fees/**
+            - Path=/api/pauses/**
+          filters:
+            - StripPrefix=1
+        - id: microservice-maintenance
+          uri: lb://microservice-maintenance
+          predicates:
+            - Path=/api/maintenances/**
+          filters:
+            - StripPrefix=1
+        - id: microservice-monopatin
+          uri: lb://microservice-monopatin
+          predicates:
+            - Path=/api/monopatines/**
+            - Path=/api/stops/**
+          filters:
+            - StripPrefix=1
+        - id: microservice-user
+          uri: lb://microservice-user
+          predicates:
+            - Path=/api/users/**
+            - Path=/api/accounts/**
+          filters:
+            - StripPrefix=1
+server:
+  port: 8080
 
 eureka:
   client:
@@ -42,5 +49,3 @@ eureka:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
-
-

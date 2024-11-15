@@ -4,6 +4,7 @@ import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import com.grupo08.unicen.microservicemonopatin.dto.StopDto;
 import com.grupo08.unicen.microservicemonopatin.entity.Monopatin;
 import com.grupo08.unicen.microservicemonopatin.service.MonopatinService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,8 +56,13 @@ public class MonopatinController {
 
     @PutMapping("/{monopatinID}")
     public ResponseEntity<MonopatinDto>editMonopatin(@PathVariable UUID monopatinID, @RequestBody MonopatinDto monopatinDto){
-        return monopatinService.editMonopatin(monopatinID, monopatinDto);
+        try {
+            return ResponseEntity.ok(monopatinService.editMonopatin(monopatinID, monopatinDto));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
+
     @GetMapping("/maintenance")
     public ResponseEntity<List<MonopatinDto>>getMonopatinesInMaintenance(){
         return monopatinService.getMonopatinesInMaintenance();

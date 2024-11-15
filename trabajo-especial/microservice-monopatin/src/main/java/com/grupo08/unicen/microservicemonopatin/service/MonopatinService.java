@@ -100,23 +100,18 @@ public class MonopatinService {
 
     
 
-    public ResponseEntity<MonopatinDto> editMonopatin(UUID monopatinID,MonopatinDto monopatinDto) {
-        try {
-            Monopatin m = monopatinRepository.findById(monopatinID).orElse(null);
-            if(m!=null){
-                m.setKmTraveled(monopatinDto.getKmTraveled());
-                m.setState(monopatinDto.getState());
-                m.setUseTime(monopatinDto.getUseTime());
-                m.setX(monopatinDto.getX());
-                m.setY(monopatinDto.getY());
-                monopatinRepository.save(m);
-                ResponseEntity.ok(monopatinDto) ;
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        } return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body(null);
+    public MonopatinDto editMonopatin(UUID monopatinID,MonopatinDto monopatinDto) {
+        Monopatin m = monopatinRepository.findById(monopatinID).orElse(null);
+        if(m!=null){
+            m.setState(monopatinDto.getState());
+            m.setX(monopatinDto.getX());
+            m.setY(monopatinDto.getY());
+            monopatinRepository.save(m);
+            ResponseEntity.ok(monopatinDto) ;
+        }
+
+        MonopatinDto mdto = new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime());
+        return mdto;
     }
 
     public ResponseEntity <List<MonopatinDto>> getMonopatinesInMaintenance() {
