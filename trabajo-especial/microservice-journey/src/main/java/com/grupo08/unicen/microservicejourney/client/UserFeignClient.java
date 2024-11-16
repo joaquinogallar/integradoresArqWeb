@@ -1,8 +1,6 @@
 package com.grupo08.unicen.microservicejourney.client;
 
-
-
-
+import com.grupo08.unicen.microservicejourney.model.AccountDto;
 import com.grupo08.unicen.microservicejourney.model.UserEntityDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +20,7 @@ public interface UserFeignClient {
     @PutMapping("/api/users/{userId}")
     public ResponseEntity<UserEntityDto> editUser(@PathVariable UUID userId, @RequestBody UserEntityDto u);
 
-
+    @GetMapping("/api/accounts/{accountId}")
+    public ResponseEntity<AccountDto> getAccountById(@PathVariable UUID accountId);
 
 }

@@ -1,8 +1,5 @@
-package com.grupo08.unicen.microserviceuser.dto;
+package com.grupo08.unicen.microservicejourney.model;
 
-import com.grupo08.unicen.microserviceuser.entity.Account;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -40,7 +40,7 @@ public class UserEntityService {
         try {
             List<UserEntity> users = userEntityRepository.findAll();
             List<UserEntityDto> userDtos = new ArrayList<>();
-            users.forEach(u -> userDtos.add(new UserEntityDto(u.getId(),u.getX(),u.getY(),u.getBalance())));
+            users.forEach(u -> userDtos.add(new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY())));
             return ResponseEntity.ok(userDtos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -51,7 +51,7 @@ public class UserEntityService {
     public ResponseEntity<UserEntityDto> getUserById(UUID userId) {
         UserEntity u = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.toString()));
-        UserEntityDto userDto = new UserEntityDto(u.getId(), u.getX(), u.getY(), u.getBalance());
+        UserEntityDto userDto = new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY());
         return ResponseEntity.ok(userDto);
     }
 
@@ -68,7 +68,7 @@ public class UserEntityService {
     public ResponseEntity<UserEntityDto> deleteUserById(UUID userId) {
         UserEntity u = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.toString()));
-        UserEntityDto userDto = new UserEntityDto(u.getId(),  u.getX(), u.getY(),u.getBalance());
+        UserEntityDto userDto = new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY());
         userEntityRepository.delete(u);
 
         return ResponseEntity.ok(userDto);
@@ -99,7 +99,6 @@ public class UserEntityService {
        UserEntity u = userEntityRepository.findById(userId).orElse(null);
        try {
         if(u!=null){
-            u.setBalance(user.getBalance());
             u.setEmail(user.getEmail());
             u.setName(user.getName());
             u.setX(user.getX());

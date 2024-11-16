@@ -44,12 +44,12 @@ public class JourneyController {
         }
     }
 
-    @PostMapping("/crear/{monopatinId}/usuario/{usuarioId}")
-    public ResponseEntity<JourneyDto> createViaje(@PathVariable("monopatinId") UUID monopatinId, @PathVariable("usuarioId") UUID usuarioId){
+    @PostMapping("/create/{monopatinId}/users/{usuarioId}/accounts/{accountId}")
+    public ResponseEntity<JourneyDto> createViaje(@PathVariable("monopatinId") UUID monopatinId, @PathVariable("usuarioId") UUID usuarioId, @PathVariable("accountId") UUID accountId) {
        try {
-           return ResponseEntity.ok(viajeService.createViaje(monopatinId, usuarioId));
+           return ResponseEntity.ok(viajeService.createViaje(monopatinId, usuarioId, accountId));
        } catch (Exception e) {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
        }
     }
 

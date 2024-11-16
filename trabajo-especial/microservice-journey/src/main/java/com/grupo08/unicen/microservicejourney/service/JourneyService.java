@@ -7,6 +7,7 @@ import com.grupo08.unicen.microservicejourney.entity.Journey;
 import com.grupo08.unicen.microservicejourney.client.MonopatinFeignClient;
 import com.grupo08.unicen.microservicejourney.client.StopFeignClient;
 import com.grupo08.unicen.microservicejourney.client.UserFeignClient;
+import com.grupo08.unicen.microservicejourney.model.AccountDto;
 import com.grupo08.unicen.microservicejourney.model.MonopatinDto;
 import com.grupo08.unicen.microservicejourney.model.State;
 import com.grupo08.unicen.microservicejourney.model.UserEntityDto;
@@ -55,14 +56,15 @@ public class JourneyService {
         }
     }
 
-    public JourneyDto createViaje(UUID monopatinId, UUID userId) {
-            MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
-            UserEntityDto user = userFeignClient.getUserById(userId).getBody();
+    public JourneyDto createViaje(UUID monopatinId, UUID userId, UUID accountId) {
+        MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
+        UserEntityDto user = userFeignClient.getUserById(userId).getBody();
+        AccountDto accountDto = userFeignClient.getAccountById(accountId).getBody();
 
-            if(monopatin == null || user == null || user.getBalance()<=0 )  throw new RuntimeException();
+        if(monopatin == null || user == null || accountDto == null || accountDto.getBalance()<=0)  throw new RuntimeException();
 
-            Journey j = new Journey(monopatinId, userId, monopatin.getX(), monopatin.getY());
-            return new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId());
+        Journey j = new Journey(monopatinId, userId, accountId, monopatin.getX(), monopatin.getY());
+        return new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId());
     }
 
 
@@ -105,6 +107,8 @@ public class JourneyService {
         MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(j.getMonopatinId()).getBody();
         if(monopatin == null) throw new RuntimeException();
 
+        AccountDto account = userFeignClient.getAccountById(j.getAccountId()).getBody();
+
         
         if(stopFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()) != null) {
             j.setFinishDate(LocalDateTime.now());
@@ -139,12 +143,12 @@ public class JourneyService {
             if(minutos>15) {
                 Fee tarifaEspecial = feeRepository.getTarifaExtraEnPlazoValido();
                 Long minutosFinal = minutos-15 ;
-                 tarifaXpausas = minutosFinal*tarifaEspecial.getSpecialFee();
+                tarifaXpausas = minutosFinal*tarifaEspecial.getSpecialFee();
             }
 
             
-        UserEntityDto u  =  userFeignClient.getUserById(j.getUserId()).getBody();
-            u.setBalance(tarifaNormal+tarifaXpausas);
+            UserEntityDto u  =  userFeignClient.getUserById(j.getUserId()).getBody();
+            account.setBalance(tarifaNormal+tarifaXpausas);
             userFeignClient.editUser(j.getUserId(),u);
             return new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId());
         }

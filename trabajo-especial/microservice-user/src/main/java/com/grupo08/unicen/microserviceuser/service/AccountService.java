@@ -28,7 +28,7 @@ public class AccountService {
         try {
             List<Account> accounts = accountRepository.findAll();
             List<AccountDto> accountDtos = new ArrayList<>();
-            accounts.forEach(a -> accountDtos.add(new AccountDto(a)));
+            accounts.forEach(a -> accountDtos.add(new AccountDto(a.getId(), a.getName(), a.getCreatedAt(), a.getBalance())));
             return ResponseEntity.ok(accountDtos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -37,28 +37,24 @@ public class AccountService {
     }
 
     public ResponseEntity<AccountDto> getAccountById(UUID accountId) {
-        Account account = accountRepository.findById(accountId)
+        Account a = accountRepository.findById(accountId)
                 .orElseThrow(() -> new UserNotFoundException(accountId.toString()));
-        return ResponseEntity.ok(new AccountDto(account));
+        return ResponseEntity.ok(new AccountDto(a.getId(), a.getName(), a.getCreatedAt(), a.getBalance()));
     }
 
-    public ResponseEntity<String> createAccount(AccountDto newAccount) {
-        try {
+    public String createAccount(AccountDto newAccount) {
             Account account = new Account(newAccount);
             accountRepository.save(account);
-            return ResponseEntity.ok("User created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(500)
-                    .body("Error: " + e);
-        }
+            return "User created successfully";
+
     }
 
     public ResponseEntity<AccountDto> deleteAccountById(UUID accountId) {
-        Account account = accountRepository.findById(accountId)
+        Account a = accountRepository.findById(accountId)
                 .orElseThrow(() -> new UserNotFoundException(accountId.toString()));
-        accountRepository.delete(account);
+        accountRepository.delete(a);
 
-        return ResponseEntity.ok(new AccountDto(account));
+        return ResponseEntity.ok(new AccountDto(a.getId(), a.getName(), a.getCreatedAt(), a.getBalance()));
     }
 
     /**

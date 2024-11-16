@@ -32,7 +32,11 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<String> createAccount(@RequestBody AccountDto newAccount) {
-        return accountService.createAccount(newAccount);
+        try {
+            return ResponseEntity.ok(accountService.createAccount(newAccount));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
     }
 
     @DeleteMapping("/{accountId}")

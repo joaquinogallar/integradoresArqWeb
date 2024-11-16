@@ -30,6 +30,7 @@ public class Journey {
 
     private UUID userId;
     private UUID monopatinId;
+    private UUID accountId;
 
     @OneToOne
     @JoinColumn(name = "id_fee")
@@ -38,10 +39,11 @@ public class Journey {
     @OneToMany(mappedBy = "journey", cascade = CascadeType.ALL)
     private List<Pause> pauses;
 
-    public Journey(UUID monopatinId, UUID userId, int x, int y){
+    public Journey(UUID monopatinId, UUID userId, UUID accountId, int x, int y){
         this.startDate = LocalDateTime.now();
         this.userId = userId;
         this.monopatinId = monopatinId;
+        this.accountId = accountId;
         this.xOrigin = x;
         this.yOrigin = y;
     }
