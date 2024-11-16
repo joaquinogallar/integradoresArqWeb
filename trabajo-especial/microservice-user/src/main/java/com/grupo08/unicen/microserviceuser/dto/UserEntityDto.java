@@ -31,13 +31,5 @@ public class UserEntityDto {
     private String phoneNumber;
     private int x ; 
     private int y ;
-    private double balance ;
-
-    public UserEntityDto(UUID id, int x, int y ,double balance){
-        this.id= id;
-        this.x=x;
-        this.y= y;
-        this.balance= balance;
-    }
 
 }

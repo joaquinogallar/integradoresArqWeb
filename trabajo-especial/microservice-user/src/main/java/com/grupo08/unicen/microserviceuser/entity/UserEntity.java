@@ -3,6 +3,7 @@ package com.grupo08.unicen.microserviceuser.entity;
 import com.grupo08.unicen.microserviceuser.dto.UserEntityDto;
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class UserEntity {
     @Id
@@ -28,7 +30,6 @@ public class UserEntity {
 
     private String email;
     private String phoneNumber;
-    private double balance ;
 
     @ManyToMany
     private List<Account> accounts;
@@ -36,7 +37,7 @@ public class UserEntity {
     @ElementCollection
     private List<UUID> journeys;
 
-    public UserEntity(String name, String lastname, String email, String phoneNumber, double balance) {
+    public UserEntity(String name, String lastname, String email, String phoneNumber) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
