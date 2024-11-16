@@ -26,8 +26,8 @@ public class JourneyController {
     }
 
     @GetMapping
-    public  ResponseEntity<List<JourneyDto>> getAll(){
-        return viajeService.getAll();
+    public  ResponseEntity<List<JourneyDto>> getAllJourneys(){
+        return ResponseEntity.ok(viajeService.getAllJoruneys());
     }
 
     @GetMapping("/monopatines/viajes/{cant}/{anio}")

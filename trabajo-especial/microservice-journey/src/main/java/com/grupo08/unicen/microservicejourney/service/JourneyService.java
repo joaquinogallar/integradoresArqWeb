@@ -13,12 +13,12 @@ import com.grupo08.unicen.microservicejourney.model.State;
 import com.grupo08.unicen.microservicejourney.model.UserEntityDto;
 import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.grupo08.unicen.microservicejourney.repository.JourneyRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.time.LocalDateTime;
@@ -34,6 +34,7 @@ public class JourneyService {
     MonopatinFeignClient monopatinFeignClient;
     StopFeignClient stopFeignClient;
     FeeRepository feeRepository ;
+    private static final Logger logger = LoggerFactory.getLogger(JourneyService.class);
 
     public JourneyService(JourneyRepository journeyRepository, UserFeignClient userFeignClient, MonopatinFeignClient monopatinFeignClient, StopFeignClient stopFeignClient, FeeRepository feeRepository) {
         this.journeyRepository = journeyRepository;
@@ -43,17 +44,12 @@ public class JourneyService {
         this.feeRepository = feeRepository;
     }
 
-    public ResponseEntity<List<JourneyDto>> getAll() {
-        try{
-            List<Journey> journeys = this.journeyRepository.findAll() ;
-            List<JourneyDto> journeyDtos = new ArrayList<>();
-            journeys.forEach(j -> journeyDtos.add(new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId())));
+    public List<JourneyDto> getAllJoruneys() {
+        List<Journey> journeys = this.journeyRepository.findAll() ;
+        List<JourneyDto> journeyDtos = new ArrayList<>();
+        journeys.forEach(j -> journeyDtos.add(new JourneyDto(j.getId(), j.getStartDate(), j.getFinishDate(), j.getKmTraveled(), j.getXOrigin(), j.getYOrigin(), j.getXDestinatio(), j.getYDestinatio(), j.getUserId(), j.getMonopatinId(), j.getAccountId())));
 
-            return ResponseEntity.ok(journeyDtos);
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
+        return journeyDtos;
     }
 
     public JourneyDto createViaje(UUID monopatinId, UUID userId, UUID accountId) {
@@ -61,10 +57,17 @@ public class JourneyService {
         UserEntityDto user = userFeignClient.getUserById(userId).getBody();
         AccountDto accountDto = userFeignClient.getAccountById(accountId).getBody();
 
+        logger.info("Monopatin: {} ", monopatin);
+        logger.info("User: {} ", user);
+        logger.info("Account: {} ", accountDto);
+
         if(monopatin == null || user == null || accountDto == null || accountDto.getBalance()<=0)  throw new RuntimeException();
 
         Journey j = new Journey(monopatinId, userId, accountId, monopatin.getX(), monopatin.getY());
-        return new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId());
+        journeyRepository.save(j);
+
+        JourneyDto jdto = new JourneyDto(j.getId(), j.getStartDate(), j.getFinishDate(), j.getKmTraveled(), j.getXOrigin(), j.getYOrigin(), j.getXDestinatio(), j.getYDestinatio(), j.getUserId(), j.getMonopatinId(), j.getAccountId());
+        return jdto;
     }
 
 
@@ -74,7 +77,7 @@ public class JourneyService {
             List<Journey> viajes= journeyRepository.FindViajesPorId_monopatin(idMonopatin);
             List<JourneyDto> aux = new ArrayList<>();
             for (Journey j : viajes) {
-                aux.add(new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId())) ;
+                aux.add(new JourneyDto(j.getId(), j.getStartDate(), j.getFinishDate(), j.getKmTraveled(), j.getXOrigin(), j.getYOrigin(), j.getXDestinatio(), j.getYDestinatio(), j.getUserId(), j.getMonopatinId(), j.getAccountId())) ;
             }
             return ResponseEntity.ok(aux);
         } catch (Exception e) {
@@ -150,7 +153,7 @@ public class JourneyService {
             UserEntityDto u  =  userFeignClient.getUserById(j.getUserId()).getBody();
             account.setBalance(tarifaNormal+tarifaXpausas);
             userFeignClient.editUser(j.getUserId(),u);
-            return new JourneyDto(j.getId(),j.getStartDate(),j.getFinishDate(),j.getKmTraveled(),j.getXDestinatio(),j.getYOrigin(),j.getUserId(),j.getMonopatinId(),j.getFee().getId());
+            return new JourneyDto(j.getId(), j.getStartDate(), j.getFinishDate(), j.getKmTraveled(), j.getXOrigin(), j.getYOrigin(), j.getXDestinatio(), j.getYDestinatio(), j.getUserId(), j.getMonopatinId(), j.getAccountId());
         }
         throw new RuntimeException();
     }

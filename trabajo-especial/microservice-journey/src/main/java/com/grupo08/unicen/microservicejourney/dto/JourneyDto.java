@@ -4,6 +4,7 @@ import com.grupo08.unicen.microservicejourney.entity.Fee;
 import com.grupo08.unicen.microservicejourney.entity.Journey;
 import com.grupo08.unicen.microservicejourney.entity.Pause;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class JourneyDto {
 
     private UUID id;
@@ -23,25 +25,10 @@ public class JourneyDto {
     private Double kmTraveled;
     private int xOrigin;
     private int yOrigin;
+    private Integer xDestinatio;
+    private Integer yDestinatio;
 
     private UUID userId;
     private UUID monopatinId;
-
-
-    private UUID fee;
-
-    
-
-    public JourneyDto(UUID id,LocalDateTime startDate, LocalDateTime finishDate, double kmTraveled,int x,int y, UUID userid,UUID monopatinId,UUID fee) {
-        this.id = id ;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-        this.kmTraveled = kmTraveled;
-        this.xOrigin = x;
-        this.yOrigin = y;
-        this.userId = userid;
-        this.monopatinId = monopatinId;
-        this.fee = fee;
-        
-    }
+    private UUID accountId;
 }

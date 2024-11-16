@@ -21,14 +21,11 @@ public class JourneyDto {
     private Double kmTraveled;
     private int xOrigin;
     private int yOrigin;
+    private Integer xDestinatio;
+    private Integer yDestinatio;
 
     private UUID userId;
     private UUID monopatinId;
-
-
-    private FeeDto fee;
-
-    private List<UUID> pauses;
-
+    private UUID accountId;
 
 }

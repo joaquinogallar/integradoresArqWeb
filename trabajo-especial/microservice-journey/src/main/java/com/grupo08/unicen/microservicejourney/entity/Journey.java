@@ -22,7 +22,7 @@ public class Journey {
     private LocalDateTime startDate;
     private LocalDateTime finishDate;
 
-    private Double kmTraveled;
+    private Double  kmTraveled;
     private int xOrigin;
     private int yOrigin;
     private Integer xDestinatio;
@@ -40,11 +40,15 @@ public class Journey {
     private List<Pause> pauses;
 
     public Journey(UUID monopatinId, UUID userId, UUID accountId, int x, int y){
+        this.kmTraveled = 0.0;
         this.startDate = LocalDateTime.now();
         this.userId = userId;
         this.monopatinId = monopatinId;
         this.accountId = accountId;
         this.xOrigin = x;
         this.yOrigin = y;
+        xDestinatio = null;
+        yDestinatio = null;
+        fee = null;
     }
 }
