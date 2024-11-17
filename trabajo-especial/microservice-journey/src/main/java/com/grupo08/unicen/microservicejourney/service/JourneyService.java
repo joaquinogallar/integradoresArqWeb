@@ -5,12 +5,8 @@ import com.grupo08.unicen.microservicejourney.entity.Pause;
 import com.grupo08.unicen.microservicejourney.entity.Fee;
 import com.grupo08.unicen.microservicejourney.entity.Journey;
 import com.grupo08.unicen.microservicejourney.client.MonopatinFeignClient;
-import com.grupo08.unicen.microservicejourney.client.StopFeignClient;
 import com.grupo08.unicen.microservicejourney.client.UserFeignClient;
-import com.grupo08.unicen.microservicejourney.model.AccountDto;
-import com.grupo08.unicen.microservicejourney.model.MonopatinDto;
-import com.grupo08.unicen.microservicejourney.model.State;
-import com.grupo08.unicen.microservicejourney.model.UserEntityDto;
+import com.grupo08.unicen.microservicejourney.model.*;
 import com.grupo08.unicen.microservicejourney.repository.FeeRepository;
 
 import org.slf4j.Logger;
@@ -32,15 +28,13 @@ public class JourneyService {
     JourneyRepository journeyRepository;
     UserFeignClient userFeignClient;
     MonopatinFeignClient monopatinFeignClient;
-    StopFeignClient stopFeignClient;
     FeeRepository feeRepository ;
     private static final Logger logger = LoggerFactory.getLogger(JourneyService.class);
 
-    public JourneyService(JourneyRepository journeyRepository, UserFeignClient userFeignClient, MonopatinFeignClient monopatinFeignClient, StopFeignClient stopFeignClient, FeeRepository feeRepository) {
+    public JourneyService(JourneyRepository journeyRepository, UserFeignClient userFeignClient, MonopatinFeignClient monopatinFeignClient, FeeRepository feeRepository) {
         this.journeyRepository = journeyRepository;
         this.userFeignClient = userFeignClient;
         this.monopatinFeignClient = monopatinFeignClient;
-        this.stopFeignClient = stopFeignClient;
         this.feeRepository = feeRepository;
     }
 
@@ -87,18 +81,13 @@ public class JourneyService {
       
     }
 
-    public ResponseEntity<List<MonopatinDto>> getMonopatinesByXViajes(int cantidad, int anio){
-        try {
-            List<UUID> idMonopatines = journeyRepository.findMonopatinesByViaje(anio,cantidad);
-            List<MonopatinDto> monopatines = new ArrayList<>();
+    public List<MonopatinDto> getMonopatinesByXViajes(int cantidad, int anio){
+        List<UUID> idMonopatines = journeyRepository.findMonopatinesByViaje(anio,cantidad);
+        List<MonopatinDto> monopatines = new ArrayList<>();
 
-            idMonopatines.forEach(im -> monopatines.add(monopatinFeignClient.getMonopatinById(im).getBody()));
+        idMonopatines.forEach(im -> monopatines.add(monopatinFeignClient.getMonopatinById(im).getBody()));
 
-            return ResponseEntity.ok(monopatines);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
+        return monopatines;
 
     }
 
@@ -108,12 +97,17 @@ public class JourneyService {
         Journey j  = journeyRepository.findById(journeyId).orElseThrow();
 
         MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(j.getMonopatinId()).getBody();
-        if(monopatin == null) throw new RuntimeException();
-
         AccountDto account = userFeignClient.getAccountById(j.getAccountId()).getBody();
 
-        
-        if(stopFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()) != null) {
+        StopDto stop = monopatinFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()).getBody();
+
+        logger.info("Viaje: {} ", j);
+        logger.info("Stop: {} ", stop);
+
+        if(monopatin == null) throw new RuntimeException();
+
+
+        if(monopatinFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()).getBody() != null) {
             j.setFinishDate(LocalDateTime.now());
             monopatin.setState(State.AVAILABLE);
 

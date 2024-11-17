@@ -32,7 +32,11 @@ public class JourneyController {
 
     @GetMapping("/monopatines/viajes/{cant}/{anio}")
     public ResponseEntity<List<MonopatinDto>> getMonopatinesByViaje(@PathVariable int cant, @PathVariable int anio){
-        return viajeService.getMonopatinesByXViajes(cant, anio);
+        try {
+            return ResponseEntity.ok(viajeService.getMonopatinesByXViajes(cant, anio));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @PutMapping("/endViaje/{idViaje}")
