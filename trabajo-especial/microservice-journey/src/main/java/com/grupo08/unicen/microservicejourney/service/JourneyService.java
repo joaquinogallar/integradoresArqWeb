@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.grupo08.unicen.microservicejourney.repository.JourneyRepository;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -92,8 +93,8 @@ public class JourneyService {
     }
 
     public JourneyDto endViaje(UUID journeyId) {
-        double xfinal = 0;
-        double yfinal = 0;
+        int xfinal = 0;
+        int yfinal = 0;
         Journey j  = journeyRepository.findById(journeyId).orElseThrow();
 
         MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(j.getMonopatinId()).getBody();
@@ -101,8 +102,6 @@ public class JourneyService {
 
         StopDto stop = monopatinFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()).getBody();
 
-        logger.info("Viaje: {} ", j);
-        logger.info("Stop: {} ", stop);
 
         if(monopatin == null) throw new RuntimeException();
 
@@ -113,26 +112,29 @@ public class JourneyService {
 
             xfinal = monopatin.getX();
             yfinal = monopatin.getY();
-            j.setKmTraveled(
-                    // formula para sacar la distancia entre 2 vectores (origen y destino)
-                    Math.sqrt(
-                            Math.pow(xfinal - j.getXOrigin(), 2) + Math.pow(yfinal - j.getYOrigin(), 2)
-                    )
-            );
+            // formula para sacar la distancia entre 2 vectores (origen y destino)
+            Double kmTraveled = Math.sqrt(Math.pow(xfinal - j.getXOrigin(), 2) + Math.pow(yfinal - j.getYOrigin(), 2));
+
+            BigDecimal totalKm = BigDecimal.valueOf(kmTraveled);
+            monopatin.setKmTraveled(totalKm.add(monopatin.getKmTraveled()));
+
+            j.setKmTraveled(kmTraveled);
+            j.setXDestinatio(xfinal);
+            j.setYDestinatio(yfinal);
         }
 
         journeyRepository.save(j);
 
-        List<Pause>pausas = journeyRepository.findPausasByIdViaje(journeyId);
-        double tarifaXpausas = 0 ;
+        List<Pause> pausas = journeyRepository.findPausasByIdViaje(journeyId);
+        double tarifaXpausas = 0;
         double tarifaNormal = 0;
 
 
         Fee ta = feeRepository.getTarifaNormalEnPlazoValido();
         Long t =  ChronoUnit.MINUTES.between(j.getStartDate(), j.getFinishDate());
 
-        monopatin.setUseTime(t);
-        monopatinFeignClient.editMonopatin(monopatin.getId());
+        monopatin.setUseTime(monopatin.getUseTime() + t);
+        monopatinFeignClient.editMonopatin(monopatin.getId(), monopatin);
 
         tarifaNormal = (xfinal+yfinal)*ta.getFee();
         for (Pause pausa : pausas) {
@@ -147,9 +149,9 @@ public class JourneyService {
             UserEntityDto u  =  userFeignClient.getUserById(j.getUserId()).getBody();
             account.setBalance(tarifaNormal+tarifaXpausas);
             userFeignClient.editUser(j.getUserId(),u);
-            return new JourneyDto(j.getId(), j.getStartDate(), j.getFinishDate(), j.getKmTraveled(), j.getXOrigin(), j.getYOrigin(), j.getXDestinatio(), j.getYDestinatio(), j.getUserId(), j.getMonopatinId(), j.getAccountId());
+            // return new JourneyDto(j.getId(), j.getStartDate(), j.getFinishDate(), j.getKmTraveled(), j.getXOrigin(), j.getYOrigin(), j.getXDestinatio(), j.getYDestinatio(), j.getUserId(), j.getMonopatinId(), j.getAccountId());
         }
-        throw new RuntimeException();
+        return new JourneyDto(j.getId(), j.getStartDate(), j.getFinishDate(), j.getKmTraveled(), j.getXOrigin(), j.getYOrigin(), j.getXDestinatio(), j.getYDestinatio(), j.getUserId(), j.getMonopatinId(), j.getAccountId());
     }
 
     public int getFacturadoEntreMeses(int year, int mes, int mes2) {
