@@ -1,0 +1,11 @@
+services:
+  authdb:
+    container_name: auth
+    image: postgres:14.4
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=auth
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "127.0.0.1:3307:5432"
+    command: postgres -c shared_buffers=256MB -c max_connections=200
