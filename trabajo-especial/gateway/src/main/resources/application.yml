@@ -3,49 +3,61 @@ spring:
     name: gateway
   config:
     import: optional:configserver:http://localhost:8081
-  cloud:
-    gateway:
-      routes:
-        - id: microservice-journey
-          uri: lb://microservice-journey
-          predicates:
-            - Path=/api/journeys/**
-            - Path=/api/fees/**
-            - Path=/api/pauses/**
-          filters:
-            - StripPrefix=1
-        - id: microservice-maintenance
-          uri: lb://microservice-maintenance
-          predicates:
-            - Path=/api/maintenances/**
-          filters:
-            - StripPrefix=1
-        - id: microservice-monopatin
-          uri: lb://microservice-monopatin
-          predicates:
-            - Path=/api/monopatines/**
-            - Path=/api/stops/**
-          filters:
-            - StripPrefix=1
-        - id: microservice-user
-          uri: lb://microservice-user
-          predicates:
-            - Path=/api/users/**
-            - Path=/api/accounts/**
-          filters:
-            - StripPrefix=1
-server:
-  port: 8080
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:3307/auth?createDatabaseIfNotExist=true
+    username: admin
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database: postgresql
 
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      default-zone: http://localhost:8761/eureka
-  instance:
-    hostname: localhost
-
-logging:
-  level:
-    org.springframework.cloud.gateway: DEBUG
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: microservice-journey
+#          uri: lb://microservice-journey
+#          predicates:
+#            - Path=/api/journeys/**
+#            - Path=/api/fees/**
+#            - Path=/api/pauses/**
+#          filters:
+#            - StripPrefix=1
+#        - id: microservice-maintenance
+#          uri: lb://microservice-maintenance
+#          predicates:
+#            - Path=/api/maintenances/**
+#          filters:
+#            - StripPrefix=1
+#        - id: microservice-monopatin
+#          uri: lb://microservice-monopatin
+#          predicates:
+#            - Path=/api/monopatines/**
+#            - Path=/api/stops/**
+#          filters:
+#            - StripPrefix=1
+#        - id: microservice-user
+#          uri: lb://microservice-user
+#          predicates:
+#            - Path=/api/users/**
+#            - Path=/api/accounts/**
+#          filters:
+#            - StripPrefix=1
+#
+#logging:
+#  level:
+#    org.springframework.cloud.gateway: DEBUG
+#
+#
+#server:
+#  port: 8080
+#
+#eureka:
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      default-zone: http://localhost:8761/eureka
+#  instance:
+#    hostname: localhost

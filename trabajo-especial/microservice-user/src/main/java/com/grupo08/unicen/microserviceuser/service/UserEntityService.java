@@ -113,4 +113,19 @@ public class UserEntityService {
        .body(null);
     }
 
+    public String addAccount(UUID userId, UUID accountId) {
+        UserEntity u = userEntityRepository.findById(userId).orElse(null);
+        Account a = accountRepository.findById(accountId).orElse(null);
+        try {
+            if(u!=null && a!=null){
+                u.getAccounts().add(a);
+                userEntityRepository.save(u);
+                return "Account added";
+            }
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+        return "Error";
+    }
+
 }

@@ -52,4 +52,13 @@ public class UserEntityController {
     public ResponseEntity<UserEntityDto> editUser(@PathVariable UUID userId, @RequestBody UserEntityDto u){
         return userEntityService.editUser(userId, u);
     }
+    @PutMapping("/{userId}/accounts/{accountId}")
+    public ResponseEntity<String> addAccount(@PathVariable UUID userId, @PathVariable UUID accountId){
+        try {
+            userEntityService.addAccount(userId, accountId);
+            return ResponseEntity.ok("Account added");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
 }

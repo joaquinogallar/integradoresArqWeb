@@ -38,6 +38,13 @@ public class MonopatinService {
         }
     }
 
+    public MonopatinDto deleteMonopatin(UUID monopatinId) {
+        Monopatin m = monopatinRepository.findById(monopatinId)
+                .orElseThrow(() -> new MonopatinNotFoundException(monopatinId.toString()));
+        monopatinRepository.delete(m);
+        return new MonopatinDto(m.getId(), m.getState(), m.getX(), m.getY(), m.getKmTraveled(), m.getUseTime());
+    }
+
     public ResponseEntity<MonopatinDto> getMonopatinById(UUID monopatinId) {
         Monopatin m = monopatinRepository.findById(monopatinId)
                 .orElseThrow(() -> new MonopatinNotFoundException(monopatinId.toString()));

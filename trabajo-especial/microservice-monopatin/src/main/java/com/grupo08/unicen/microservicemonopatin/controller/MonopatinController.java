@@ -37,6 +37,15 @@ public class MonopatinController {
         return monopatinService.createMonopatin(newMonopatin);
     }
 
+    @DeleteMapping("/{monoaptinId}")
+    public ResponseEntity<MonopatinDto> deleteMonopatin(@PathVariable UUID monopatinId) {
+        try {
+            return ResponseEntity.ok(monopatinService.deleteMonopatin(monopatinId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
     @GetMapping("/order/use-time/with-pause")
     public ResponseEntity<List<MonopatinDto>> getMonopatinesWithTimePause()  {
         return monopatinService.getMonopatinesConTiempoPausa();
