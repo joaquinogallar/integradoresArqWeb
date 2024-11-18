@@ -1,13 +1,13 @@
 package com.grupo08.unicen.microserviceuser.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,13 +66,21 @@ public class AccountController {
             )
     })
     @GetMapping("/{accountId}")
-    public ResponseEntity<AccountDto> getAccountById(@PathVariable UUID accountId) {
+    public ResponseEntity<AccountDto> getAccountById(@Parameter(description = "ID de la cuenta", example = "123e4567-e89b-12d3-a456-426614174000") @PathVariable UUID accountId) {
         return accountService.getAccountById(accountId);
     }
 
     @Operation(
             summary = "Crear una nueva cuenta",
-            description = "Crea una nueva cuenta a partir de los datos proporcionados."
+            description = "Crea una nueva cuenta a partir de los datos proporcionados.",
+            requestBody = @RequestBody(
+                    description = "Datos de la cuenta a crear",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = AccountDto.class)
+                    )
+            )
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -91,14 +99,7 @@ public class AccountController {
     })
     @PostMapping
     public ResponseEntity<String> createAccount(
-           @RequestBody(
-                    description = "Datos de la cuenta a crear",
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = AccountDto.class)
-                    )
-            )  AccountDto newAccount) {
+            @RequestBody @Schema(description = "Datos de la cuenta a crear", implementation = AccountDto.class) AccountDto newAccount) {
         try {
             return ResponseEntity.ok(accountService.createAccount(newAccount));
         } catch (Exception e) {
@@ -123,14 +124,22 @@ public class AccountController {
             )
     })
     @DeleteMapping("/{accountId}")
-    public ResponseEntity<AccountDto> deleteUserById(@PathVariable UUID accountId) {
+    public ResponseEntity<AccountDto> deleteUserById(@Parameter(description = "ID de la cuenta a eliminar", example = "123e4567-e89b-12d3-a456-426614174000") @PathVariable UUID accountId) {
         return accountService.deleteAccountById(accountId);
     }
 
     // Custom methods
     @Operation(
             summary = "Agregar dinero a una cuenta",
-            description = "Permite agregar una cantidad específica de dinero a una cuenta basada en su UUID."
+            description = "Permite agregar una cantidad específica de dinero a una cuenta basada en su UUID.",
+            requestBody = @RequestBody(
+                    description = "Cantidad de dinero a agregar",
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Double.class)
+                    )
+            )
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -146,7 +155,7 @@ public class AccountController {
     })
     @PutMapping("/{accountId}/add-money")
     public ResponseEntity<String> addMoney(
-            @PathVariable UUID accountId,
+            @Parameter(description = "ID de la cuenta", example = "123e4567-e89b-12d3-a456-426614174000") @PathVariable UUID accountId,
             @RequestParam @Schema(description = "Cantidad a agregar", example = "100.0") Double quantity) {
         return accountService.addMoney(accountId, quantity);
     }
@@ -171,7 +180,7 @@ public class AccountController {
             )
     })
     @PutMapping("/disable/{accountId}")
-    public ResponseEntity<AccountDto> disableAccount(@PathVariable UUID accountId) {
+    public ResponseEntity<AccountDto> disableAccount(@Parameter(description = "ID de la cuenta a deshabilitar", example = "123e4567-e89b-12d3-a456-426614174000") @PathVariable UUID accountId) {
         return accountService.disableAccount(accountId);
     }
 }
