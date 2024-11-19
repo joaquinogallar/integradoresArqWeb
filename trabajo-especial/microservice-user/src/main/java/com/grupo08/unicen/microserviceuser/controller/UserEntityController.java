@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,11 @@ public class UserEntityController {
     })
     @GetMapping
     public ResponseEntity<List<UserEntityDto>> getAllUsers() {
-        return userEntityService.getAllUsers();
+        try {
+            return ResponseEntity.ok(userEntityService.getAllUsers());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @Operation(
@@ -68,7 +73,11 @@ public class UserEntityController {
     })
     @GetMapping("/{userId}")
     public ResponseEntity<UserEntityDto> getUserById(@PathVariable UUID userId) {
-        return userEntityService.getUserById(userId);
+        try {
+            return ResponseEntity.ok(userEntityService.getUserById(userId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @Operation(
@@ -92,7 +101,11 @@ public class UserEntityController {
     })
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody UserEntityDto newUser) {
-        return userEntityService.createUser(newUser);
+        try {
+            return ResponseEntity.ok(userEntityService.createUser(newUser));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
     }
 
     @Operation(
@@ -113,7 +126,11 @@ public class UserEntityController {
     })
     @DeleteMapping("/{userId}")
     public ResponseEntity<UserEntityDto> deleteUserById(@PathVariable UUID userId) {
-        return userEntityService.deleteUserById(userId);
+        try {
+            return ResponseEntity.ok(userEntityService.deleteUserById(userId));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
     }
 
     @Operation(
@@ -140,7 +157,11 @@ public class UserEntityController {
             @PathVariable UUID userId,
             @PathVariable UUID accountId,
             @PathVariable UUID monopatinId) {
-        return userEntityService.activateMonopatinByQr(userId, monopatinId, accountId);
+        try {
+            return ResponseEntity.ok(userEntityService.activateMonopatinByQr(userId, monopatinId, accountId));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
     }
 
     @Operation(
@@ -159,7 +180,11 @@ public class UserEntityController {
     })
     @GetMapping("/nearMonopatines/{id}/{rangoMetros}")
     public ResponseEntity<List<MonopatinDto>> getNearMonopatines(@PathVariable UUID id, @PathVariable int rangoMetros){
-        return userEntityService.getNearMonopatines(id, rangoMetros);
+        try {
+            return ResponseEntity.ok(userEntityService.getNearMonopatines(id, rangoMetros));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
     }
 
     @Operation(
@@ -183,7 +208,7 @@ public class UserEntityController {
     })
     @PutMapping("/{userId}")
     public ResponseEntity<UserEntityDto> editUser(@PathVariable UUID userId, @RequestBody UserEntityDto u){
-        return userEntityService.editUser(userId, u);
+        return ResponseEntity.ok(userEntityService.editUser(userId, u));
     }
 
     @PutMapping("/{userId}/accounts/{accountId}")

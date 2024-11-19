@@ -79,7 +79,7 @@ public class JourneyService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(null);
         }
-      
+
     }
 
     public List<MonopatinDto> getMonopatinesByXViajes(int cantidad, int anio){
@@ -95,16 +95,15 @@ public class JourneyService {
     public JourneyDto endViaje(UUID journeyId) {
         int xfinal = 0;
         int yfinal = 0;
-        Journey j  = journeyRepository.findById(journeyId).orElseThrow();
 
+        Journey j  = journeyRepository.findById(journeyId).orElseThrow();
         MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(j.getMonopatinId()).getBody();
         AccountDto account = userFeignClient.getAccountById(j.getAccountId()).getBody();
-
         StopDto stop = monopatinFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()).getBody();
 
         if(monopatin == null) throw new RuntimeException();
 
-        if(monopatinFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()).getBody() != null) {
+        if(stop != null) {
             j.setFinishDate(LocalDateTime.now());
             monopatin.setState(State.AVAILABLE);
 
@@ -113,8 +112,8 @@ public class JourneyService {
 
             // formula para sacar la distancia entre 2 vectores (origen y destino)
             Double kmTraveled = Math.sqrt(Math.pow(xfinal - j.getXOrigin(), 2) + Math.pow(yfinal - j.getYOrigin(), 2));
-
             BigDecimal totalKm = BigDecimal.valueOf(kmTraveled);
+            
             monopatin.setKmTraveled(totalKm.add(monopatin.getKmTraveled()));
 
             j.setKmTraveled(kmTraveled);

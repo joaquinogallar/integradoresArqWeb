@@ -23,94 +23,74 @@ import java.util.UUID;
 
 @Service
 public class UserEntityService {
+    private UserEntityRepository userEntityRepository;
+    private JourneyFeignClient journeyFeignClient;
+    private MonopatinFeignClient monopatinFeignClient;
+    private AccountRepository accountRepository ;
 
-    @Autowired
-   private UserEntityRepository userEntityRepository;
-
-   @Autowired
-   private JourneyFeignClient journeyFeignClient;
-
-   @Autowired 
-  private MonopatinFeignClient monopatinFeignClient;
-
-   @Autowired
-   private AccountRepository accountRepository ;
-    // basic methods
-    public ResponseEntity<List<UserEntityDto>> getAllUsers() {
-        try {
-            List<UserEntity> users = userEntityRepository.findAll();
-            List<UserEntityDto> userDtos = new ArrayList<>();
-            users.forEach(u -> userDtos.add(new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY())));
-            return ResponseEntity.ok(userDtos);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
+    public UserEntityService(UserEntityRepository userEntityRepository, JourneyFeignClient journeyFeignClient, MonopatinFeignClient monopatinFeignClient, AccountRepository accountRepository) {
+        this.userEntityRepository = userEntityRepository;
+        this.journeyFeignClient = journeyFeignClient;
+        this.monopatinFeignClient = monopatinFeignClient;
+        this.accountRepository = accountRepository;
     }
 
-    public ResponseEntity<UserEntityDto> getUserById(UUID userId) {
+    // basic methods
+    public List<UserEntityDto> getAllUsers() {
+        List<UserEntity> users = userEntityRepository.findAll();
+        List<UserEntityDto> userDtos = new ArrayList<>();
+        users.forEach(u -> userDtos.add(new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY())));
+        return userDtos;
+    }
+
+    public UserEntityDto getUserById(UUID userId) {
         UserEntity u = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.toString()));
         UserEntityDto userDto = new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY());
-        return ResponseEntity.ok(userDto);
+        return userDto;
     }
 
-    public ResponseEntity<String> createUser(UserEntityDto newUser) {
-        try {
-            userEntityRepository.save(new UserEntity(newUser));
-            return ResponseEntity.ok("User created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(500)
-                    .body("Error: " + e);
-        }
+    public String createUser(UserEntityDto newUser) {
+        userEntityRepository.save(new UserEntity(newUser));
+        return "User created successfully";
     }
 
-    public ResponseEntity<UserEntityDto> deleteUserById(UUID userId) {
+    public UserEntityDto deleteUserById(UUID userId) {
         UserEntity u = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId.toString()));
         UserEntityDto userDto = new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY());
         userEntityRepository.delete(u);
 
-        return ResponseEntity.ok(userDto);
+        return userDto;
     }
 
-    public ResponseEntity<JourneyDto> activateMonopatinByQr(UUID monopatinId, UUID userId, UUID accountId) {
-        try {
-            UserEntity user = userEntityRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId.toString()));
-            Account account = accountRepository.findById(accountId).orElseThrow(() -> new RuntimeException(accountId.toString()));
+    public JourneyDto activateMonopatinByQr(UUID monopatinId, UUID userId, UUID accountId) {
+        UserEntity user = userEntityRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId.toString()));
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new RuntimeException(accountId.toString()));
 
-            if(!user.getAccounts().contains(account))
-                throw new RuntimeException(accountId.toString());
+        if(!user.getAccounts().contains(account))
+            throw new RuntimeException(accountId.toString());
 
-            MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
-            return journeyFeignClient.createViaje(monopatinId, userId);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
+        MonopatinDto monopatin = monopatinFeignClient.getMonopatinById(monopatinId).getBody();
+        return journeyFeignClient.createViaje(monopatinId, userId).getBody();
     }
 
-    public ResponseEntity<List<MonopatinDto>> getNearMonopatines(UUID id,int rangoMetros) {
+    public List<MonopatinDto> getNearMonopatines(UUID id,int rangoMetros) {
        UserEntity u = userEntityRepository.findById(id).orElse(null);
-       return monopatinFeignClient.getNearMonopatines(u.getX(),u.getY(), rangoMetros) ;
+       return monopatinFeignClient.getNearMonopatines(u.getX(),u.getY(), rangoMetros).getBody();
     }
 
-    public ResponseEntity<UserEntityDto> editUser(UUID userId, UserEntityDto user) {
+    public UserEntityDto editUser(UUID userId, UserEntityDto user) {
        UserEntity u = userEntityRepository.findById(userId).orElse(null);
-       try {
         if(u!=null){
             u.setEmail(user.getEmail());
             u.setName(user.getName());
             u.setX(user.getX());
             u.setY(user.getY());
             userEntityRepository.save(u);
-            ResponseEntity.ok(user);
+            return new UserEntityDto(u.getId(), u.getName(), u.getLastname(), u.getEmail(), u.getPhoneNumber(), u.getX(), u.getY());
         }
-       } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-       }return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-       .body(null);
+        return null;
     }
 
     public String addAccount(UUID userId, UUID accountId) {
