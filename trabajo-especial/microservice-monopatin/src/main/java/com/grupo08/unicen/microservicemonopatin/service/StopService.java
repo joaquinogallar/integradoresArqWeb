@@ -58,6 +58,13 @@ public class StopService {
         }
     }
 
+    public String deleteStop(UUID stopId) {
+        Stop s = stopRepository.findById(stopId)
+                .orElseThrow(() -> new StopNotFoundException(stopId.toString()));
+        stopRepository.delete(s);
+        return "Stop deleted successfully";
+    }
+
     public ResponseEntity<String> addMonopatinToStop(UUID stopId, UUID monopatinId) {
         try {
             Stop stop = stopRepository.findById(stopId)

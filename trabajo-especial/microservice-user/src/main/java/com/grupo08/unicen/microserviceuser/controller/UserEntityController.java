@@ -185,6 +185,7 @@ public class UserEntityController {
     public ResponseEntity<UserEntityDto> editUser(@PathVariable UUID userId, @RequestBody UserEntityDto u){
         return userEntityService.editUser(userId, u);
     }
+
     @PutMapping("/{userId}/accounts/{accountId}")
     public ResponseEntity<String> addAccount(@PathVariable UUID userId, @PathVariable UUID accountId){
         try {

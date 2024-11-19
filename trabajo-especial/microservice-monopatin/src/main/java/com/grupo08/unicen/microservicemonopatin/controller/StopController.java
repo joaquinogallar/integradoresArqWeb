@@ -48,6 +48,15 @@ public class StopController {
         return stopService.getStopById(stopId);
     }
 
+    @DeleteMapping("/{stopId}")
+    public ResponseEntity<String> deleteStop(@PathVariable UUID stopId) {
+        try {
+            return ResponseEntity.ok(stopService.deleteStop(stopId));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
     @Operation(summary = "Crear una nueva parada", description = "Permite registrar una nueva parada.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Parada creada correctamente", content = @Content(mediaType = "application/json")),
