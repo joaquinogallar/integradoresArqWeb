@@ -102,9 +102,7 @@ public class JourneyService {
 
         StopDto stop = monopatinFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()).getBody();
 
-
         if(monopatin == null) throw new RuntimeException();
-
 
         if(monopatinFeignClient.getStopByXY(monopatin.getX(),monopatin.getY()).getBody() != null) {
             j.setFinishDate(LocalDateTime.now());
@@ -112,6 +110,7 @@ public class JourneyService {
 
             xfinal = monopatin.getX();
             yfinal = monopatin.getY();
+
             // formula para sacar la distancia entre 2 vectores (origen y destino)
             Double kmTraveled = Math.sqrt(Math.pow(xfinal - j.getXOrigin(), 2) + Math.pow(yfinal - j.getYOrigin(), 2));
 
@@ -139,6 +138,7 @@ public class JourneyService {
         tarifaNormal = (xfinal+yfinal)*ta.getFee();
         for (Pause pausa : pausas) {
             Long minutos = ChronoUnit.MINUTES.between(pausa.getStartDate(), pausa.getFinishDate());
+
             if(minutos>15) {
                 Fee tarifaEspecial = feeRepository.getTarifaExtraEnPlazoValido();
                 Long minutosFinal = minutos-15 ;

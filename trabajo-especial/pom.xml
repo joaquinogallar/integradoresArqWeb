@@ -18,12 +18,10 @@
     <name>trabajo-especial</name>
     <description>trabajo-especial</description>
     <modules>
-        <module>microservice-report</module>
         <module>microservice-maintenance</module>
         <module>microservice-journey</module>
         <module>microservice-monopatin</module>
         <module>microservice-user</module>
-        <module>config-service</module>
         <module>eureka-service</module>
         <module>gateway</module>
     </modules>
