@@ -16,6 +16,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "user_auth")
 public class User {
 
     @Id

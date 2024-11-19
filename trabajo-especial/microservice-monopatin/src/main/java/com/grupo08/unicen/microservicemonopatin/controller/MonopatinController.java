@@ -9,10 +9,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/monopatines")
@@ -35,7 +37,6 @@ public class MonopatinController {
         return monopatinService.getAllMonopatines();
     }
 
-<<<<<<< HEAD
     @GetMapping("/{monopatinId}")
     public ResponseEntity<MonopatinDto> getMonopatinById(@PathVariable UUID monopatinId) {
         return monopatinService.getMonopatinById(monopatinId);
@@ -46,7 +47,7 @@ public class MonopatinController {
         return monopatinService.createMonopatin(newMonopatin);
     }
 
-    @DeleteMapping("/{monoaptinId}")
+    @DeleteMapping("/{monopatinId}")
     public ResponseEntity<MonopatinDto> deleteMonopatin(@PathVariable UUID monopatinId) {
         try {
             return ResponseEntity.ok(monopatinService.deleteMonopatin(monopatinId));
@@ -55,13 +56,11 @@ public class MonopatinController {
         }
     }
 
-=======
     @Operation(summary = "Obtener monopatines por uso con pausa", description = "Devuelve una lista ordenada de monopatines a partir de su uso contando las pausas.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de monopatines obtenida correctamente",
                     content = @Content(mediaType = "application/json", schema = @Schema(type = "array", implementation = MonopatinDto.class)))
     })
->>>>>>> 38d2d384682334152e08f7b2737ddf4a5e05558f
     @GetMapping("/order/use-time/with-pause")
     public ResponseEntity<List<MonopatinDto>> getMonopatinesWithTimePause() {
         return monopatinService.getMonopatinesConTiempoPausa();

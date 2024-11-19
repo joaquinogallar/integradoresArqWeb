@@ -1,9 +1,11 @@
 package com.grupo08.unicen.gateway.config;
 
+import com.grupo08.unicen.gateway.security.AuthorityConstant;
 import com.grupo08.unicen.gateway.security.jwt.JwtFilter;
 import com.grupo08.unicen.gateway.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,7 +40,16 @@ public class SecurityConfig {
         http
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(authorize -> authorize
-                        // TODO: configurar endpoints y los roles necesarios para cada uno con AuthorityConstant
+                        .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        // .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority(AuthorityConstant._ADMIN)
+                      /*  .requestMatchers(HttpMethod.GET, "/api/monopatines/**").hasAuthority(AuthorityConstant._USER)
+                        .requestMatchers(HttpMethod.POST, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers(HttpMethod.DELETE, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers(HttpMethod.POST, "/api/stops/**").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers(HttpMethod.DELETE, "/api/stops/**").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers("/api/maintenances/**").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers("/api/journeys/**").hasAuthority(AuthorityConstant._USER)*/
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

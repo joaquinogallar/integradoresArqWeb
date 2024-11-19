@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.math.BigDecimal;
 import java.util.List;
 
-@FeignClient(name = "microservice-monopatin")
+@FeignClient(name = "MICROSERVICE-MONOPATIN", url = "http://localhost:8052")
 public interface MonopatinClient {
 
     @GetMapping("/api/monopatines/maintenance")

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient("MICROSERVICE-JOURNEY")
+@FeignClient(name = "MICROSERVICE-JOURNEY", url = "http://localhost:8051")
 public interface JourneyFeignClient {
     @GetMapping("/api/journeys/")
     ResponseEntity<List<JourneyDto>> getAll();

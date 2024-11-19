@@ -22,7 +22,6 @@
         <module>microservice-journey</module>
         <module>microservice-monopatin</module>
         <module>microservice-user</module>
-        <module>eureka-service</module>
         <module>gateway</module>
     </modules>
     <url/>

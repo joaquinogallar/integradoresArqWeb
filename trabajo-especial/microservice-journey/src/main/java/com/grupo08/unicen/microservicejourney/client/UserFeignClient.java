@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
-@FeignClient("MICROSERVICE-USER")
+@FeignClient(name = "MICROSERVICE-USER", url = "http://localhost:8050")
 public interface UserFeignClient {
 
     @GetMapping("/api/users/{userId}")

@@ -6,13 +6,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -22,5 +19,10 @@ public class UserController {
     public ResponseEntity<?> saveUser(@RequestBody @Valid UserDto userDto) {
         final var id = userService.saveUser( userDto );
         return new ResponseEntity<>( id, HttpStatus.CREATED );
+    }
+
+    @GetMapping
+    public String getAllUsers() {
+        return "TESTEO";
     }
 }
