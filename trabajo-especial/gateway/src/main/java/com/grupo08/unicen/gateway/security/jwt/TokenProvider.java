@@ -80,7 +80,7 @@ public class TokenProvider {
             log.trace(INVALID_JWT_TOKEN, e );
         } catch ( MalformedJwtException e ) {
             log.trace(INVALID_JWT_TOKEN, e );
-        } catch ( SignatureException e ) {
+        } catch ( @SuppressWarnings("deprecation") SignatureException e ) {
             log.trace(INVALID_JWT_TOKEN, e );
         } catch ( IllegalArgumentException e ) {
             log.error("Token validation error {}", e.getMessage());
