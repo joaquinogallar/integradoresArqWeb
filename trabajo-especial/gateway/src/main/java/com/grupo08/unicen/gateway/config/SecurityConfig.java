@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         // .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority(AuthorityConstant._ADMIN)
-                      /*  .requestMatchers(HttpMethod.GET, "/api/monopatines/**").hasAuthority(AuthorityConstant._USER)
+                      /* .requestMatchers(HttpMethod.GET, "/api/monopatines/**").hasAuthority(AuthorityConstant._USER)
                         .requestMatchers(HttpMethod.POST, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers(HttpMethod.POST, "/api/stops/**").hasAuthority(AuthorityConstant._ADMIN)

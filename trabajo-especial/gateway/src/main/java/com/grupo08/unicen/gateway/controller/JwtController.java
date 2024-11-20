@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/authenticate" )
+@RequestMapping("/api/authenticate")
 @RequiredArgsConstructor
 public class JwtController {
 
@@ -30,7 +30,7 @@ public class JwtController {
     public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginDto request ) {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                request.getEmail(),
+                request.getUsername(),
                 request.getPassword()
         );
 

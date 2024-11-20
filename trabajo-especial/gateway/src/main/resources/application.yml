@@ -1,47 +1,44 @@
- spring:
+spring:
   application:
     name: gateway
-  config:
-    import: optional:configserver:http://localhost:8081
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:3307/auth?createDatabaseIfNotExist=true
     username: admin
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     database: postgresql
-  cloud:
-   gateway:
-     routes:
-       - id: microservice-journey
-         uri: lb://microservice-journey:8051
-         predicates:
-           - Path=/api/journeys/**
-           - Path=/api/fees/**
-           - Path=/api/pauses/**
 
-       - id: microservice-maintenance
-         uri: lb://microservice-maintenance:8053
-         predicates:
-           - Path=/api/maintenances/**
+cloud:
+  gateway:
+    routes:
+      - id: microservice-journey
+        uri: http://localhost:8051
+        predicates:
+          - Path=/api/journeys/**, /api/fees/**, /api/pauses/**
 
-       - id: microservice-monopatin
-         uri: lb://microservice-monopatin:8052
-         predicates:
-           - Path=/api/monopatines/**
-           - Path=/api/stops/**
+      - id: microservice-maintenance
+        uri: http://localhost:8053
+        predicates:
+          - Path=/api/maintenances/**
 
-       - id: microservice-user
-         uri: lb://microservice-user:8050
-         predicates:
-           - Path=/api/users/**
-           - Path=/api/accounts/**
+      - id: microservice-monopatin
+        uri: http://localhost:8052
+        predicates:
+          - Path=/api/monopatines/**, /api/stops/**
 
-#logging:
-#  level:
-#    org.springframework.cloud.gateway: DEBUG
+      - id: microservice-user
+        uri: http://localhost:8050
+        predicates:
+          - Path=/api/users/**, /api/accounts/**
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+
 #
 #
 #server:

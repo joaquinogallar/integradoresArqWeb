@@ -15,9 +15,6 @@ public class UserDto {
     @NotNull( message = "El usuario es un campo requerido." )
     @NotEmpty( message = "El usuario es un campo requerido." )
     private String username;
-    
-    private String email ;
-
 
     @NotNull( message = "La contraseña es un campo requerido." )
     @NotEmpty( message = "La contraseña es un campo requerido." )

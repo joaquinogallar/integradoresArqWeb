@@ -11,11 +11,14 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+
 
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -31,18 +34,20 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String jwt = resolveToken(request);
+        String jwt = resolveToken( request );
         try {
-            if(StringUtils.hasText(jwt) &&  this.tokenProvider.validateToken(jwt)) {
-
+            if ( StringUtils.hasText(jwt) && this.tokenProvider.validateToken( jwt ) ) {
+                Authentication authentication = this.tokenProvider.getAuthentication( jwt );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch(ExpiredJwtException e) {
+        } catch ( ExpiredJwtException e ) {
             log.info( "REST request UNAUTHORIZED - La sesión ha expirado." );
             response.setStatus( 498 );
             response.setContentType( MediaType.APPLICATION_JSON_VALUE );
             response.getWriter().write( new JwtErrorDTO().toJson() );
             return;
         }
+        filterChain.doFilter(request, response);
     }
 
     private String resolveToken( HttpServletRequest request ) {
@@ -68,5 +73,4 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }
     }
-
 }
