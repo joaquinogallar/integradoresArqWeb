@@ -37,18 +37,37 @@ public class MonopatinController {
         return monopatinService.getAllMonopatines();
     }
 
+    @Operation(summary = "Obtener monopatín por ID", description = "Devuelve los detalles de un monopatín específico basado en su UUID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Monopatín obtenido correctamente",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MonopatinDto.class))),
+            @ApiResponse(responseCode = "404", description = "Monopatín no encontrado", content = @Content(mediaType = "application/json"))
+    })
     @GetMapping("/{monopatinId}")
-    public ResponseEntity<MonopatinDto> getMonopatinById(@PathVariable UUID monopatinId) {
+    public ResponseEntity<MonopatinDto> getMonopatinById(@Parameter(description = "ID único del monopatín (UUID)", example = "fa39b0b6-3a1e-4f1f-b47b-cf50634e5678")
+                                                         @PathVariable UUID monopatinId) {
         return monopatinService.getMonopatinById(monopatinId);
     }
 
+    @Operation(summary = "Crear un nuevo monopatín", description = "Permite registrar un nuevo monopatín.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Monopatín creado correctamente", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "Error en la solicitud", content = @Content(mediaType = "application/json"))
+    })
     @PostMapping
-    public ResponseEntity<String> createMonopatin(@RequestBody MonopatinDto newMonopatin) {
+    public ResponseEntity<String> createMonopatin(@Parameter(description = "Información del nuevo monopatín a registrar", required = true)
+                                                  @RequestBody MonopatinDto newMonopatin) {
         return monopatinService.createMonopatin(newMonopatin);
     }
 
+    @Operation(summary = "Eliminar un monopatín", description = "Elimina un monopatín específico basado en su UUID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Monopatín eliminado correctamente"),
+            @ApiResponse(responseCode = "400", description = "Error en la solicitud")
+    })
     @DeleteMapping("/{monopatinId}")
-    public ResponseEntity<MonopatinDto> deleteMonopatin(@PathVariable UUID monopatinId) {
+    public ResponseEntity<MonopatinDto> deleteMonopatin(@Parameter(description = "ID único del monopatín a eliminar (UUID)", example = "fa39b0b6-3a1e-4f1f-b47b-cf50634e5678")
+                                                        @PathVariable UUID monopatinId) {
         try {
             return ResponseEntity.ok(monopatinService.deleteMonopatin(monopatinId));
         } catch (Exception e) {
@@ -56,9 +75,9 @@ public class MonopatinController {
         }
     }
 
-    @Operation(summary = "Obtener monopatines por uso con pausa", description = "Devuelve una lista ordenada de monopatines a partir de su uso contando las pausas.")
+    @Operation(summary = "Ordenar monopatines por tiempo de uso (con pausas)", description = "Devuelve una lista de monopatines ordenada por su tiempo de uso, considerando las pausas.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de monopatines obtenida correctamente",
+            @ApiResponse(responseCode = "200", description = "Lista obtenida correctamente",
                     content = @Content(mediaType = "application/json", schema = @Schema(type = "array", implementation = MonopatinDto.class)))
     })
     @GetMapping("/order/use-time/with-pause")
@@ -66,9 +85,9 @@ public class MonopatinController {
         return monopatinService.getMonopatinesConTiempoPausa();
     }
 
-    @Operation(summary = "Ordenar monopatines por kilometraje", description = "Devuelve una lista de monopatines ordenados por kilómetros recorridos.")
+    @Operation(summary = "Ordenar monopatines por kilometraje", description = "Devuelve una lista de monopatines ordenada por kilómetros recorridos.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de monopatines obtenida correctamente",
+            @ApiResponse(responseCode = "200", description = "Lista obtenida correctamente",
                     content = @Content(mediaType = "application/json", schema = @Schema(type = "array", implementation = MonopatinDto.class)))
     })
     @GetMapping("/order/byKms")
@@ -76,9 +95,9 @@ public class MonopatinController {
         return monopatinService.getMonopatinesPorKms();
     }
 
-    @Operation(summary = "Obtener monopatines por uso sin pausa", description = "Devuelve una lista de monopatines ordenada a partir de su tiempo de uso sin contar pausas.")
+    @Operation(summary = "Ordenar monopatines por tiempo de uso (sin pausas)", description = "Devuelve una lista de monopatines ordenada por su tiempo de uso, sin considerar las pausas.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de monopatines obtenida correctamente",
+            @ApiResponse(responseCode = "200", description = "Lista obtenida correctamente",
                     content = @Content(mediaType = "application/json", schema = @Schema(type = "array", implementation = MonopatinDto.class)))
     })
     @GetMapping("/order/use-time/without-pause")
@@ -86,9 +105,9 @@ public class MonopatinController {
         return monopatinService.getMonopatinesSinTiempoPausa();
     }
 
-    @Operation(summary = "Obtener monopatines en mantenimiento", description = "Devuelve una lista de monopatines que actualmente están en mantenimiento.")
+    @Operation(summary = "Obtener monopatines en mantenimiento", description = "Devuelve una lista de monopatines que están en mantenimiento.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de monopatines en mantenimiento obtenida correctamente",
+            @ApiResponse(responseCode = "200", description = "Lista obtenida correctamente",
                     content = @Content(mediaType = "application/json", schema = @Schema(type = "array", implementation = MonopatinDto.class)))
     })
     @GetMapping("/maintenance")
@@ -98,7 +117,7 @@ public class MonopatinController {
 
     @Operation(summary = "Obtener monopatines activos", description = "Devuelve una lista de monopatines que están activos.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de monopatines activos obtenida correctamente",
+            @ApiResponse(responseCode = "200", description = "Lista obtenida correctamente",
                     content = @Content(mediaType = "application/json", schema = @Schema(type = "array", implementation = MonopatinDto.class)))
     })
     @GetMapping("/actives")
@@ -106,21 +125,19 @@ public class MonopatinController {
         return monopatinService.getActivesMonopatines();
     }
 
-    @Operation(summary = "Obtener monopatines cercanos", description = "Devuelve una lista de monopatines dentro de un rango de metros desde una posición dada.")
+    @Operation(summary = "Obtener monopatines cercanos", description = "Devuelve una lista de monopatines cercanos a una posición específica dentro de un rango de metros.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de monopatines cercanos obtenida correctamente",
+            @ApiResponse(responseCode = "200", description = "Lista obtenida correctamente",
                     content = @Content(mediaType = "application/json", schema = @Schema(type = "array", implementation = MonopatinDto.class))),
             @ApiResponse(responseCode = "400", description = "Parámetros inválidos en la solicitud")
     })
     @GetMapping("/nearMonopatines/{x}/{y}/{rangoMetros}")
-    public ResponseEntity<List<MonopatinDto>> GetNearStops(
-            @Parameter(description = "Coordenada X de la posición desde donde calcular los monopatines cercanos", example = "100") 
+    public ResponseEntity<List<MonopatinDto>> getNearStops(
+            @Parameter(description = "Coordenada X", example = "100")
             @PathVariable int x,
-            
-            @Parameter(description = "Coordenada Y de la posición desde donde calcular los monopatines cercanos", example = "200") 
+            @Parameter(description = "Coordenada Y", example = "200")
             @PathVariable int y,
-
-            @Parameter(description = "Rango en metros para calcular los monopatines cercanos", example = "500")
+            @Parameter(description = "Rango en metros", example = "500")
             @PathVariable int rangoMetros) {
         return monopatinService.getNearMonopatines(x, y, rangoMetros);
     }
