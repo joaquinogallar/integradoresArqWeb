@@ -37,6 +37,8 @@ public class UserEntity {
     @ElementCollection
     private List<UUID> journeys;
 
+    
+
     public UserEntity(String name, String lastname, String email, String phoneNumber) {
         this.name = name;
         this.lastname = lastname;
