@@ -13,28 +13,27 @@ spring:
 
 cloud:
   gateway:
-    routes:
-      - id: microservice-journey
-        uri: http://localhost:8051
-        predicates:
-          - Path=/api/journeys/**, /api/fees/**, /api/pauses/**
-        filters:
-          - AuthFilter
+    mvc:
+      routes:
+        - id: microservice-journey
+          uri: http://localhost:8051
+          predicates:
+            - Path=/api/journeys/**,/api/fees/**,/api/pauses/**
 
-      - id: microservice-maintenance
-        uri: http://localhost:8053
-        predicates:
-          - Path=/api/maintenances/**
+        - id: microservice-maintenance
+          uri: http://localhost:8053
+          predicates:
+            - Path=/api/maintenances/**
 
-      - id: microservice-monopatin
-        uri: http://localhost:8052
-        predicates:
-          - Path=/api/monopatines/**, /api/stops/**
+        - id: microservice-monopatin
+          uri: http://localhost:8052
+          predicates:
+            - Path=/api/monopatines/**,/api/stops/**
 
-      - id: microservice-user
-        uri: http://localhost:8050
-        predicates:
-          - Path=/api/users/**, /api/accounts/**
+        - id: microservice-user
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/users/**,/api/accounts/**
 
 logging:
   level:

@@ -47,15 +47,22 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
 
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers(HttpMethod.GET, "/api/users/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority(AuthorityConstant._USER)
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority(AuthorityConstant._ADMIN)
 
+                        .requestMatchers(HttpMethod.GET, "/api/accounts/**").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers(HttpMethod.POST, "/api/accounts/**").hasAuthority(AuthorityConstant._USER)
+                        .requestMatchers(HttpMethod.DELETE, "/api/accounts/**").hasAuthority(AuthorityConstant._ADMIN)
+
+                        .requestMatchers(HttpMethod.GET, "/api/stops/**").hasAuthority(AuthorityConstant._USER)
                         .requestMatchers(HttpMethod.POST, "/api/stops/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/stops/**").hasAuthority(AuthorityConstant._ADMIN)
 
                         .requestMatchers("/api/maintenances/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers("/api/journeys/**").hasAuthority(AuthorityConstant._USER)
+                        .requestMatchers("/api/fees/**").hasAuthority(AuthorityConstant._USER)
+                        .requestMatchers("/api/pauses/**").hasAuthority(AuthorityConstant._USER)
 
                         .anyRequest().authenticated()
                 )
