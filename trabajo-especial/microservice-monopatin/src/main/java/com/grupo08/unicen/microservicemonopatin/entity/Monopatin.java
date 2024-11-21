@@ -2,6 +2,7 @@ package com.grupo08.unicen.microservicemonopatin.entity;
 
 import com.grupo08.unicen.microservicemonopatin.dto.MonopatinDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Monopatin {
     @Id

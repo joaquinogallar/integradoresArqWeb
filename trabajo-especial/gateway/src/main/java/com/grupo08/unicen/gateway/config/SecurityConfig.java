@@ -41,15 +41,22 @@ public class SecurityConfig {
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                        // .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority(AuthorityConstant._ADMIN)
-                      /* .requestMatchers(HttpMethod.GET, "/api/monopatines/**").hasAuthority(AuthorityConstant._USER)
+                        .requestMatchers(HttpMethod.POST, "/api/auth/users").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/api/monopatines/**").hasAuthority(AuthorityConstant._USER)
                         .requestMatchers(HttpMethod.POST, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
+
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers(HttpMethod.GET, "/api/users/**").hasAuthority(AuthorityConstant._ADMIN)
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority(AuthorityConstant._USER)
+
                         .requestMatchers(HttpMethod.POST, "/api/stops/**").hasAuthority(AuthorityConstant._ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/stops/**").hasAuthority(AuthorityConstant._ADMIN)
+
                         .requestMatchers("/api/maintenances/**").hasAuthority(AuthorityConstant._ADMIN)
-                        .requestMatchers("/api/journeys/**").hasAuthority(AuthorityConstant._USER)*/
+                        .requestMatchers("/api/journeys/**").hasAuthority(AuthorityConstant._USER)
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
@@ -57,4 +64,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }

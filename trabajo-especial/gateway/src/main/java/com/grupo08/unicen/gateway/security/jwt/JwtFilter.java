@@ -33,22 +33,27 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String jwt = resolveToken( request );
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        log.debug("Processing request for URI: {}", request.getRequestURI());
+        String jwt = resolveToken(request);
         try {
-            if ( StringUtils.hasText(jwt) && this.tokenProvider.validateToken( jwt ) ) {
-                Authentication authentication = this.tokenProvider.getAuthentication( jwt );
+            if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt)) {
+                log.debug("Token is valid for URI: {}", request.getRequestURI());
+                Authentication authentication = tokenProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch ( ExpiredJwtException e ) {
-            log.info( "REST request UNAUTHORIZED - La sesión ha expirado." );
-            response.setStatus( 498 );
-            response.setContentType( MediaType.APPLICATION_JSON_VALUE );
-            response.getWriter().write( new JwtErrorDTO().toJson() );
+        } catch (ExpiredJwtException e) {
+            log.info("REST request UNAUTHORIZED - La sesión ha expirado.");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.getWriter().write(new JwtErrorDTO().toJson());
             return;
         }
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);  // Permite que las solicitudes pasen
     }
+
+
 
     private String resolveToken( HttpServletRequest request ) {
         String bearerToken = request.getHeader( AUTHORIZATION_HEADER );

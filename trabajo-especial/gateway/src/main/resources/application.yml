@@ -18,6 +18,8 @@ cloud:
         uri: http://localhost:8051
         predicates:
           - Path=/api/journeys/**, /api/fees/**, /api/pauses/**
+        filters:
+          - AuthFilter
 
       - id: microservice-maintenance
         uri: http://localhost:8053
