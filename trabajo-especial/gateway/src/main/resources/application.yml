@@ -1,4 +1,25 @@
 spring:
+  cloud:
+    gateway:
+      routes:
+        - id: journey
+          uri: http://localhost:8051
+          predicates:
+            - Path=/api/journeys/**,/api/fees/**,/api/pauses/**
+          filters:
+            - StripPrefix=1
+        - id: maintenance
+          uri: http://localhost:8053
+          predicates:
+            - Path=/api/maintenances/**
+        - id: monopatin
+          uri: http://localhost:8052
+          predicates:
+            - Path=/api/monopatines/**,/api/stops/**
+        - id: user
+          uri: http://localhost:8050
+          predicates:
+              - Path=/api/users/**,/api/accounts/**
   application:
     name: gateway
   datasource:
@@ -11,37 +32,12 @@ spring:
     show-sql: true
     database: postgresql
 
-cloud:
-  gateway:
-    mvc:
-      routes:
-        - id: microservice-journey
-          uri: http://localhost:8051
-          predicates:
-            - Path=/api/journeys/**,/api/fees/**,/api/pauses/**
-
-        - id: microservice-maintenance
-          uri: http://localhost:8053
-          predicates:
-            - Path=/api/maintenances/**
-
-        - id: microservice-monopatin
-          uri: http://localhost:8052
-          predicates:
-            - Path=/api/monopatines/**,/api/stops/**
-
-        - id: microservice-user
-          uri: http://localhost:8050
-          predicates:
-            - Path=/api/users/**,/api/accounts/**
-
 logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
+    org.springframework.cloud.gateway: TRACE
 
-#
-#
 #server:
 #  port: 8080
 #

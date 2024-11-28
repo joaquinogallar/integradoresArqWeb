@@ -35,6 +35,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorize -> authorize
+                        // Permitir todas las solicitudes que pasan a través del gateway
+                        .requestMatchers("/api/**").permitAll()
+                        .anyRequest().permitAll()
+                )
+                .httpBasic(Customizer.withDefaults())
+                .addFilterBefore(new JwtFilter(this.tokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+
+/*    @Bean
+    public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http
@@ -42,6 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/users").permitAll()
+
 
                         .requestMatchers(HttpMethod.GET, "/api/monopatines/**").hasAuthority(AuthorityConstant._USER)
                         .requestMatchers(HttpMethod.POST, "/api/monopatines/**").hasAuthority(AuthorityConstant._ADMIN)
@@ -64,12 +81,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/fees/**").hasAuthority(AuthorityConstant._USER)
                         .requestMatchers("/api/pauses/**").hasAuthority(AuthorityConstant._USER)
 
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(new JwtFilter(this.tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
+    }*/
 
 }
